@@ -8,7 +8,6 @@ import "@/styles/app/unauth/pricing.scss";
 import { getClient } from "@/utils/getClient";
 import { gql } from "@apollo/client";
 import Box from "@mui/joy/Box";
-import { Typography } from "@mui/material";
 
 const LIST_PLANS = gql`
     query ListPlans {
