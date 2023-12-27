@@ -8,6 +8,7 @@ import "@/styles/app/unauth/pricing.scss";
 import { getClient } from "@/utils/getClient";
 import { gql } from "@apollo/client";
 import Box from "@mui/joy/Box";
+import { Typography } from "@mui/material";
 
 const LIST_PLANS = gql`
     query ListPlans {
@@ -51,13 +52,15 @@ export default async function Pricing() {
             <div className="pricing w-full">
                 <div className="intro flex flex-col mt-36 mb-20">
                     <div className="container title text-center">
-                        <h3 className="uppercase">Memberships levels</h3>
-                        <h5>
+                        <Typography variant="h3" className="uppercase">
+                            Memberships levels
+                        </Typography>
+                        <Typography variant="h5">
                             Choose a plan
                             <span className="text-gradient">
                                 that's right for you.
                             </span>
-                        </h5>
+                        </Typography>
                     </div>
                 </div>
 
