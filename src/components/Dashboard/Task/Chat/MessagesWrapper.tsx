@@ -20,6 +20,7 @@ const MESSAGE_SENT = gql`
             received_by
             read_by
             asset {
+                id
                 src
                 alt
                 type

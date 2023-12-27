@@ -1,5 +1,5 @@
 import AssetList from "@/components/Dashboard/Asset/AssetList";
-import { TaskInterface } from "@/interfaces";
+import { Asset as AssetInterface, TaskInterface } from "@/interfaces";
 import { setTaskAssets } from "@/store/features/task";
 import { getClient } from "@/utils/getClient";
 import { gql, useMutation } from "@apollo/client";
@@ -19,13 +19,7 @@ export default function Attachement({ task }: { task: TaskInterface }) {
     const client = getClient(session);
     const [deleteAsset] = useMutation(DELETE_ASSET, { client });
 
-    const handleDeleteAsset = async ({
-        id,
-        alt,
-    }: {
-        id: string;
-        alt: string;
-    }) => {
+    const handleDeleteAsset = async ({ id, alt }: AssetInterface) => {
         try {
             const { data } = await deleteAsset({
                 variables: {

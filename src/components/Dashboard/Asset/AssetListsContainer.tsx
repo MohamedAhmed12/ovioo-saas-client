@@ -1,7 +1,7 @@
 "use client";
 
 import DashBoardCard from "@/components/DashBoardCard";
-import { Asset, Asset as AssetInterface } from "@/interfaces";
+import { Asset as AssetInterface } from "@/interfaces";
 import { ApolloClient, gql, useMutation } from "@apollo/client";
 import { Button } from "@mui/joy";
 import { MenuItem } from "@mui/material";
@@ -33,7 +33,7 @@ export default function AssetListsContainer({
     client,
     setAssets,
 }: {
-    assets: Asset[];
+    assets: AssetInterface[];
     sortBy: string;
     client: ApolloClient<any> | undefined;
     setAssets: Dispatch<SetStateAction<never[]>>;
@@ -54,7 +54,7 @@ export default function AssetListsContainer({
         const a = document.createElement("a");
         a.style.display = "none";
         url && (a.href = url);
-        a.setAttribute("download", null);
+        a.setAttribute("download", "");
         document.body.appendChild(a);
         a.click();
 
@@ -90,13 +90,7 @@ export default function AssetListsContainer({
     const handleSortBySelected = (selectedVal: string) =>
         router.push(sortbyOptions[+selectedVal].path);
 
-    const handleDeleteAsset = async ({
-        id,
-        alt,
-    }: {
-        id: string;
-        alt: string;
-    }) => {
+    const handleDeleteAsset = async ({ id, alt }: AssetInterface) => {
         try {
             await deleteAsset({
                 variables: {

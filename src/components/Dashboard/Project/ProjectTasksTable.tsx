@@ -12,7 +12,7 @@ const rows = [
     {
         designer: "John Doe",
         task: "First Task",
-        status: TaskStatus.InQueue,
+        status: TaskStatus.IN_QUEUE,
         updated: new Date().toDateString(),
     },
 ];
@@ -32,7 +32,11 @@ export default function ProjectTasksTable() {
                     aria-label="Tabs where each tab needs to be selected manually"
                 >
                     {taskStatuses.map((status) => (
-                        <Tab key={status} label={status} className="dark:text-white " />
+                        <Tab
+                            key={status}
+                            label={status}
+                            className="dark:text-white "
+                        />
                     ))}
                 </Tabs>
 

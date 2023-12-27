@@ -90,7 +90,10 @@ export default function AssetList({
 
             if (data?.createAssets) {
                 dispatch(
-                    setTaskAssets([...task.assets, ...data?.createAssets])
+                    setTaskAssets([
+                        ...(task?.assets || []),
+                        ...data?.createAssets,
+                    ])
                 );
                 toast.success("Uploaded successfully");
             }
@@ -107,7 +110,8 @@ export default function AssetList({
          * on our serverfailed
          * If "id" provided then it will delete both in DB & S3
          */
-        assets.map(async ({ id, alt }: { id: string; alt: string }) => {
+        assets.map(async ({ id, alt }: { id?: string; alt: string }) => {
+            if(!id) return;
             const { data } = await deleteAsset({
                 variables: {
                     asset: {
@@ -129,14 +133,15 @@ export default function AssetList({
                 flexDirection="row"
                 className="flex gap-6 flex-wrap"
             >
-                {assets&&assets.map((asset) => (
-                    <AssetWrapper
-                        key={asset.id}
-                        handleDelete={handleDelete}
-                        client={client}
-                        asset={asset}
-                    />
-                ))}
+                {assets &&
+                    assets.map((asset) => (
+                        <AssetWrapper
+                            key={asset.id}
+                            handleDelete={handleDelete}
+                            client={client}
+                            asset={asset}
+                        />
+                    ))}
 
                 {!readOnly && (
                     <AddAssetCard

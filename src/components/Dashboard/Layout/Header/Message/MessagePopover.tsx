@@ -37,6 +37,7 @@ const MESSAGE_SENT = gql`
             content
             voice_note_src
             asset {
+                id
                 src
                 alt
                 type

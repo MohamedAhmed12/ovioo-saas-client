@@ -35,46 +35,46 @@ export const boardSlice = createSlice({
                 (task: TaskInterface) => task.id != id
             );
         },
-        editTask: (state, action) => {
-            const {
-                title,
-                status,
-                description,
-                subtasks,
-                prevColIndex,
-                newColIndex,
-                taskIndex,
-            } = action.payload;
-            const column = state.columns.find(
-                (col: ColumnInterface, index: number) => index === newColIndex
-            );
+        // editTask: (state, action) => {
+        //     const {
+        //         title,
+        //         status,
+        //         description,
+        //         subtasks,
+        //         prevColIndex,
+        //         newColIndex,
+        //         taskIndex,
+        //     } = action.payload;
+        //     const column = state.tasks.find(
+        //         (col: ColumnInterface, index: number) => index === newColIndex
+        //     );
 
-            if (column == undefined) return;
+        //     if (column == undefined) return;
 
-            let task =
-                column &&
-                column.tasks.find(
-                    (task: TaskInterface, index) => index === taskIndex
-                );
+        //     let task =
+        //         column &&
+        //         column.tasks.find(
+        //             (task: TaskInterface, index) => index === taskIndex
+        //         );
 
-            if (task == undefined) return;
+        //     if (task == undefined) return;
 
-            task = {
-                ...task,
-                title,
-                status,
-                description,
-                subtasks,
-            };
+        //     task = {
+        //         ...task,
+        //         title,
+        //         status,
+        //         description,
+        //         subtasks,
+        //     };
 
-            if (prevColIndex === newColIndex) return;
+        //     if (prevColIndex === newColIndex) return;
 
-            const newCol = state.columns.find(
-                (col: ColumnInterface, index: number) => index === newColIndex
-            );
-            if (newCol && newCol.tasks && task)
-                (column.tasks as TaskInterface[]).push(task as TaskInterface);
-        },
+        //     const newCol = state.columns.find(
+        //         (col: ColumnInterface, index: number) => index === newColIndex
+        //     );
+        //     if (newCol && newCol.tasks && task)
+        //         (column.tasks as TaskInterface[]).push(task as TaskInterface);
+        // },
         dragTask: (state, action) => {
             if (!state.tasks) return;
 
@@ -92,23 +92,6 @@ export const boardSlice = createSlice({
                 state.tasks[task.status].push(task);
             }
         },
-        setSubtaskCompleted: (state, action) => {
-            const payload = action.payload;
-            const col = state.columns.find(
-                (col: ColumnInterface, i) => i === payload.colIndex
-            );
-            const task =
-                col &&
-                col.tasks.find(
-                    (task: TaskInterface, i) => i === payload.taskIndex
-                );
-            const subtask =
-                task &&
-                task.subtasks &&
-                task.subtasks.find((subtask, i) => i === payload.index);
-
-            if (subtask) subtask.isCompleted = !subtask.isCompleted;
-        },
         setTaskStatus: (state, action) => {
             console.log(action.payload);
         },
@@ -118,9 +101,8 @@ export const boardSlice = createSlice({
 export const {
     setTasks,
     pushNewTask,
-    editTask,
+    // editTask,
     dragTask,
-    setSubtaskCompleted,
     setTaskStatus,
     deleteTask,
 } = boardSlice.actions;

@@ -8,7 +8,7 @@ import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 let client: ApolloClient<any> | undefined = undefined;
 
 const httpLink = new HttpLink({
-    uri: `${process.env.NEXT_PUBLIC_SERVER_URL}/graphql`,
+    uri: `${process.env.SERVER_URL}/graphql`,
 });
 
 const wsLink = (session: any) =>

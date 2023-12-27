@@ -15,8 +15,9 @@ const OviooMessage = ({
     const authUser = useAppSelector((state) => state.userReducer.user);
 
     const getType = (): any => {
-        if (isVideo(message?.asset)) return "video";
-        if (isImage(message?.asset)) return "photo";
+        if (!message?.asset) return "text";
+        if (isVideo(message.asset)) return "video";
+        if (isImage(message.asset)) return "photo";
         return "text";
     };
     const getMediaDate = () => {

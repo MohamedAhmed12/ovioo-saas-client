@@ -3,9 +3,9 @@ import { Session } from "next-auth";
 import { ChangeEvent } from "react";
 import toast from "react-hot-toast";
 
-export const isVideo = (asset: Asset | undefined | null): boolean =>
+export const isVideo = (asset: Asset): boolean =>
     asset ? asset.type.startsWith("video/") : false;
-export const isImage = (asset: Asset | undefined | null): boolean =>
+export const isImage = (asset: Asset): boolean =>
     asset ? asset.type.startsWith("image/") : false;
 
 export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
@@ -33,7 +33,7 @@ export const uploadFiles = async (
         }
 
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_SERVER_URL}/api/file/upload`,
+            `${process.env.SERVER_URL}/api/file/upload`,
             {
                 method: "POST",
                 body: form,

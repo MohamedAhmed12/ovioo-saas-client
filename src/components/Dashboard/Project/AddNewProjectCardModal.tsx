@@ -52,8 +52,9 @@ export default function AddNewProjectCardModal({
     useEffect(() => {
         if (Object.keys(projectToEdit).length > 0) {
             setFormData({
-                title: (projectToEdit as ProjectInterface)?.title,
-                description: (projectToEdit as ProjectInterface)?.description,
+                title: (projectToEdit as ProjectInterface)?.title || "",
+                description:
+                    (projectToEdit as ProjectInterface)?.description || "",
             });
         }
     }, [projectToEdit]);
@@ -93,7 +94,12 @@ export default function AddNewProjectCardModal({
             });
 
             if (data.updateProject) {
-                dispatch(replaceProject({ id: projectToEdit.id, ...formData }));
+                dispatch(
+                    replaceProject({
+                        id: (projectToEdit as ProjectInterface).id,
+                        ...formData,
+                    })
+                );
                 data && toast.success("Project edited successfully");
                 handleClose();
             }

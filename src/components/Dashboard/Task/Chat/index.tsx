@@ -21,6 +21,7 @@ const LIST_MESSAGES = gql`
             received_by
             read_by
             asset {
+                id
                 src
                 alt
                 type
@@ -44,6 +45,7 @@ const SEND_MESSAGE = gql`
             received_by
             read_by
             asset {
+                id
                 src
                 alt
                 type
