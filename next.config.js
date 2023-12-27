@@ -1,23 +1,26 @@
-const path = require('path');
+const path = require("path");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    experimental: {
+        appDir: true,
+    },
     images: {
         remotePatterns: [
             {
-              protocol: "https",
-              hostname: "**",
+                protocol: "https",
+                hostname: "**",
             },
         ],
     },
     webpack: (config) => {
         config.resolve.alias = {
-          ...config.resolve.alias,
-          '@': path.resolve(__dirname, './'),
+            ...config.resolve.alias,
+            "@": path.resolve(__dirname, "./"),
         };
-    
+
         return config;
-      },
+    },
 };
 
 module.exports = nextConfig;
