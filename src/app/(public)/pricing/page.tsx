@@ -52,15 +52,13 @@ export default async function Pricing() {
             <div className="pricing w-full">
                 <div className="intro flex flex-col mt-36 mb-20">
                     <div className="container title text-center">
-                        <Typography variant="h3" className="uppercase">
-                            Memberships levels
-                        </Typography>
-                        <Typography variant="h5">
+                        <h3 className="uppercase">Memberships levels</h3>
+                        <h5>
                             Choose a plan
                             <span className="text-gradient">
                                 that's right for you.
                             </span>
-                        </Typography>
+                        </h5>
                     </div>
                 </div>
 
