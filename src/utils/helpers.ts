@@ -33,7 +33,7 @@ export const uploadFiles = async (
         }
 
         const response = await fetch(
-            `${process.env.SERVER_URL}/api/file/upload`,
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/api/file/upload`,
             {
                 method: "POST",
                 body: form,

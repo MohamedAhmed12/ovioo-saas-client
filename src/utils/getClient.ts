@@ -8,13 +8,13 @@ import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 let client: ApolloClient<any> | undefined = undefined;
 
 const httpLink = new HttpLink({
-    uri: `${process.env.SERVER_URL}/graphql`,
+    uri: `${process.env.NEXT_PUBLIC_SERVER_URL}/graphql`,
 });
 
 const wsLink = (session: any) =>
     new GraphQLWsLink(
         createClient({
-            url: `ws://127.0.0.1:3000/graphql`,
+            url: `ws://localhost:3001/graphql`,
             shouldRetry: () => true,
             connectionParams: () => {
                 return {
