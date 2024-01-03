@@ -24,7 +24,7 @@ export const AdvantageSection = () => {
                 style={{ color: "#fee4a5" }}
             >
                 <div className="flex flex-col basis-1/2">
-                    <Card className="w-full h-full p-0">
+                    <Card className="w-full h-full p-0 border-none">
                         <CardContent className="card-content pr-10 pl-10 lg:p-0">
                             <h1 className="text-white text-3xl lg:text-5xl font-bold mb-5">
                                 Your design work should be simple

@@ -77,7 +77,7 @@ export default function Footer() {
                                 </a>
                             </div>
                             <div className="link_footer mt-7">
-                                <a href="/about-us" className="footer_nav-text">
+                                <a href="/about" className="footer_nav-text">
                                     About Us
                                 </a>
                             </div>
