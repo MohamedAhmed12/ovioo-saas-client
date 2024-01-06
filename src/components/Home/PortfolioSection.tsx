@@ -1,11 +1,9 @@
-"use client";
-
 import { Button } from "@mui/material";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import Carousel from "../Carousel";
 
 export const PortfolioSection = () => (
-    <div className="portfolio-section max-w-full">
+    <div className="portfolio-section max-w-full mt-10">
         <Carousel
             title={
                 <h3 className="carousel-title">

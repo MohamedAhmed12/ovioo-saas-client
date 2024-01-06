@@ -18,7 +18,7 @@ export default function Desktop({
     return (
         <HideOnScroll>
             <AppBar
-                className={`navbar-container justify-center ${scrolling ? "navbar-blur" : ""}`}
+                className={`navbar-container justify-center px-10 ${scrolling ? "navbar-blur" : ""}`}
                 style={{
                     backgroundColor: "transparent",
                     boxShadow: "none",

@@ -1,12 +1,9 @@
 .intro-container {
-    margin-top: 105px;
-    line-height: 83px;
     background-image: url("/svg/background/main-layout-starts.svg");
     background-position: 20% 77%;
     background-repeat: no-repeat, no-repeat;
     background-size: 1330px 1165px;
     h1 {
-        font-size: 52px;
         letter-spacing: 2px;
         .gradient-h1 {
             -webkit-text-fill-color: transparent;
@@ -21,9 +18,7 @@
         }
     }
     .subtitle {
-        font-size: 20px;
         font-weight: 200;
-        line-height: 28px;
     }
     .btns-wrapper {
         @media screen and (max-width: 991px) {

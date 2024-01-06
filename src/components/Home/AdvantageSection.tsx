@@ -20,11 +20,11 @@ export const AdvantageSection = () => {
     return (
         <div className="adv-section__stars-bg flex w-full justify-center">
             <div
-                className="container adv-section flex flex-col lg:flex-row mt-40 mb-10 pr-5 pl-5"
+                className="container adv-section flex flex-col lg:flex-row mt-40 mb-10 px-[5%] lg:px-[3%]"
                 style={{ color: "#fee4a5" }}
             >
                 <div className="flex flex-col basis-1/2">
-                    <Card className="w-full h-full p-0 border-none">
+                    <Card className="w-full h-full p-0 !border-none">
                         <CardContent className="card-content pr-10 pl-10 lg:p-0">
                             <h1 className="text-white text-3xl lg:text-5xl font-bold mb-5">
                                 Your design work should be simple
@@ -47,7 +47,7 @@ export const AdvantageSection = () => {
                         <Paper
                             key={index}
                             elevation={5}
-                            className="flex items-center rounded-md"
+                            className="flex items-center rounded-md text-sm md:text-xl"
                         >
                             <FaXmark className="mr-2 text-red-800" />
                             {disAdv}

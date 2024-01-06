@@ -40,14 +40,14 @@ export default function MobileNavBar({
             >
                 <Toolbar disableGutters className="w-full justify-center h-full">
                     <div
-                        className="navbar-mobile w-full h-full justify-between items-center pl-12 pr-12 flex"
+                        className="navbar-mobile w-full h-full justify-between items-center px-[8%] flex"
                         style={{ position: "relative" }}
                     >
                         <Image
                             src="/svg/logo.svg"
                             className="slef-center mobile-logo"
-                            width={800}
-                            height={800}
+                            width={100}
+                            height={100}
                             alt="logo"
                         />
                         {authUser && (
