@@ -1,9 +1,8 @@
 "use client";
 
 import "@/styles/app/unauth/demo.scss";
-import Script from "next/script";
-import { Typography } from "@mui/material";
 import Image from "next/image";
+import Script from "next/script";
 import { useEffect, useState } from "react";
 import Loading from "../../loading";
 
@@ -16,7 +15,10 @@ export default function Demo() {
         };
 
         const handleCalendlyEvent = (e: any) => {
-            if ((isCalendlyEvent(e), e.data.event == "calendly.event_type_viewed")) {
+            if (
+                isCalendlyEvent(e) &&
+                e.data.event == "calendly.event_type_viewed"
+            ) {
                 setLoading(false);
             }
         };
@@ -29,32 +31,37 @@ export default function Demo() {
     }, []);
 
     return (
-        <>
+        <div className="min-h-screen">
             <div className={loading ? "" : "hidden"}>
                 <Loading bgTransparent />
             </div>
 
             <div
-                className={`demo container flex items-center flex-col mt-28 mb-28 ${
+                className={`demo w-full flex items-center flex-col mt-28 mb-28 ${
                     loading ? "hidden" : ""
                 }`}
             >
-                <Typography
-                    variant="h3"
-                    className="title max-w-5xl font-medium capitalize text-center"
+                <h3
+                    className="title text-[1.6rem] leading-relaxed lg:text-5xl lg:!leading-[3.6rem] max-w-5xl font-medium capitalize text-center"
                 >
                     book your demo with one
-                    <br /> of our team <span className="text-gradient">heroes</span>
-                </Typography>
+                    <br /> of our team{" "}
+                    <span className="text-gradient">heroes</span>
+                </h3>
 
-                <div className="flex flex-row justify-center lg:justify-between w-full">
+                <div className="flex flex-row justify-center lg:justify-between ">
                     <div
                         id="calendly-container"
-                        className="calendly-inline-widget basis-1/2"
+                        className="calendly-inline-widget lg:basis-1/2"
                         data-url="https://calendly.com/mohamed-gad3633/demo-call?hide_gdpr_banner=1"
                     ></div>
                     <div className="basis-1/2 hidden lg:flex">
-                        <Image src="/images/smile.jpg" alt="smile" width={800} height={720} />
+                        <Image
+                            src="/images/smile.jpg"
+                            alt="smile"
+                            width={800}
+                            height={720}
+                        />
                     </div>
 
                     <Script
@@ -64,6 +71,6 @@ export default function Demo() {
                     ></Script>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

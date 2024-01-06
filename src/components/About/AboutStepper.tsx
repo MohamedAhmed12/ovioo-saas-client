@@ -40,7 +40,7 @@ export default function AboutStepper() {
                         <div className=" mt-4 lg:m-0">{ReactHtmlParser(text)}</div>
                     </div>
                     {steps.length !== index + 1 && (
-                        <div className="about-us-steppers-vertical-line block lg:hidden"></div>
+                        <div className="about-us-steppers-vertical-line block lg:hidden mx-auto my-6"></div>
                     )}
                 </span>
             ))}

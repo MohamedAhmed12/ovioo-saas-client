@@ -41,7 +41,7 @@ export default function HowItWorksStepper() {
                         </div>
                     </div>
                     {steps.length !== index + 1 && (
-                        <div className="about-us-steppers-vertical-line block lg:hidden"></div>
+                        <div className="about-us-steppers-vertical-line block lg:hidden mx-auto my-6"></div>
                     )}
                 </span>
             ))}

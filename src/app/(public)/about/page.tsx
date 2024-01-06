@@ -1,12 +1,11 @@
 "use client";
 
 import AboutStepper from "@/components/About/AboutStepper";
-import "@/styles/app/unauth/about-us.scss";
-import { Typography } from "@mui/material";
-import Image from "next/image";
-import ReactHtmlParser from "react-html-parser";
 import BottomWrapper from "@/components/BottomWrapper";
 import { FAQ as FAQInterface } from "@/interfaces";
+import "@/styles/app/unauth/about-us.scss";
+import Image from "next/image";
+import ReactHtmlParser from "react-html-parser";
 
 export default function Home() {
     const faq: FAQInterface[] = [
@@ -30,18 +29,18 @@ export default function Home() {
         <div className="about">
             <div className="intro flex flex-col">
                 <div className="container title uppercase text-center">
-                    <Typography variant="h2">
+                    <h2>
                         <span className="text-gradient font-bold">ovioo</span>
                         <span className="title-span ml-4 mr-4">=</span>
                         <span className="font-bold">amazing</span> companies
                         <br />+ <span className="font-bold">cosmic</span> designers
-                    </Typography>
+                    </h2>
                 </div>
 
                 <AboutStepper />
             </div>
-            <div className="info container w-full flex-col lg:flex-row flex items-center justify-between mb-10 pr-2 pl-2 lg:pr-11 lg:pl-11">
-                <h2 className="text-[40px] lg:text-5xl font-medium leading-snug basis-1/2 text-center lg:text-left p-0 lg:pr-20">
+            <div className="info px-[5%] lg:px-[9%] w-full flex-col lg:flex-row flex items-center justify-between mb-10">
+                <h2 className="text-4xl md:text-[40px] lg:text-5xl font-medium md:!leading-snug basis-1/2 text-center lg:text-left p-0 lg:pr-20 mb-3">
                     We’ve created an algorithm to help others, matching businesses with the best-fit
                     designers.
                 </h2>
@@ -49,7 +48,7 @@ export default function Home() {
                     <Image src="/images/smile.jpg" alt="smile" width={610} height={500} />
                 </div>
             </div>
-            <div className="values section mt-25 mb-20">
+            <div className="public-container values section mt-25 mb-20">
                 <div className="title-wrapper">
                     <h3 className="text-[30px] font-medium text-center mt-20">Our Values</h3>
                 </div>

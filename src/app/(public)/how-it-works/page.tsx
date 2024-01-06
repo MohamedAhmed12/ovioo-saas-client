@@ -96,10 +96,10 @@ export default function HowItWorks() {
                 ></iframe>
             </div>
 
-            <div className="what-you-get text-[40px] font-medium text-center mt-36 mb-20 flex  flex-col items-center">
-                <h2 className="mb-20">What You Get With Ovioo</h2>
+            <div className="what-you-get text-[40px] font-medium text-center mt-36 mb-20 px-5 flex flex-col items-center">
+                <h3 className="mb-10 lg:mb-20 text-3xl lg:text-[2.8rem]">What You Get With Ovioo</h3>
                 <ImageList
-                    className="w-full pr-5 pl-5 "
+                    className="w-full"
                     sx={{ gridAutoColumns: 1 }}
                     variant="quilted"
                     cols={4}
