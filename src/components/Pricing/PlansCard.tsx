@@ -34,7 +34,7 @@ export default function PlansCard({
             variant={background_color ? "solid" : "outlined"}
             invertedColors={background_color ? true : false}
             sx={{ bgcolor: background_color }}
-            className="overflow-hidden px-6 !py-[36px]"
+            className="mt-6 overflow-hidden px-6 !py-[36px] flex-1 min-w-[306px]"
         >
             {is_most_popular && (
                 <div className="w-52 bg-gradient-to-r from-blue-300 via-blue-400 to-blue-300 transform rotate-[30deg] absolute top-[26px] right-[-38px] z-90 text-center font-semibold">

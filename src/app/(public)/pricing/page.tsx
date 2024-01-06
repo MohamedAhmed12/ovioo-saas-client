@@ -50,13 +50,13 @@ export default async function Pricing() {
 
     return (
         data.listPlans && (
-            <div className="pricing w-full">
-                <div className="intro flex flex-col mt-36 mb-20">
-                    <div className="container title text-center">
-                        <h3 className="uppercase text-5xl">
+            <div className="w-full">
+                <div className="intro flex mt-36 mb-14 justify-center">
+                    <div className="container title text-center px-5">
+                        <h3 className="uppercase text-4xl md:text-5xl">
                             Memberships levels
                         </h3>
-                        <h5 className="text-2xl mt-3 pr-2">
+                        <h5 className="text-xl md:text-2xl mt-3 pr-2">
                             Choose a plan
                             <span className="text-gradient">
                                 {` that's right for you.`}
@@ -65,15 +65,7 @@ export default async function Pricing() {
                     </div>
                 </div>
 
-                <Box
-                    sx={{
-                        width: "100%",
-                        display: "grid",
-                        gridTemplateColumns:
-                            "repeat(auto-fill, minmax(min(100%, 300px), 1fr))",
-                        gap: 5,
-                    }}
-                >
+                <Box className="flex flex-wrap justify-center w-full px-[9%] gap-x-9">
                     {data.listPlans.map((plan: PlanInterface) => (
                         <PlansCard {...plan} key={plan.title} />
                     ))}

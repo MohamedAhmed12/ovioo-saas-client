@@ -11,57 +11,61 @@ import Image from "next/image";
 
 export default function PlansHelpCard() {
     return (
-        <Card
-            variant="solid"
-            invertedColors
-            className="flex flex-row plans__help-card mt-20 rounded-lg shadow-xl"
-        >
-            <CardContent orientation="horizontal">
-                <div className="flex-1 pricing__add-ons">
-                    <Chip
-                        size="md"
-                        variant="solid"
-                        color="neutral"
-                        className="mr-3"
-                    >
-                        Add-on
-                    </Chip>
-                    <List aria-labelledby="decorated-list-demo">
-                        <ListItem className="flex flex-row !text-2xl !p-0 !pt-4">
-                            <span className="basis-4/5">
-                                <ListItemDecorator>
-                                    <Image
-                                        src="/icons/web-flow.png"
-                                        alt="webflow icon"
-                                        width={25}
-                                        height={25}
-                                    />
-                                </ListItemDecorator>
-                                Full web design using Webflow
-                            </span>
-                            <span className="basis-1/5 font-semibold text-secondary">
-                                $500
-                            </span>
-                        </ListItem>
-                        <ListItem className="flex flex-row !text-2xl !p-0 !pt-4">
-                            <span className="basis-4/5">
-                                <ListItemDecorator>📹</ListItemDecorator> Video
-                                editing
-                            </span>
-                            <span className="basis-1/5 font-semibold text-secondary">
-                                $1000
-                            </span>
-                        </ListItem>
-                    </List>
-                </div>
-                <div className="pricing__not-sure flex-1 flex-col">
-                    <h2>Not sure what to choose?</h2>
-                    <p>We will help you build a plan acording to you needs</p>
-                    <div className="mt-12 flex justify-end">
-                        <AnimatedBtn title="Book a Demo" />
+        <div className="w-full px-[9%]">
+            <Card
+                variant="solid"
+                invertedColors
+                className="flex flex-row plans__help-card mt-20 !px-12 !py-10 rounded-lg shadow-xl"
+            >
+                <CardContent orientation="horizontal" className="flex flex-wrap">
+                    <div className="flex-1 pricing__add-ons">
+                        <Chip
+                            size="md"
+                            variant="solid"
+                            color="neutral"
+                            className="mr-3"
+                        >
+                            Add-on
+                        </Chip>
+                        <List aria-labelledby="decorated-list-demo">
+                            <ListItem className="flex flex-row !text-2xl !p-0 !pt-4">
+                                <span className="basis-4/5">
+                                    <ListItemDecorator>
+                                        <Image
+                                            src="/icons/web-flow.png"
+                                            alt="webflow icon"
+                                            width={25}
+                                            height={25}
+                                        />
+                                    </ListItemDecorator>
+                                    Full web design using Webflow
+                                </span>
+                                <span className="basis-1/5 font-semibold text-secondary">
+                                    $500
+                                </span>
+                            </ListItem>
+                            <ListItem className="flex flex-row !text-2xl !p-0 !pt-4">
+                                <span className="basis-4/5">
+                                    <ListItemDecorator>📹</ListItemDecorator>{" "}
+                                    Video editing
+                                </span>
+                                <span className="basis-1/5 font-semibold text-secondary">
+                                    $1000
+                                </span>
+                            </ListItem>
+                        </List>
                     </div>
-                </div>
-            </CardContent>
-        </Card>
+                    <div className="pricing__not-sure flex-1 flex-col pt-10 lg:pt-0 px-3">
+                        <h2>Not sure what to choose?</h2>
+                        <p>
+                            We will help you build a plan acording to you needs
+                        </p>
+                        <div className="mt-12 flex justify-end">
+                            <AnimatedBtn title="Book a Demo" />
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
     );
 }
