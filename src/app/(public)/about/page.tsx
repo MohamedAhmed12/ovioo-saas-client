@@ -51,6 +51,7 @@ export default function Home() {
                         alt="smile"
                         width={610}
                         height={500}
+                        unoptimized
                     />
                 </div>
             </div>

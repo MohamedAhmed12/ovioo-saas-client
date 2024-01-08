@@ -57,6 +57,7 @@ export const PyramidSection = () => {
                         alt="pyramid"
                         width={420}
                         height={0}
+                        unoptimized
                     /> 
                 </div>
                 <div className="text-4xl basis-1/3 font-bold mt-3">
