@@ -22,7 +22,7 @@ export default function ForgotPassForm() {
 
     const { errors, setErrors, errorHandler } = useGraphError({});
 
-    const { data: session } = useSession({ required: true });
+    const { data: session } = useSession();
     const client = getClient(session);
     const [forgetPassword] = useMutation(FORGET_PASSWORD, { client });
 
@@ -36,17 +36,26 @@ export default function ForgotPassForm() {
                 variables: { email },
             });
 
-            data && toast.success("Reset password email sent successfully");
-            setEmail("");
+            if (data) {
+                toast.success("Reset password email sent successfully");
+                setEmail("");
+            }
         } catch (e: any) {
-            errorHandler(e);
+            if (
+                e?.graphQLErrors?.[0]?.extensions?.code !==
+                "INTERNAL_SERVER_ERROR"
+            ) {
+                errorHandler(e);
+            }else{
+                toast.error("Something went wrong!");
+            }
         }
 
         setLoading(false);
     };
 
     return (
-        <form className="px-10" onSubmit={handleSubmit}>
+        <form className="px-5 w-[360px] lg:w-[400px]" onSubmit={handleSubmit}>
             <Typography variant="h4" gutterBottom>
                 Forgot Password
             </Typography>

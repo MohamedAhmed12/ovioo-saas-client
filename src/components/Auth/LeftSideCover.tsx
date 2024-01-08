@@ -1,6 +1,5 @@
 "use client";
 
-import "@/styles/app/auth/left-side-cover.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,17 +21,32 @@ export default function LeftSideCover() {
     };
 
     return (
-        <div className="basis-[45%] flex flex-col">
-            <Link href="/" className="flex items-start w-full h-auto py-5 px-6 shadow-none">
-                <Image src="/svg/logo.svg" width={100} height={40} alt="logo" className="h-auto" />
+        <div className="left-side-cover basis-[45%] hidden sm:flex flex-col">
+            <Link
+                href="/"
+                className="flex items-start w-full h-auto !py-5 !px-6 shadow-none min-h-[85px]"
+            >
+                <Image
+                    src="/svg/logo.svg"
+                    width={0}
+                    height={0}
+                    alt="logo"
+                    className="logo w-[100px]"
+                />
             </Link>
 
-            <div className="styled-scetion__title hidden lg:flex flex-col flex-wrap items-center mt-16 text-center">
-                <h3 className={`mb-10 ${!pathname.includes("/auth/password") ? 'text-5xl leading-[3.6rem]': 'text-[2rem] leading-[3.3rem]'}`}>
+            <div className="styled-scetion__title flex flex-col flex-wrap items-center mt-16 text-center px-3">
+                <h3
+                    className={`mb-10 ${
+                        !pathname.includes("/auth/password")
+                            ? "text-[1.7rem] md:text-4xl leading-[3.6rem]"
+                            : "text-[2rem] leading-[3.3rem]"
+                    }`}
+                >
                     {ReactHtmlParser(leftSideTitle())}
                 </h3>
                 <Image
-                    src="/images/planeta.png"
+                    src="/svg/planet.svg"
                     alt="login"
                     width={200}
                     height={200}

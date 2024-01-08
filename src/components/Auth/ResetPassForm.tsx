@@ -41,7 +41,7 @@ export default function ResetPassForm({ token }: { token: string }) {
     const { errors, setErrors, errorHandler } = useGraphError({});
     const { handleOnChange } = useForm(setFormData);
 
-    const { data: session } = useSession({ required: true });
+    const { data: session } = useSession();
     const client = getClient(session);
     const [resetPassword] = useMutation(RESET_PASSWORD, { client });
 
@@ -79,7 +79,7 @@ export default function ResetPassForm({ token }: { token: string }) {
     };
 
     return (
-        <form className="px-10" onSubmit={handleSubmit}>
+        <form className="px-5 w-[360px] lg:w-[400px]" onSubmit={handleSubmit}>
             <Typography variant="h4" gutterBottom>
                 Reset Password
             </Typography>

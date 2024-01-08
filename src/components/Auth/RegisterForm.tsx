@@ -7,10 +7,16 @@ import { getClient } from "@/utils/getClient";
 import { gql } from "@apollo/client";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Button as JoyButton } from "@mui/joy";
-import { IconButton, InputAdornment, Stack, TextField, Typography } from "@mui/material";
+import {
+    IconButton,
+    InputAdornment,
+    Stack,
+    TextField,
+    Typography,
+} from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import SSOWrapper from "./SSOWrapper";
 
@@ -33,17 +39,20 @@ export default function RegisterForm() {
 
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
+    const [showPasswordConfirmation, setShowPasswordConfirmation] =
+        useState(false);
 
     const { errors, errorHandler } = useGraphError({});
     const { value: fullname, bind: bindFullname } = useInput("");
     const { value: email, bind: bindEmail } = useInput("");
     const { value: company, bind: bindCompany } = useInput("");
     const { value: password, bind: bindPassword } = useInput("");
-    const { value: password_confirmation, bind: bindPasswordConfirmation } = useInput("");
+    const { value: password_confirmation, bind: bindPasswordConfirmation } =
+        useInput("");
     const { value: phone, bind: bindPhone } = useInput("");
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         setLoading(true);
 
         try {
@@ -72,7 +81,7 @@ export default function RegisterForm() {
     };
 
     return (
-        <>
+        <form className="register__form w-[360px] lg:w-[400px]" onSubmit={handleSubmit}>
             <Typography variant="h4" gutterBottom>
                 Create your account
             </Typography>
@@ -124,10 +133,16 @@ export default function RegisterForm() {
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton
-                                    onClick={() => setShowPassword(!showPassword)}
+                                    onClick={() =>
+                                        setShowPassword(!showPassword)
+                                    }
                                     edge="end"
                                 >
-                                    {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+                                    {showPassword ? (
+                                        <AiFillEye />
+                                    ) : (
+                                        <AiFillEyeInvisible />
+                                    )}
                                 </IconButton>
                             </InputAdornment>
                         ),
@@ -146,7 +161,9 @@ export default function RegisterForm() {
                             <InputAdornment position="end">
                                 <IconButton
                                     onClick={() =>
-                                        setShowPasswordConfirmation(!showPasswordConfirmation)
+                                        setShowPasswordConfirmation(
+                                            !showPasswordConfirmation
+                                        )
                                     }
                                     edge="end"
                                 >
@@ -174,22 +191,24 @@ export default function RegisterForm() {
 
             <JoyButton
                 loading={loading}
-                onClick={() => {
-                    handleSubmit();
-                }}
                 variant="solid"
                 type="submit"
-                className="auth-btn !mt-8 !mb-2"
+                className="auth-btn !mt-8 !mb-2 min-w-[155px]"
             >
                 {!loading && "Create Account"}
             </JoyButton>
 
             <Stack direction="row" alignItems="center" sx={{ my: 2 }}>
-                <p>By creating account, you agree to Ovioo's</p>
-                <Link href="/terms" className="ml-1 text-sm text-blue-600 font-normal">
-                    Terms and Policies
-                </Link>
+                <p>
+                    By creating account, you agree to Ovioo's{" "}
+                    <Link
+                        href="/terms"
+                        className="text-sm text-blue-600 font-normal"
+                    >
+                        Terms and Policies
+                    </Link>
+                </p>
             </Stack>
-        </>
+        </form>
     );
 }

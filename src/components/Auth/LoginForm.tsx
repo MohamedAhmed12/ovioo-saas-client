@@ -18,7 +18,7 @@ import {
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import SSOWrapper from "./SSOWrapper";
 
@@ -48,7 +48,8 @@ export default function LoginForm() {
     const client = getClient();
     const [login] = useMutation(Login, { client });
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         setLoading(true);
 
         try {
@@ -72,7 +73,10 @@ export default function LoginForm() {
     };
 
     return (
-        <>
+        <form
+            className="login__form w-[360px] lg:w-[400px]"
+            onSubmit={handleSubmit}
+        >
             <Typography variant="h4" gutterBottom>
                 Sign in to Ovioo
             </Typography>
@@ -145,13 +149,12 @@ export default function LoginForm() {
 
             <Button
                 loading={loading}
-                onClick={handleSubmit}
                 variant="solid"
                 type="submit"
-                className="auth-btn !mt-4"
+                className="auth-btn !mt-4 min-w-[75px]"
             >
                 {!loading && "Login"}
             </Button>
-        </>
+        </form>
     );
 }

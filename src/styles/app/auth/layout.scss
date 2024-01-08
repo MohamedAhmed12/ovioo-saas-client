@@ -9,10 +9,9 @@
     scrollbar-color: var(--secondary) var(--primary);
     .form__wrapper {
         min-height: 100vh;
-        display: flex;
         justify-content: center;
+        align-items: center;
         flex-direction: column;
-        padding: 96px 160px;
         .social-btn-group {
             button {
                 min-width: 64px;
