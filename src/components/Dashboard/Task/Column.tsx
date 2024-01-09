@@ -66,7 +66,7 @@ export default function Column({
             onDragOver={handleOnDragOver}
             className="column mx-5 min-w-[280px] "
         >
-            <p className="font-semibold flex items-center gap-2 tracking-widest md:tracking-[.2em]">
+            <p className="font-semibold flex items-center gap-2 mb-4 tracking-widest md:tracking-[.2em]">
                 <span
                     className="rounded-full w-4 h-4"
                     style={{ backgroundColor: `${color}` }}

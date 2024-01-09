@@ -34,14 +34,14 @@ export default function Task({ task }: { task: TaskInterface }) {
     };
 
     return (
-        <div>
+        <>
             <div
                 onClick={() => {
                     setIsTaskModalOpen(true);
                 }}
                 draggable
                 onDragStart={handleOnDrag}
-                className=" w-[280px] first:my-5 py-6 px-3 ovioo-card with-shadow dark:hover:text-[#0ea5e9] cursor-pointer "
+                className="w-[280px] first:my-5 py-6 px-3 ovioo-card dark:hover:text-[#0ea5e9] cursor-pointer focus-visible:outline-none"
             >
                 <p className="font-bold tracking-wide text-black dark:text-white dark:hover:text-[#0ea5e9] hover:text-[#0ea5e9] truncate">
                     {task.title}
@@ -60,6 +60,6 @@ export default function Task({ task }: { task: TaskInterface }) {
                     onClose={handleModalClose}
                 />
             )}
-        </div>
+        </>
     );
 }

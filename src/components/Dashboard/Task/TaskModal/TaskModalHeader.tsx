@@ -24,9 +24,9 @@ const USER_STATUS_CHANGED = gql`
     subscription UserStatusChanged {
         userStatusChanged {
             id
-            isActive
             avatar
             fullname
+            isActive
         }
     }
 `;
@@ -83,13 +83,19 @@ export default function TaskModalHeader({
 
     useEffect(() => {
         if (!userStatusChangedLoading && userStatusChangedData) {
-            const userIndex: number = activeUsers.findIndex(
-                (user) => user.id == userStatusChangedData.userStatusChanged.id
+            const changedUser = userStatusChangedData.userStatusChanged;
+            const changedUserIndex: number = activeUsers.findIndex(
+                (user) => user.id == changedUser.id
             );
 
-            userIndex == -1
-                ? activeUsers.push(userStatusChangedData.userStatusChanged)
-                : activeUsers.splice(userIndex, 1);
+            if (changedUser.isActive == true && changedUserIndex == -1) {
+                setActiveUsers((users) => [...users, changedUser]);
+            }
+            if (changedUser.isActive == false && changedUserIndex != -1) {
+                setActiveUsers((users) =>
+                    users.filter((user) => user.id !== changedUser.id)
+                );
+            }
         }
     }, [activeUsers, userStatusChangedData, userStatusChangedLoading]);
 

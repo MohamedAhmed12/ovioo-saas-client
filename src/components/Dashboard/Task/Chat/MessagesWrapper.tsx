@@ -178,7 +178,7 @@ export default function MessagesWrapper({
                 if (status == MessageStatusEnum.READ) {
                     if (
                         msg.status == MessageStatusEnum.READ &&
-                        msg.read_by.includes(` ${fullname}`)
+                        msg?.read_by?.includes(` ${fullname}`)
                     ) {
                         return msg;
                     }
