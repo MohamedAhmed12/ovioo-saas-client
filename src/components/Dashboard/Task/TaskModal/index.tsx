@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { RoleEnum } from "@/interfaces";
+import { TaskInterface } from "@/interfaces";
+import { updateTaskTitle } from "@/store/features/board";
 import { setSelectedTask } from "@/store/features/task";
 import "@/styles/components/dashboard/task/task-modal.scss";
 import { getClient } from "@/utils/getClient";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import { useMediaQuery } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import { useTheme } from "@mui/material/styles";
@@ -17,6 +18,47 @@ import TaskModalHeader from "./TaskModalHeader";
 const SHOW_TASK = gql`
     query ShowTask($id: String!) {
         showTask(id: $id) {
+            id
+            designer {
+                id
+                fullname
+                avatar
+            }
+            description
+            title
+            status
+            project {
+                id
+            }
+            type {
+                id
+            }
+            assets {
+                id
+                src
+                alt
+                type
+            }
+            subtasks {
+                id
+                title
+                status
+            }
+            team {
+                id
+                members {
+                    id
+                    avatar
+                    fullname
+                    isActive
+                }
+            }
+        }
+    }
+`;
+const TASK_UPDATED = gql`
+    subscription TaskUpdated($taskId: String!) {
+        taskUpdated(taskId: $taskId) {
             id
             designer {
                 id
@@ -85,7 +127,9 @@ export default function TaskModal({
     const theme = useTheme();
     const dispatch = useAppDispatch();
     const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-    const task = useAppSelector((state) => state.taskReducer.selectedTask);
+    const task: TaskInterface = useAppSelector(
+        (state) => state.taskReducer.selectedTask
+    );
     const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
 
     const { data: session } = useSession({ required: true });
@@ -115,6 +159,21 @@ export default function TaskModal({
 
     if (listProjectError) throw new Error(JSON.stringify(listProjectError));
 
+    const { data: taskUpdatedSubsData, loading: taskUpdatedSubsLoading } =
+        useSubscription(TASK_UPDATED, { variables: { taskId }, client });
+
+    useEffect(() => {
+        const updatedTask: TaskInterface & { title: string } =
+            taskUpdatedSubsData?.taskUpdated;
+
+        if (!taskUpdatedSubsLoading && updatedTask) {
+            if (task.title != updatedTask.title) {
+                dispatch(updateTaskTitle({ task, title: updatedTask.title }));
+            }
+
+            dispatch(setSelectedTask(updatedTask));
+        }
+    }, [taskUpdatedSubsData, taskUpdatedSubsLoading]);
     useEffect(() => {
         if (!graphQLloading && showTaskData?.showTask) {
             dispatch(setSelectedTask(showTaskData?.showTask));
