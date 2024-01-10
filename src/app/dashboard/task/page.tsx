@@ -3,11 +3,8 @@
 import Column from "@/components/Dashboard/Task/Column";
 import { TaskKanbanColors } from "@/constants/TaskKanbanColors";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import {
-    DesignerTaskStatus,
-    TaskStatus
-} from "@/interfaces";
-import { setTasks } from "@/store/features/board";
+import { DesignerTaskStatus, TaskStatus } from "@/interfaces";
+import { resetTasks, setTasks } from "@/store/features/board";
 import "@/styles/app/unauth/home.scss";
 import { getClient } from "@/utils/getClient";
 import { gql, useQuery } from "@apollo/client";
@@ -50,6 +47,10 @@ export default function Task() {
         if (!graphQLloading && data?.listTasks) {
             dispatch(setTasks(data.listTasks));
         }
+
+        return () => {
+            dispatch(resetTasks());
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [graphQLloading, data, data?.listTasks]);
 
