@@ -3,7 +3,6 @@ import { useAppDispatch } from "@/hooks/redux";
 import { useForm } from "@/hooks/useForm";
 import { useGraphError } from "@/hooks/useGraphError";
 import { TaskStatus } from "@/interfaces";
-import { pushNewTask } from "@/store/features/board";
 import "@/styles/components/dashboard/task/create-task-backdrop.scss";
 import { getClient } from "@/utils/getClient";
 import { gql, useMutation, useQuery } from "@apollo/client";
@@ -100,7 +99,6 @@ export default function CreateTaskBackdrop({
                 },
             });
 
-            dispatch(pushNewTask(data.createTask));
             handleClose();
         } catch (e: any) {
             errorHandler(e);

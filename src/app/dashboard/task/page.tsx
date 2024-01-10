@@ -4,10 +4,10 @@ import Column from "@/components/Dashboard/Task/Column";
 import { TaskKanbanColors } from "@/constants/TaskKanbanColors";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { DesignerTaskStatus, TaskStatus } from "@/interfaces";
-import { resetTasks, setTasks } from "@/store/features/board";
+import { pushNewTask, resetTasks, setTasks } from "@/store/features/board";
 import "@/styles/app/unauth/home.scss";
 import { getClient } from "@/utils/getClient";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useSubscription } from "@apollo/client";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 
@@ -16,6 +16,16 @@ const LIST_TASKS = gql`
         listTasks {
             id
             title
+            status
+        }
+    }
+`;
+const TASK_CREATED = gql`
+    subscription TaskCreated {
+        taskCreated {
+            id
+            title
+            description
             status
         }
     }
@@ -35,6 +45,9 @@ export default function Task() {
 
     if (error) throw new Error(JSON.stringify(error));
 
+    const { data: taskCreatedSubsData, loading: taskCreatedSubsLoading } =
+        useSubscription(TASK_CREATED, { client });
+
     const getTaskStatuses = () => {
         if (isDesigner) {
             return Object.keys(DesignerTaskStatus);
@@ -53,6 +66,11 @@ export default function Task() {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [graphQLloading, data, data?.listTasks]);
+    useEffect(() => {
+        if (!taskCreatedSubsLoading && taskCreatedSubsData?.taskCreated) {
+            dispatch(pushNewTask(taskCreatedSubsData.taskCreated));
+        }
+    }, [dispatch, taskCreatedSubsData, taskCreatedSubsLoading]);
 
     return (
         session &&
