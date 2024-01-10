@@ -1,7 +1,10 @@
-import { useAppSelector } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { Project, RoleEnum, TaskInterface } from "@/interfaces";
 import OviooDropDown from "../../OviooDropDown";
 import Attachement from "./Attachement";
+import { ChangeEvent } from "react";
+import { useDispatch } from "react-redux";
+import { updateTaskTitle } from "@/store/features/board";
 
 export default function TaskModalBody({
     task,
@@ -12,8 +15,12 @@ export default function TaskModalBody({
     projects: Project[];
     handleOnChange: (name: string, value: any) => void;
 }) {
+    const dispatch = useAppDispatch();
     const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
-
+    const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        handleOnChange("title", e.target.value);
+        dispatch(updateTaskTitle({ task, title: e.target.value }));
+    };
     return (
         <div
             className={`task-modal__body p-[25px] ${
@@ -22,7 +29,7 @@ export default function TaskModalBody({
         >
             <input
                 value={task.title}
-                onChange={(e) => handleOnChange("title", e.target.value)}
+                onChange={handleTitleChange}
                 id="task-name-input"
                 type="text"
                 className="bg-transparent w-full px-4 py-2 outline-none focus:border-0 rounded-md text-3xl border-[0.5px] border-gray-600 focus:outline-[#635fc7] outline-1 ring-0"

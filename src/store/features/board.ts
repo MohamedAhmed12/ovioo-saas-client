@@ -43,46 +43,6 @@ export const boardSlice = createSlice({
                 (task: TaskInterface) => task.id != id
             );
         },
-        // editTask: (state, action) => {
-        //     const {
-        //         title,
-        //         status,
-        //         description,
-        //         subtasks,
-        //         prevColIndex,
-        //         newColIndex,
-        //         taskIndex,
-        //     } = action.payload;
-        //     const column = state.tasks.find(
-        //         (col: ColumnInterface, index: number) => index === newColIndex
-        //     );
-
-        //     if (column == undefined) return;
-
-        //     let task =
-        //         column &&
-        //         column.tasks.find(
-        //             (task: TaskInterface, index) => index === taskIndex
-        //         );
-
-        //     if (task == undefined) return;
-
-        //     task = {
-        //         ...task,
-        //         title,
-        //         status,
-        //         description,
-        //         subtasks,
-        //     };
-
-        //     if (prevColIndex === newColIndex) return;
-
-        //     const newCol = state.columns.find(
-        //         (col: ColumnInterface, index: number) => index === newColIndex
-        //     );
-        //     if (newCol && newCol.tasks && task)
-        //         (column.tasks as TaskInterface[]).push(task as TaskInterface);
-        // },
         dragTask: (state, action) => {
             if (!state.tasks) return;
 
@@ -100,8 +60,18 @@ export const boardSlice = createSlice({
                 state.tasks[task.status].push(task);
             }
         },
-        setTaskStatus: (state, action) => {
-            console.log(action.payload);
+        updateTaskTitle(
+            state,
+            {
+                payload: { task, title },
+            }: { payload: { task: TaskInterface; title: string } }
+        ) {
+            state.tasks[task.status].map((task) => {
+                if (task.id != task.id) return task;
+
+                task.title = title;
+                return task;
+            });
         },
     },
 });
@@ -111,7 +81,7 @@ export const {
     resetTasks,
     pushNewTask,
     dragTask,
-    setTaskStatus,
     deleteTask,
+    updateTaskTitle,
 } = boardSlice.actions;
 export default boardSlice.reducer;
