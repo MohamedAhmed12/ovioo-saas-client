@@ -70,7 +70,7 @@ export default function MediaCard({ asset }: { asset: AssetInterface }) {
                 className="overflow-y-auto"
             >
                 {isVideo ? (
-                    <video autoPlay loop muted src={asset.src} />
+                    <video autoPlay loop muted src={asset.src} className="max-w-[80%]"/>
                 ) : (
                     <Image
                         src={asset.src}
