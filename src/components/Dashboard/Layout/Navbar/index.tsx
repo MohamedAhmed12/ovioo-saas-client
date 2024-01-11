@@ -52,7 +52,7 @@ export default function Navbar({
     onCloseNav: () => void;
 }) {
     const isUser = useAppSelector((state) => state.userReducer.isUser);
-    const navbarTabs: () => {
+    const navbarLinks: () => {
         title: string;
         url: string;
         icon: JSX.Element;
@@ -80,7 +80,7 @@ export default function Navbar({
             </Box>
             <Box>
                 <List disablePadding className=" dark:text-white">
-                    {navbarTabs().map(({ title, url, icon }) => (
+                    {navbarLinks().map(({ title, url, icon }) => (
                         <Link href={url} key={title}>
                             <ListItemButton
                                 disableGutters

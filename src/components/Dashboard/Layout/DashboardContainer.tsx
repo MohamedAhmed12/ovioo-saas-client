@@ -129,7 +129,7 @@ export default function DashboardContainer({
         !isRedirecting && (
             <main
                 className={`flex min-h-screen flex-col dashboard-main-layout bg-[#f4f7fd] dark:bg-[#20212c] pt-32 pb-14 pr-8 ${
-                    navbarIsHidden ? "pl-8" : "pl-80"
+                    navbarIsHidden ? "pl-8" : "pl-8 md:pl-80"
                 }`}
             >
                 <DashboardHeader

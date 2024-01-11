@@ -1,7 +1,7 @@
 .navbar .MuiDrawer-root {
-    display:flex;
+    display: flex;
     width: 240px;
-    flex-shrink: 0!important;
+    flex-shrink: 0 !important;
     .MuiDrawer-paper {
         box-sizing: border-box;
     }
@@ -56,6 +56,9 @@
         }
         .dark & {
             border-right: 1px solid var(--dashboard-dark-border);
+        }
+        @media screen and (max-width: 767px) {
+            display: none;
         }
     }
 }
