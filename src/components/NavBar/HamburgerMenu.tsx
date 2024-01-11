@@ -56,7 +56,9 @@ export default function HamburgerMenu({
                         </IconButton>
                     </Tooltip>
                 </div>
-                <div className="menu-container w-full">
+                <div className="menu-container w-full flex flex-1 flex-col justify-between items-between">
+                    <div className="links">
+
                     {pages.map(({ url, title }, index) => (
                         <span key={index}>
                             <Link href={url} className="navlink block">
@@ -73,8 +75,9 @@ export default function HamburgerMenu({
                             )}
                         </span>
                     ))}
+                    </div>
 
-                    <div className="book-btn flex w-full mt-40 justify-center border-2 rounded-md">
+                    <div className="book-btn flex w-full justify-center border-2 rounded-md">
                         <Link href="/demo" className="navlink block">
                             Book a Demo
                         </Link>
