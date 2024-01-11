@@ -1,6 +1,4 @@
 import { useAppSelector } from "@/hooks/redux";
-import { RoleEnum } from "@/interfaces/user";
-import "@/styles/components/dashboard/layout/navbar.scss";
 import {
     Box,
     List,
@@ -44,13 +42,7 @@ const UserNavbarTabs = [
     },
 ];
 
-export default function Navbar({
-    openNav,
-    onCloseNav,
-}: {
-    openNav: boolean;
-    onCloseNav: () => void;
-}) {
+export default function Navbar() {
     const isUser = useAppSelector((state) => state.userReducer.isUser);
     const navbarLinks: () => {
         title: string;
@@ -101,11 +93,5 @@ export default function Navbar({
         </SimpleBar>
     );
 
-    return (
-        <NavbarWrapper
-            content={renderContent}
-            openNav={openNav}
-            onCloseNav={onCloseNav}
-        />
-    );
+    return <NavbarWrapper content={renderContent} />;
 }

@@ -10,6 +10,7 @@ import { FaMoon, FaSun } from "react-icons/fa6";
 import AccountPopover from "./AccountPopover";
 import MessagePopover from "./Message/MessagePopover";
 import NotificationPopover from "./Notification/NotificationPopover";
+import Navbar from "../Navbar";
 
 export default function DashboardHeader({
     openNav,
@@ -42,18 +43,9 @@ export default function DashboardHeader({
                         }}
                     />
                 )}
-                {!openNav && (
-                    <IconButton
-                        onClick={onOpenNav}
-                        sx={{
-                            mr: 1,
-                            color: "text.primary",
-                        }}
-                        className="hamburger-btn toolbar-icon"
-                    >
-                        <AiOutlineMenu />
-                    </IconButton>
-                )}
+                
+                {!navbarIsHidden && <Navbar />}
+
                 <Box sx={{ flexGrow: 1 }} />
                 <Stack
                     direction="row"

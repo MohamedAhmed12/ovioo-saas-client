@@ -1,9 +1,19 @@
-.navbar .MuiDrawer-root {
-    display: flex;
-    width: 240px;
-    flex-shrink: 0 !important;
-    .MuiDrawer-paper {
-        box-sizing: border-box;
+.navbar {
+    .MuiDrawer-root {
+        display: flex;
+        flex-shrink: 0 !important;
+        .MuiDrawer-paper {
+            box-sizing: border-box;
+        }
+        @media screen and (max-width: 767px) {
+            display: none;
+        }
+    }
+    .dashboard__hamburger-btn {
+        display: none !important;
+        @media screen and (max-width: 767px) {
+            display: inline-flex !important;
+        }
     }
 }
 .navbar .MuiDrawer-root,
@@ -58,7 +68,10 @@
             border-right: 1px solid var(--dashboard-dark-border);
         }
         @media screen and (max-width: 767px) {
-            display: none;
+            background-color: var(--dashboard-bg);
+            .dark & {
+                background-color: var(--dashboard-dark-bg);
+            }
         }
     }
 }
