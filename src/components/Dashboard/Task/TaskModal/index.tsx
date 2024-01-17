@@ -127,7 +127,7 @@ export default function TaskModal({
     const theme = useTheme();
     const dispatch = useAppDispatch();
     const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-    const task: TaskInterface = useAppSelector(
+    const task: TaskInterface | null = useAppSelector(
         (state) => state.taskReducer.selectedTask
     );
     const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
@@ -166,7 +166,7 @@ export default function TaskModal({
         const updatedTask: TaskInterface & { title: string } =
             taskUpdatedSubsData?.taskUpdated;
 
-        if (!taskUpdatedSubsLoading && updatedTask) {
+        if (!taskUpdatedSubsLoading && task && updatedTask) {
             if (task.title != updatedTask.title) {
                 dispatch(updateTaskTitle({ task, title: updatedTask.title }));
             }
