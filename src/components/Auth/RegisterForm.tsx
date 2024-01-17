@@ -73,7 +73,7 @@ export default function RegisterForm() {
             toast.success("Account created successfully.", {
                 position: "top-right",
             });
-            await router.push("/dashboard/task");
+            await router.push("/auth/login");
         } catch (e: any) {
             errorHandler(e);
             setLoading(false);
