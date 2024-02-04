@@ -130,7 +130,7 @@ export default function MessagesWrapper({
             ) => {
                 if (
                     !fetchMoreResult ||
-                    fetchMoreResult.listMessages.length == 0
+                    fetchMoreResult.listTaskMessages.length == 0
                 ) {
                     return prev;
                 }
@@ -140,7 +140,7 @@ export default function MessagesWrapper({
                 }
                 setMessages((messages) => [
                     ...messages,
-                    ...fetchMoreResult.listMessages,
+                    ...fetchMoreResult.listTaskMessages,
                 ]);
             },
         });

@@ -13,7 +13,7 @@ import MessagesWrapper from "./MessagesWrapper";
 
 const LIST_MESSAGES = gql`
     query ListMessages($data: ListMessageDto!) {
-        listMessages(data: $data) {
+        listTaskMessages(data: $data) {
             id
             content
             voice_note_src
@@ -96,8 +96,8 @@ export default function Chat({
     if (error) throw new Error(JSON.stringify(error));
 
     useEffect(() => {
-        if (data?.listMessages && data?.listMessages?.length > 0) {
-            const msgs = data.listMessages;
+        if (data?.listTaskMessages && data?.listTaskMessages?.length > 0) {
+            const msgs = data.listTaskMessages;
             const read: MessageInterface[] = [];
             const unread: MessageInterface[] = [];
 
@@ -142,7 +142,7 @@ export default function Chat({
 
     return (
         !graphQLloading &&
-        data?.listMessages &&
+        data?.listTaskMessages &&
         messages && (
             <div className="chat basis-1/2 flex flex-col rounded-md text-black border-[0.5px] border-gray-600 focus:border-0 mt-[25px] mr-[25px]">
                 <MessagesWrapper
