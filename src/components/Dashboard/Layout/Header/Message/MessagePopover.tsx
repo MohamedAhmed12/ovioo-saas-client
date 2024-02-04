@@ -14,7 +14,7 @@ import MessageItem from "./MessageItem";
 
 const LIST_TASK_UNREAD_MESSAGES = gql`
     query ListTaskUnreadMessages {
-        listTaskUnreadMessages {
+        listUnreadMessages {
             id
             messages {
                 id
@@ -101,7 +101,7 @@ export default function MessagePopover() {
         if (
             !messageSentSubsLoading &&
             messageSentSubsData?.messageSent &&
-            data?.listTaskUnreadMessages
+            data?.listUnreadMessages
         ) {
             // if task modal/chat alreay opened then no need to proceed
             if (
@@ -110,22 +110,22 @@ export default function MessagePopover() {
             )
                 return;
 
-            // if task exist in listTaskUnreadMessages
-            const taskIndex = data.listTaskUnreadMessages.findIndex(
+            // if task exist in listUnreadMessages
+            const taskIndex = data.listUnreadMessages.findIndex(
                 (task: Partial<TaskInterface>) =>
                     task.id == messageSentSubsData.messageSent.task.id
             );
 
             if (taskIndex !== -1) {
-                data.listTaskUnreadMessages[taskIndex].messages = [
+                data.listUnreadMessages[taskIndex].messages = [
                     messageSentSubsData.messageSent,
                 ];
-                data.listTaskUnreadMessages[taskIndex].unreadMessagesCount =
-                    data.listTaskUnreadMessages[taskIndex].unreadMessagesCount +
+                data.listUnreadMessages[taskIndex].unreadMessagesCount =
+                    data.listUnreadMessages[taskIndex].unreadMessagesCount +
                     1;
                 setAllUnreadMsgsCount((prevCount) => prevCount + 1);
             } else {
-                data.listTaskUnreadMessages.push({
+                data.listUnreadMessages.push({
                     id: messageSentSubsData.messageSent.task.id,
                     messages: [
                         {
@@ -156,8 +156,8 @@ export default function MessagePopover() {
         }
     }, [messageSentSubsData, messageSentSubsLoading]);
     useEffect(() => {
-        if (data?.listTaskUnreadMessages) {
-            const allUnreadMsgsCount = data?.listTaskUnreadMessages.reduce(
+        if (data?.listUnreadMessages) {
+            const allUnreadMsgsCount = data?.listUnreadMessages.reduce(
                 (acc: number, task: TaskInterface) => {
                     receiveTaskMessages({ variables: { taskId: task.id } });
 
@@ -172,8 +172,8 @@ export default function MessagePopover() {
         }
     }, [data]);
     useEffect(() => {
-        if (openedModalTask && data?.listTaskUnreadMessages) {
-            data.listTaskUnreadMessages = data.listTaskUnreadMessages.filter(
+        if (openedModalTask && data?.listUnreadMessages) {
+            data.listUnreadMessages = data.listUnreadMessages.filter(
                 (task: Partial<TaskInterface>) => {
                     if (task.id != openedModalTask.id) return task;
 
@@ -191,7 +191,7 @@ export default function MessagePopover() {
 
     return (
         !graphQLloading &&
-        data.listTaskUnreadMessages && (
+        data.listUnreadMessages && (
             <div>
                 <IconButton
                     className={` toolbar-icon ${open ? "opened" : "closed"}`}
@@ -243,7 +243,7 @@ export default function MessagePopover() {
                     <Divider sx={{ borderStyle: "dashed" }} />
 
                     <List disablePadding>
-                        {data?.listTaskUnreadMessages.map(
+                        {data?.listUnreadMessages.map(
                             (task: TaskInterface) => (
                                 <MessageItem key={+task.id} task={task} />
                             )
