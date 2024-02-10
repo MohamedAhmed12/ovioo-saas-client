@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/hooks/redux";
-import { TaskInterface } from "@/interfaces";
+import { TaskInterface, Team } from "@/interfaces";
 import "@/styles/components/dashboard/layout/header/notifications-popover.scss";
 import { getClient } from "@/utils/getClient";
 import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
@@ -12,8 +12,8 @@ import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
 import MessageItem from "./MessageItem";
 
-const LIST_TASK_UNREAD_MESSAGES = gql`
-    query ListTaskUnreadMessages {
+const LIST_UNREAD_MESSAGES = gql`
+    query ListUnreadMessages {
         listUnreadMessages {
             id
             messages {
@@ -76,7 +76,7 @@ export default function MessagePopover() {
         loading: graphQLloading,
         error,
         data,
-    } = useQuery(LIST_TASK_UNREAD_MESSAGES, {
+    } = useQuery(LIST_UNREAD_MESSAGES, {
         client,
         fetchPolicy: "no-cache",
     });
@@ -87,7 +87,7 @@ export default function MessagePopover() {
         useSubscription(MESSAGE_SENT, {
             variables: {
                 data: {
-                    team_id: authUser.team.id,
+                    teamIds: authUser.teams.map((team: Team) => team.id),
                 },
             },
             client,
@@ -121,8 +121,7 @@ export default function MessagePopover() {
                     messageSentSubsData.messageSent,
                 ];
                 data.listUnreadMessages[taskIndex].unreadMessagesCount =
-                    data.listUnreadMessages[taskIndex].unreadMessagesCount +
-                    1;
+                    data.listUnreadMessages[taskIndex].unreadMessagesCount + 1;
                 setAllUnreadMsgsCount((prevCount) => prevCount + 1);
             } else {
                 data.listUnreadMessages.push({
@@ -243,11 +242,9 @@ export default function MessagePopover() {
                     <Divider sx={{ borderStyle: "dashed" }} />
 
                     <List disablePadding>
-                        {data?.listUnreadMessages.map(
-                            (task: TaskInterface) => (
-                                <MessageItem key={+task.id} task={task} />
-                            )
-                        )}
+                        {data?.listUnreadMessages.map((task: TaskInterface) => (
+                            <MessageItem key={+task.id} task={task} />
+                        ))}
                     </List>
                 </Popover>
             </div>

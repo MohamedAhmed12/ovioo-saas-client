@@ -36,7 +36,7 @@ const FETCH_USER_WITH_PROFILE = gql`
                 push_notification_enabled
                 mail_notification_enabled
             }
-            team {
+            teams {
                 id
             }
         }
