@@ -4,7 +4,9 @@ import { sign } from "jsonwebtoken";
 import { Account, Profile, Session, User } from "next-auth";
 import { AdapterUser } from "next-auth/adapters";
 import { JWT, Secret } from "next-auth/jwt";
-import CredentialsProvider, { CredentialInput } from "next-auth/providers/credentials";
+import CredentialsProvider, {
+    CredentialInput,
+} from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 import LinkedInProvider from "next-auth/providers/linkedin";
@@ -115,11 +117,28 @@ export const authOptions = {
         error: "/auth/login",
     },
     callbacks: {
-        async session({ session, token }: { session: Session; token: JWT }): Promise<Session> {
-            session.access_token = sign(token, process.env.NEXTAUTH_SECRET as Secret);
+        async session({
+            session,
+            token,
+        }: {
+            session: Session;
+            token: JWT;
+        }): Promise<Session> {
+            session.access_token = sign(
+                token,
+                process.env.NEXTAUTH_SECRET as Secret
+            );
             return Promise.resolve(session);
         },
-        async jwt({ token, account, user }: { token: JWT; account: Account | null; user: User }) {
+        async jwt({
+            token,
+            account,
+            user,
+        }: {
+            token: JWT;
+            account: Account | null;
+            user: User;
+        }) {
             if (account) {
                 token.provider = account?.provider;
             }
@@ -136,8 +155,8 @@ export const authOptions = {
             credentials,
         }: {
             user: User | AdapterUser;
-            account: Account | null;
-            profile?: Profile;
+            account: Account;
+            profile: Profile;
             email?: {
                 verificationRequest?: boolean;
             };
@@ -160,6 +179,14 @@ export const authOptions = {
                             },
                         },
                     });
+
+                    // handle google provider case
+                    if (account.provider === "google") {
+                        return (
+                            profile?.email_verified &&
+                            profile?.email?.endsWith("@gmail.com")
+                        );
+                    }
 
                     return true;
                 } catch (error) {

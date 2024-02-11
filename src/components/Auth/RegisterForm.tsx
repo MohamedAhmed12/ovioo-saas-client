@@ -81,7 +81,7 @@ export default function RegisterForm() {
     };
 
     return (
-        <form className="register__form w-[360px] lg:w-[400px]" onSubmit={handleSubmit}>
+        <div className="register__form w-[360px] lg:w-[400px]">
             <Typography variant="h4" gutterBottom>
                 Create your account
             </Typography>
@@ -94,121 +94,122 @@ export default function RegisterForm() {
             </Typography>
 
             <SSOWrapper />
+            <form onSubmit={handleSubmit}>
+                <Stack spacing={3}>
+                    <TextField
+                        required
+                        name="fullname"
+                        error={errors.hasOwnProperty("fullname")}
+                        helperText={errors["fullname"]}
+                        label="Full name"
+                        type="text"
+                        {...bindFullname}
+                    />
+                    <TextField
+                        name="company"
+                        error={errors.hasOwnProperty("company")}
+                        helperText={errors["company"]}
+                        label="Company"
+                        type="text"
+                        {...bindCompany}
+                    />
+                    <TextField
+                        required
+                        name="email"
+                        error={errors.hasOwnProperty("email")}
+                        helperText={errors["email"]}
+                        label="Work email"
+                        type="email"
+                        {...bindEmail}
+                    />
+                    <TextField
+                        required
+                        name="password"
+                        error={errors.hasOwnProperty("password")}
+                        helperText={errors["password"]}
+                        label="Password"
+                        type={showPassword ? "text" : "password"}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={() =>
+                                            setShowPassword(!showPassword)
+                                        }
+                                        edge="end"
+                                    >
+                                        {showPassword ? (
+                                            <AiFillEye />
+                                        ) : (
+                                            <AiFillEyeInvisible />
+                                        )}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                        {...bindPassword}
+                    />
+                    <TextField
+                        required
+                        name="password_confirmation"
+                        error={errors.hasOwnProperty("password_confirmation")}
+                        helperText={errors["password_confirmation"]}
+                        label="Password Confirmation"
+                        type={showPasswordConfirmation ? "text" : "password"}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={() =>
+                                            setShowPasswordConfirmation(
+                                                !showPasswordConfirmation
+                                            )
+                                        }
+                                        edge="end"
+                                    >
+                                        {showPasswordConfirmation ? (
+                                            <AiFillEye />
+                                        ) : (
+                                            <AiFillEyeInvisible />
+                                        )}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                        {...bindPasswordConfirmation}
+                    />
+                    <TextField
+                        name="phone"
+                        error={errors.hasOwnProperty("phone")}
+                        helperText={errors["phone"]}
+                        label="Phone number"
+                        type="text"
+                        placeholder="+971"
+                        {...bindPhone}
+                    />
+                </Stack>
 
-            <Stack spacing={3}>
-                <TextField
-                    required
-                    name="fullname"
-                    error={errors.hasOwnProperty("fullname")}
-                    helperText={errors["fullname"]}
-                    label="Full name"
-                    type="text"
-                    {...bindFullname}
-                />
-                <TextField
-                    name="company"
-                    error={errors.hasOwnProperty("company")}
-                    helperText={errors["company"]}
-                    label="Company"
-                    type="text"
-                    {...bindCompany}
-                />
-                <TextField
-                    required
-                    name="email"
-                    error={errors.hasOwnProperty("email")}
-                    helperText={errors["email"]}
-                    label="Work email"
-                    type="email"
-                    {...bindEmail}
-                />
-                <TextField
-                    required
-                    name="password"
-                    error={errors.hasOwnProperty("password")}
-                    helperText={errors["password"]}
-                    label="Password"
-                    type={showPassword ? "text" : "password"}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    onClick={() =>
-                                        setShowPassword(!showPassword)
-                                    }
-                                    edge="end"
-                                >
-                                    {showPassword ? (
-                                        <AiFillEye />
-                                    ) : (
-                                        <AiFillEyeInvisible />
-                                    )}
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                    {...bindPassword}
-                />
-                <TextField
-                    required
-                    name="password_confirmation"
-                    error={errors.hasOwnProperty("password_confirmation")}
-                    helperText={errors["password_confirmation"]}
-                    label="Password Confirmation"
-                    type={showPasswordConfirmation ? "text" : "password"}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    onClick={() =>
-                                        setShowPasswordConfirmation(
-                                            !showPasswordConfirmation
-                                        )
-                                    }
-                                    edge="end"
-                                >
-                                    {showPasswordConfirmation ? (
-                                        <AiFillEye />
-                                    ) : (
-                                        <AiFillEyeInvisible />
-                                    )}
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                    {...bindPasswordConfirmation}
-                />
-                <TextField
-                    name="phone"
-                    error={errors.hasOwnProperty("phone")}
-                    helperText={errors["phone"]}
-                    label="Phone number"
-                    type="text"
-                    placeholder="+971"
-                    {...bindPhone}
-                />
-            </Stack>
+                <JoyButton
+                    loading={loading}
+                    variant="solid"
+                    type="submit"
+                    className="auth-btn !mt-8 !mb-2 min-w-[155px]"
+                >
+                    {!loading && "Create Account"}
+                </JoyButton>
 
-            <JoyButton
-                loading={loading}
-                variant="solid"
-                type="submit"
-                className="auth-btn !mt-8 !mb-2 min-w-[155px]"
-            >
-                {!loading && "Create Account"}
-            </JoyButton>
-
-            <Stack direction="row" alignItems="center" sx={{ my: 2 }}>
-                <p>
-                    By creating account, you agree to Ovioo's{" "}
-                    <Link
-                        href="/terms"
-                        className="text-sm text-blue-600 font-normal"
-                    >
-                        Terms and Policies
-                    </Link>
-                </p>
-            </Stack>
-        </form>
+                <Stack direction="row" alignItems="center" sx={{ my: 2 }}>
+                    <p>
+                        By creating account, you agree to Ovioo's{" "}
+                        <Link
+                            href="/terms"
+                            className="text-sm text-blue-600 font-normal"
+                        >
+                            Terms and Policies
+                        </Link>
+                    </p>
+                </Stack>
+            </form>
+        </div>
     );
 }

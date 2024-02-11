@@ -6,6 +6,8 @@ declare module "next-auth" {
     }
     interface Profile {
         id: string;
+        email_verified?: boolean;
+        email?: string;
     }
     interface User {
         provider_id: string;
