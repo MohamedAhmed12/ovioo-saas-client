@@ -2,9 +2,7 @@
 
 import AssetListsContainer from "@/components/Dashboard/Asset/AssetListsContainer";
 import "@/styles/app/dashboard/asset.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useQuery } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 const LIST_ASSETS = gql`
@@ -24,13 +22,11 @@ const LIST_ASSETS = gql`
 
 export default function Asset() {
     const [assets, setAssets] = useState([]);
-    const { data: session } = useSession({ required: true });
-    const client = getClient(session);
     const {
         loading: graphQLloading,
         error,
         data,
-    } = useQuery(LIST_ASSETS, { client, fetchPolicy: "no-cache" });
+    } = useQuery(LIST_ASSETS, { fetchPolicy: "no-cache" });
 
     if (error) throw new Error(JSON.stringify(error));
 
@@ -41,7 +37,6 @@ export default function Asset() {
     }, [graphQLloading, data, assets.length]);
 
     return (
-        session &&
         !graphQLloading &&
         !error &&
         data.listAssets && (
@@ -50,7 +45,6 @@ export default function Asset() {
                     sortBy="all"
                     assets={assets}
                     setAssets={setAssets}
-                    client={client}
                 />
             </div>
         )

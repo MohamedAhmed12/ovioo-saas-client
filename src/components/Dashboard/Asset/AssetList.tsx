@@ -7,7 +7,6 @@ import {
 } from "@/interfaces";
 import { setTaskAssets } from "@/store/features/task";
 import "@/styles/components/dashboard/asset/asset-list.scss";
-import { getClient } from "@/utils/getClient";
 import { uploadFiles } from "@/utils/helpers";
 import { gql, useMutation } from "@apollo/client";
 import Box from "@mui/joy/Box";
@@ -51,13 +50,14 @@ export default function AssetList({
     readOnly?: boolean;
     handleDelete: (asset: AssetInterface) => void;
 }) {
+    const { data: session, status } = useSession({
+        required: true,
+    });
     const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
-    const { data: session } = useSession({ required: true });
-    const client = getClient(session);
-    const [createAssets] = useMutation(CREATE_ASSET, { client });
-    const [deleteAsset] = useMutation(DELETE_ASSET, { client });
+    const [createAssets] = useMutation(CREATE_ASSET);
+    const [deleteAsset] = useMutation(DELETE_ASSET);
 
     const handleAssetsUpload = async (e: ChangeEvent<HTMLInputElement>) => {
         if (!task) return;
@@ -111,7 +111,7 @@ export default function AssetList({
          * If "id" provided then it will delete both in DB & S3
          */
         assets.map(async ({ id, alt }: { id?: string; alt: string }) => {
-            if(!id) return;
+            if (!id) return;
             const { data } = await deleteAsset({
                 variables: {
                     asset: {
@@ -138,7 +138,6 @@ export default function AssetList({
                         <AssetWrapper
                             key={asset.id}
                             handleDelete={handleDelete}
-                            client={client}
                             asset={asset}
                         />
                     ))}

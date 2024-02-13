@@ -1,14 +1,12 @@
 "use client";
 
 import { Member } from "@/interfaces";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation } from "@apollo/client";
 import Dropdown from "@mui/joy/Dropdown";
 import IconButton from "@mui/joy/IconButton";
 import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { IoMdMore } from "react-icons/io";
@@ -27,10 +25,8 @@ const TRANSFER_OWNERSHIP = gql`
 
 const MembersActionDropDown = ({ member }: { member: Member }) => {
     const router = useRouter();
-    const session = useSession();
-    const client = getClient(session);
-    const [deleteMember] = useMutation(DELETE_MEMBER, { client });
-    const [transferOwnership] = useMutation(TRANSFER_OWNERSHIP, { client });
+    const [deleteMember] = useMutation(DELETE_MEMBER);
+    const [transferOwnership] = useMutation(TRANSFER_OWNERSHIP);
 
     const handleTransferOwnership = async (id: string) => {
         try {

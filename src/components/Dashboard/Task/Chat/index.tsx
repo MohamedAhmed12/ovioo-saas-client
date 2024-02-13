@@ -5,7 +5,7 @@ import { useCustomQuery } from "@/hooks/useCustomQuery";
 import { TaskInterface } from "@/interfaces";
 import { MessageInterface, MessageStatusEnum } from "@/interfaces/message";
 import "@/styles/components/dashboard/task/chat.scss";
-import { ApolloClient, gql, useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import "react-chat-elements/dist/main.css";
 import MessageInput from "./MessageInput";
@@ -65,20 +65,14 @@ const READ_MESSAGES = gql`
     }
 `;
 
-export default function Chat({
-    client,
-    task,
-}: {
-    client: ApolloClient<any> | undefined;
-    task: TaskInterface;
-}) {
+export default function Chat({ task }: { task: TaskInterface }) {
     const authUser = useAppSelector((state) => state.userReducer.user);
     const [showPicker, setShowPicker] = useState<boolean>(false);
     const [messages, setMessages] = useState<any[]>([]);
     const [unreadMessages, setUnreadMessages] = useState<any[]>([]);
 
-    const [sendMessage] = useMutation(SEND_MESSAGE, { client });
-    const [readTaskMessages] = useMutation(READ_MESSAGES, { client });
+    const [sendMessage] = useMutation(SEND_MESSAGE);
+    const [readTaskMessages] = useMutation(READ_MESSAGES);
     const {
         loading: graphQLloading,
         error,
@@ -86,7 +80,6 @@ export default function Chat({
         fetchMore,
         subscribeToMore,
     } = useCustomQuery(
-        client,
         LIST_MESSAGES,
         { task_id: task.id, page: 1 },
         "network-only",

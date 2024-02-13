@@ -2,7 +2,7 @@
 
 import DashBoardCard from "@/components/DashBoardCard";
 import { Asset as AssetInterface } from "@/interfaces";
-import { ApolloClient, gql, useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { Button } from "@mui/joy";
 import { MenuItem } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -30,19 +30,17 @@ const sortbyOptions = [
 export default function AssetListsContainer({
     assets,
     sortBy,
-    client,
     setAssets,
 }: {
     assets: AssetInterface[];
     sortBy: string;
-    client: ApolloClient<any> | undefined;
     setAssets: Dispatch<SetStateAction<never[]>>;
 }) {
     const [loading, setLoading] = useState(false);
 
     const router = useRouter();
-    const [downloadAsset] = useMutation(DOWNLOAD_ASSET, { client });
-    const [deleteAsset] = useMutation(DELETE_ASSET, { client });
+    const [downloadAsset] = useMutation(DOWNLOAD_ASSET);
+    const [deleteAsset] = useMutation(DELETE_ASSET);
 
     const downloadUrlsSequentially = (urls: string[]) => {
         if (urls.length === 0) {

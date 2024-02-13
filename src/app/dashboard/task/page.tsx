@@ -6,9 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { DesignerTaskStatus, TaskStatus } from "@/interfaces";
 import { pushNewTask, resetTasks, setTasks } from "@/store/features/board";
 import "@/styles/app/unauth/home.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useQuery, useSubscription } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 
 const LIST_TASKS = gql`
@@ -35,18 +33,16 @@ export default function Task() {
     const tasks = useAppSelector((state) => state.boardReducer.tasks);
     const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
     const dispatch = useAppDispatch();
-    const { data: session } = useSession({ required: true });
-    const client = getClient(session);
     const {
         loading: graphQLloading,
         error,
         data,
-    } = useQuery(LIST_TASKS, { client, fetchPolicy: "no-cache" });
+    } = useQuery(LIST_TASKS, { fetchPolicy: "no-cache" });
 
     if (error) throw new Error(JSON.stringify(error));
 
     const { data: taskCreatedSubsData, loading: taskCreatedSubsLoading } =
-        useSubscription(TASK_CREATED, { client });
+        useSubscription(TASK_CREATED);
 
     const getTaskStatuses = () => {
         if (isDesigner) {
@@ -73,7 +69,6 @@ export default function Task() {
     }, [dispatch, taskCreatedSubsData, taskCreatedSubsLoading]);
 
     return (
-        session &&
         !graphQLloading &&
         !error &&
         data?.listTasks &&

@@ -1,16 +1,13 @@
 "use client";
 
 import DashboardHeader from "@/components/Dashboard/Layout/Header/index";
-import Navbar from "@/components/Dashboard/Layout/Navbar/index";
 import { AllowedRoutes } from "@/constants/AllowedRoutes";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { RoleEnum } from "@/interfaces";
 import { ModeEnum } from "@/interfaces/store/main";
 import { setUser } from "@/store/features/user";
 import "@/styles/app/dashboard/layout.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { Session } from "next-auth";
 import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
@@ -45,14 +42,11 @@ const FETCH_USER_WITH_PROFILE = gql`
 
 export default function DashboardContainer({
     children,
-    session,
 }: {
     children: React.ReactNode;
-    session: Session | null;
 }) {
     const dispatch = useAppDispatch();
     const pathname = usePathname();
-    const client = getClient(session);
     const currentUser = useAppSelector((state) => state.userReducer.user);
     const mode = useAppSelector((state) => state.mainReducer.mode);
 
@@ -61,15 +55,12 @@ export default function DashboardContainer({
     const [isRedirecting, setIsRedirecting] = useState(true);
     const [navbarIsHidden, setNavbarIsHidden] = useState(false);
 
-    const [toggleUserStatus] = useMutation(TOGGLE_USER_STATUS, { client });
+    const [toggleUserStatus] = useMutation(TOGGLE_USER_STATUS);
     const {
         loading: graphQLloading,
         data: userData,
         error,
-    } = useQuery(FETCH_USER_WITH_PROFILE, {
-        client,
-        fetchPolicy: "no-cache",
-    });
+    } = useQuery(FETCH_USER_WITH_PROFILE, { fetchPolicy: "no-cache" });
     if (error) throw new Error(JSON.stringify(error));
 
     const handleBeforeUnload = () =>

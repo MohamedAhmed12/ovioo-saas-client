@@ -1,19 +1,12 @@
-import {
-    ApolloClient,
-    DocumentNode,
-    QueryResult,
-    useQuery,
-} from "@apollo/client";
+import { DocumentNode, QueryResult, useQuery } from "@apollo/client";
 
 export const useCustomQuery = (
-    client: ApolloClient<any> | undefined,
     query: DocumentNode,
     queryData: any,
     fetchPolicy?: string,
     nextFetchPolicy?: string
 ): QueryResult<any> => {
     let options: any = {
-        client,
         variables: {
             data: queryData,
         },

@@ -1,6 +1,7 @@
 import { Asset as AssetInterface } from "@/interfaces";
 import "@/styles/components/dashboard/asset/asset-list.scss";
-import { ApolloClient, gql, useMutation } from "@apollo/client";
+import { isImage, isVideo } from "@/utils/helpers";
+import { gql, useMutation } from "@apollo/client";
 import Card from "@mui/joy/Card";
 import { CardHeader, IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
@@ -8,7 +9,6 @@ import toast from "react-hot-toast";
 import { IoMdMore } from "react-icons/io";
 import LinkAssetCard from "./Cards/DefaultCard";
 import MediaCard from "./Cards/MediaCard";
-import { isImage, isVideo } from "@/utils/helpers";
 
 const DOWNLOAD_ASSET = gql`
     mutation Mutation($alt: String!) {
@@ -19,14 +19,12 @@ const DOWNLOAD_ASSET = gql`
 export default function AssetWrapper({
     asset,
     handleDelete,
-    client,
 }: {
     asset: AssetInterface;
     handleDelete: (asset: AssetInterface) => void;
-    client: ApolloClient<any> | undefined;
 }) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [downloadAsset] = useMutation(DOWNLOAD_ASSET, { client });
+    const [downloadAsset] = useMutation(DOWNLOAD_ASSET);
 
     const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);

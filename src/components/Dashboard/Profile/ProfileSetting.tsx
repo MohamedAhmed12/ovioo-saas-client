@@ -3,13 +3,12 @@
 import DashBoardCard from "@/components/DashBoardCard";
 import { useForm } from "@/hooks/useForm";
 import { useGraphError } from "@/hooks/useGraphError";
-import { getClient } from "@/utils/getClient";
 import { uploadFiles } from "@/utils/helpers";
 import { gql, useMutation } from "@apollo/client";
 import { Button } from "@mui/joy";
 import { CircularProgress } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -29,13 +28,8 @@ const UPDATE_USER = gql`
     }
 `;
 
-export default function ProfileSetting({
-    session,
-    user,
-}: {
-    session: Session | null;
-    user: any;
-}): ReactNode {
+export default function ProfileSetting({ user }: { user: any }): ReactNode {
+    const { data: session } = useSession({ required: true });
     const [loading, setLoading] = useState(false);
     const [refreshAvatar, setRefreshAvatar] = useState(0);
     const [avatarLoading, setAvatarLoading] = useState(false);
@@ -46,11 +40,8 @@ export default function ProfileSetting({
 
     const { errors, errorHandler } = useGraphError({});
     const { handleOnChange } = useForm(setFormData);
-    const client = getClient(session);
 
-    const [updateUser] = useMutation(UPDATE_USER, {
-        client,
-    });
+    const [updateUser] = useMutation(UPDATE_USER);
 
     const handleAvatarUpload = async (e: ChangeEvent<HTMLInputElement>) => {
         setAvatarLoading(true);

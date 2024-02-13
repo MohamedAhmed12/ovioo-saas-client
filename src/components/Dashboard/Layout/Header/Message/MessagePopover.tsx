@@ -1,14 +1,11 @@
 import { useAppSelector } from "@/hooks/redux";
 import { TaskInterface, Team } from "@/interfaces";
 import "@/styles/components/dashboard/layout/header/notifications-popover.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import IconButton from "@mui/joy/IconButton";
 import { Badge, Box, Divider, List, Popover, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { TbMessageCircle2Filled } from "react-icons/tb";
-import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
 import MessageItem from "./MessageItem";
 
@@ -69,15 +66,12 @@ export default function MessagePopover() {
     const openedModalTask = useAppSelector(
         (state) => state.taskReducer.selectedTask
     );
-    const { data: session } = useSession({ required: true });
-    const client = getClient(session);
-    const [receiveTaskMessages] = useMutation(RECEIVE_MESSAGES, { client });
+    const [receiveTaskMessages] = useMutation(RECEIVE_MESSAGES);
     const {
         loading: graphQLloading,
         error,
         data,
     } = useQuery(LIST_UNREAD_MESSAGES, {
-        client,
         fetchPolicy: "no-cache",
     });
 
@@ -90,7 +84,6 @@ export default function MessagePopover() {
                     teamIds: authUser.teams.map((team: Team) => team.id),
                 },
             },
-            client,
         });
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

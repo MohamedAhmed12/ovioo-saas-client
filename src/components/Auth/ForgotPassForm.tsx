@@ -2,11 +2,9 @@
 
 import { useGraphError } from "@/hooks/useGraphError";
 import "@/styles/app/auth/login.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation } from "@apollo/client";
 import { Button as JoyButton } from "@mui/joy";
 import { Stack, TextField, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -22,9 +20,7 @@ export default function ForgotPassForm() {
 
     const { errors, setErrors, errorHandler } = useGraphError({});
 
-    const { data: session } = useSession();
-    const client = getClient(session);
-    const [forgetPassword] = useMutation(FORGET_PASSWORD, { client });
+    const [forgetPassword] = useMutation(FORGET_PASSWORD);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -46,7 +42,7 @@ export default function ForgotPassForm() {
                 "INTERNAL_SERVER_ERROR"
             ) {
                 errorHandler(e);
-            }else{
+            } else {
                 toast.error("Something went wrong!");
             }
         }
