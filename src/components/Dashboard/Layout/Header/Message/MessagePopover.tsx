@@ -1,20 +1,17 @@
 import { useAppSelector } from "@/hooks/redux";
-import { TaskInterface } from "@/interfaces";
+import { TaskInterface, Team } from "@/interfaces";
 import "@/styles/components/dashboard/layout/header/notifications-popover.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import IconButton from "@mui/joy/IconButton";
 import { Badge, Box, Divider, List, Popover, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { TbMessageCircle2Filled } from "react-icons/tb";
-import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
 import MessageItem from "./MessageItem";
 
-const LIST_TASK_UNREAD_MESSAGES = gql`
-    query ListTaskUnreadMessages {
-        listTaskUnreadMessages {
+const LIST_UNREAD_MESSAGES = gql`
+    query ListUnreadMessages {
+        listUnreadMessages {
             id
             messages {
                 id
@@ -69,15 +66,12 @@ export default function MessagePopover() {
     const openedModalTask = useAppSelector(
         (state) => state.taskReducer.selectedTask
     );
-    const { data: session } = useSession({ required: true });
-    const client = getClient(session);
-    const [receiveTaskMessages] = useMutation(RECEIVE_MESSAGES, { client });
+    const [receiveTaskMessages] = useMutation(RECEIVE_MESSAGES);
     const {
         loading: graphQLloading,
         error,
         data,
-    } = useQuery(LIST_TASK_UNREAD_MESSAGES, {
-        client,
+    } = useQuery(LIST_UNREAD_MESSAGES, {
         fetchPolicy: "no-cache",
     });
 
@@ -87,10 +81,9 @@ export default function MessagePopover() {
         useSubscription(MESSAGE_SENT, {
             variables: {
                 data: {
-                    team_id: authUser.team.id,
+                    teamIds: authUser.teams.map((team: Team) => team.id),
                 },
             },
-            client,
         });
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -101,7 +94,7 @@ export default function MessagePopover() {
         if (
             !messageSentSubsLoading &&
             messageSentSubsData?.messageSent &&
-            data?.listTaskUnreadMessages
+            data?.listUnreadMessages
         ) {
             // if task modal/chat alreay opened then no need to proceed
             if (
@@ -110,22 +103,21 @@ export default function MessagePopover() {
             )
                 return;
 
-            // if task exist in listTaskUnreadMessages
-            const taskIndex = data.listTaskUnreadMessages.findIndex(
+            // if task exist in listUnreadMessages
+            const taskIndex = data.listUnreadMessages.findIndex(
                 (task: Partial<TaskInterface>) =>
                     task.id == messageSentSubsData.messageSent.task.id
             );
 
             if (taskIndex !== -1) {
-                data.listTaskUnreadMessages[taskIndex].messages = [
+                data.listUnreadMessages[taskIndex].messages = [
                     messageSentSubsData.messageSent,
                 ];
-                data.listTaskUnreadMessages[taskIndex].unreadMessagesCount =
-                    data.listTaskUnreadMessages[taskIndex].unreadMessagesCount +
-                    1;
+                data.listUnreadMessages[taskIndex].unreadMessagesCount =
+                    data.listUnreadMessages[taskIndex].unreadMessagesCount + 1;
                 setAllUnreadMsgsCount((prevCount) => prevCount + 1);
             } else {
-                data.listTaskUnreadMessages.push({
+                data.listUnreadMessages.push({
                     id: messageSentSubsData.messageSent.task.id,
                     messages: [
                         {
@@ -156,8 +148,8 @@ export default function MessagePopover() {
         }
     }, [messageSentSubsData, messageSentSubsLoading]);
     useEffect(() => {
-        if (data?.listTaskUnreadMessages) {
-            const allUnreadMsgsCount = data?.listTaskUnreadMessages.reduce(
+        if (data?.listUnreadMessages) {
+            const allUnreadMsgsCount = data?.listUnreadMessages.reduce(
                 (acc: number, task: TaskInterface) => {
                     receiveTaskMessages({ variables: { taskId: task.id } });
 
@@ -172,8 +164,8 @@ export default function MessagePopover() {
         }
     }, [data]);
     useEffect(() => {
-        if (openedModalTask && data?.listTaskUnreadMessages) {
-            data.listTaskUnreadMessages = data.listTaskUnreadMessages.filter(
+        if (openedModalTask && data?.listUnreadMessages) {
+            data.listUnreadMessages = data.listUnreadMessages.filter(
                 (task: Partial<TaskInterface>) => {
                     if (task.id != openedModalTask.id) return task;
 
@@ -191,7 +183,7 @@ export default function MessagePopover() {
 
     return (
         !graphQLloading &&
-        data.listTaskUnreadMessages && (
+        data.listUnreadMessages && (
             <div>
                 <IconButton
                     className={` toolbar-icon ${open ? "opened" : "closed"}`}
@@ -243,11 +235,9 @@ export default function MessagePopover() {
                     <Divider sx={{ borderStyle: "dashed" }} />
 
                     <List disablePadding>
-                        {data?.listTaskUnreadMessages.map(
-                            (task: TaskInterface) => (
-                                <MessageItem key={+task.id} task={task} />
-                            )
-                        )}
+                        {data?.listUnreadMessages.map((task: TaskInterface) => (
+                            <MessageItem key={+task.id} task={task} />
+                        ))}
                     </List>
                 </Popover>
             </div>

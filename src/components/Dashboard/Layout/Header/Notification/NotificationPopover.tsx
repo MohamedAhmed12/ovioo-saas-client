@@ -2,11 +2,9 @@ import NotificationItem from "@/components/Dashboard/Layout/Header/Notification/
 import { useAppSelector } from "@/hooks/redux";
 import { NotificationInterface } from "@/interfaces";
 import "@/styles/components/dashboard/layout/header/notifications-popover.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useQuery } from "@apollo/client";
 import IconButton from "@mui/joy/IconButton";
 import { Badge, Box, Divider, List, Popover, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { MouseEvent, useEffect, useState } from "react";
 import { IoNotificationsSharp } from "react-icons/io5";
 import "simplebar-react/dist/simplebar.min.css";
@@ -45,9 +43,6 @@ export default function NotificationPopover() {
     const [offsetPlus, setOffsetPlus] = useState<number>(0);
     const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
     const authUser = useAppSelector((state) => state.userReducer.user);
-
-    const session = useSession();
-    const client = getClient(session);
     const {
         loading,
         error,
@@ -56,7 +51,6 @@ export default function NotificationPopover() {
         subscribeToMore,
     } = useQuery(LIST_NOTIFICATIONS, {
         variables: { data: { page } },
-        client,
         fetchPolicy: "network-only",
     });
 

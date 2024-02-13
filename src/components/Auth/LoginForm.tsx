@@ -73,10 +73,7 @@ export default function LoginForm() {
     };
 
     return (
-        <form
-            className="login__form w-[360px] lg:w-[400px]"
-            onSubmit={handleSubmit}
-        >
+        <div className="login__form w-[360px] lg:w-[400px]">
             <Typography variant="h4" gutterBottom>
                 Sign in to Ovioo
             </Typography>
@@ -93,68 +90,71 @@ export default function LoginForm() {
 
             <SSOWrapper />
 
-            <Stack spacing={3}>
-                <TextField
-                    required
-                    name="email"
-                    label="Email address"
-                    error={errors.hasOwnProperty("email")}
-                    helperText={errors["email"]}
-                    {...bindEmail}
-                />
+            <form onSubmit={handleSubmit}>
+                <Stack spacing={3}>
+                    <TextField
+                        required
+                        name="email"
+                        label="Email address"
+                        error={errors.hasOwnProperty("email")}
+                        helperText={errors["email"]}
+                        {...bindEmail}
+                    />
 
-                <TextField
-                    required
-                    name="password"
-                    label="Password"
-                    type={showPassword ? "text" : "password"}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    onClick={() =>
-                                        setShowPassword(!showPassword)
-                                    }
-                                    edge="end"
-                                >
-                                    {showPassword ? (
-                                        <AiFillEye />
-                                    ) : (
-                                        <AiFillEyeInvisible />
-                                    )}
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                    error={errors.hasOwnProperty("password")}
-                    helperText={errors["password"]}
-                    {...bindPassword}
-                />
-            </Stack>
-
-            <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                sx={{ my: 2 }}
-            >
-                <FormControlLabel control={<Checkbox />} label="Remember me" />
-                <Link
-                    href="/auth/password/forgot"
-                    className="text-sm text-blue-600 font-normal"
+                    <TextField
+                        required
+                        name="password"
+                        label="Password"
+                        type={showPassword ? "text" : "password"}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={() =>
+                                            setShowPassword(!showPassword)
+                                        }
+                                        edge="end"
+                                    >
+                                        {showPassword ? (
+                                            <AiFillEye />
+                                        ) : (
+                                            <AiFillEyeInvisible />
+                                        )}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                        error={errors.hasOwnProperty("password")}
+                        helperText={errors["password"]}
+                        {...bindPassword}
+                    />
+                </Stack>
+                <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    sx={{ my: 2 }}
                 >
-                    Forgot password?
-                </Link>
-            </Stack>
-
-            <Button
-                loading={loading}
-                variant="solid"
-                type="submit"
-                className="auth-btn !mt-4 min-w-[75px]"
-            >
-                {!loading && "Login"}
-            </Button>
-        </form>
+                    <FormControlLabel
+                        control={<Checkbox />}
+                        label="Remember me"
+                    />
+                    <Link
+                        href="/auth/password/forgot"
+                        className="text-sm text-blue-600 font-normal"
+                    >
+                        Forgot password?
+                    </Link>
+                </Stack>
+                <Button
+                    loading={loading}
+                    variant="solid"
+                    type="submit"
+                    className="auth-btn !mt-4 min-w-[75px]"
+                >
+                    {!loading && "Login"}
+                </Button>
+            </form>
+        </div>
     );
 }

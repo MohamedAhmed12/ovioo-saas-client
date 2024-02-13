@@ -3,12 +3,10 @@ import { TaskInterface } from "@/interfaces";
 import { updateTaskTitle } from "@/store/features/board";
 import { setSelectedTask } from "@/store/features/task";
 import "@/styles/components/dashboard/task/task-modal.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import { useMediaQuery } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import { useTheme } from "@mui/material/styles";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Chat from "../Chat";
@@ -127,20 +125,17 @@ export default function TaskModal({
     const theme = useTheme();
     const dispatch = useAppDispatch();
     const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-    const task: TaskInterface = useAppSelector(
+    const task: TaskInterface | null = useAppSelector(
         (state) => state.taskReducer.selectedTask
     );
     const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
 
-    const { data: session } = useSession({ required: true });
-    const client = getClient(session);
-    const [editTask] = useMutation(EDIT_TASK, { client });
+    const [editTask] = useMutation(EDIT_TASK);
     const {
         loading: graphQLloading,
         error: showTaskError,
         data: showTaskData,
     } = useQuery(SHOW_TASK, {
-        client,
         variables: {
             id: taskId,
         },
@@ -152,7 +147,6 @@ export default function TaskModal({
     const { error: listProjectError, data: listProjectData } = useQuery(
         LIST_PROJECTS,
         {
-            client,
             fetchPolicy: "no-cache",
         }
     );
@@ -160,13 +154,13 @@ export default function TaskModal({
     if (listProjectError) throw new Error(JSON.stringify(listProjectError));
 
     const { data: taskUpdatedSubsData, loading: taskUpdatedSubsLoading } =
-        useSubscription(TASK_UPDATED, { variables: { taskId }, client });
+        useSubscription(TASK_UPDATED, { variables: { taskId } });
 
     useEffect(() => {
         const updatedTask: TaskInterface & { title: string } =
             taskUpdatedSubsData?.taskUpdated;
 
-        if (!taskUpdatedSubsLoading && updatedTask) {
+        if (!taskUpdatedSubsLoading && task && updatedTask) {
             if (task.title != updatedTask.title) {
                 dispatch(updateTaskTitle({ task, title: updatedTask.title }));
             }
@@ -231,7 +225,7 @@ export default function TaskModal({
                             projects={listProjectData.listProjects}
                         />
 
-                        {!isDesigner && <Chat client={client} task={task} />}
+                        {!isDesigner && <Chat task={task} />}
                     </div>
                 </div>
             </Dialog>

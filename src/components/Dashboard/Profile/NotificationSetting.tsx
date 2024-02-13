@@ -2,12 +2,10 @@
 
 import DashBoardCard from "@/components/DashBoardCard";
 import { useAppSelector } from "@/hooks/redux";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation } from "@apollo/client";
 import Switch from "@mui/joy/Switch";
-import { Session } from "next-auth";
 import Image from "next/image";
-import { ChangeEvent, ReactNode, useEffect, useRef, useState } from "react";
+import { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const UPDATE_PROFILE = gql`
@@ -27,12 +25,9 @@ const UPDATE_PROFILE = gql`
     }
 `;
 
-export default function NotificationSetting({ session }: { session: Session | null }): ReactNode {
+export default function NotificationSetting(): ReactNode {
     const initialData = useAppSelector((state) => state.userReducer.user);
-    const client = getClient(session);
-    const [updateProfile] = useMutation(UPDATE_PROFILE, {
-        client: client,
-    });
+    const [updateProfile] = useMutation(UPDATE_PROFILE);
 
     const [formData, setFormData] = useState({
         id: null,
@@ -70,8 +65,10 @@ export default function NotificationSetting({ session }: { session: Session | nu
             setFormData((prevState) => ({
                 ...prevState,
                 id: initialData.profile.id,
-                push_notification_enabled: initialData.profile.push_notification_enabled,
-                mail_notification_enabled: initialData.profile.mail_notification_enabled,
+                push_notification_enabled:
+                    initialData.profile.push_notification_enabled,
+                mail_notification_enabled:
+                    initialData.profile.mail_notification_enabled,
             }));
         }
     }, [initialData]);
@@ -82,11 +79,16 @@ export default function NotificationSetting({ session }: { session: Session | nu
                 <div className="flex flex-col px-[35px] py-[24px]">
                     <div className="flex flex-row justify-between">
                         <div className="text-base">
-                            Browser push notifications (Updates & Messages from designers)
+                            Browser push notifications (Updates & Messages from
+                            designers)
                         </div>
                         <div>
                             <Switch
-                                slotProps={{ input: { name: "push_notification_enabled" } }}
+                                slotProps={{
+                                    input: {
+                                        name: "push_notification_enabled",
+                                    },
+                                }}
                                 checked={formData.push_notification_enabled}
                                 onChange={handleOnChanges}
                             />
@@ -100,18 +102,24 @@ export default function NotificationSetting({ session }: { session: Session | nu
                             alt="img"
                         />
                         <span className="ml-1 text-aw-gray-400 text-sm font-light">
-                            Unfortunately, this function is not currently available in Safari
+                            Unfortunately, this function is not currently
+                            available in Safari
                         </span>
                     </div>
                 </div>
                 <div className="flex flex-col px-[35px] py-[24px]">
                     <div className="flex flex-row justify-between">
                         <div className="text-base">
-                            Mail notifications (Updates & Messages from designers)
+                            Mail notifications (Updates & Messages from
+                            designers)
                         </div>
                         <div>
                             <Switch
-                                slotProps={{ input: { name: "mail_notification_enabled" } }}
+                                slotProps={{
+                                    input: {
+                                        name: "mail_notification_enabled",
+                                    },
+                                }}
                                 checked={formData.mail_notification_enabled}
                                 onChange={handleOnChanges}
                             />

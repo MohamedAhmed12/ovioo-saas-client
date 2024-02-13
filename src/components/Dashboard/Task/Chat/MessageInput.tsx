@@ -1,5 +1,4 @@
-import { MessageInterface, SendMessageDto } from "@/interfaces/message";
-import { getClient } from "@/utils/getClient";
+import { MessageInterface } from "@/interfaces/message";
 import { uploadFiles } from "@/utils/helpers";
 import emojiData from "@emoji-mart/data";
 import { useSession } from "next-auth/react";
@@ -34,17 +33,16 @@ export default function MessageInput({
     onMessageSend: (formData: Partial<MessageInterface>) => void;
 }) {
     const inputRef = useRef<HTMLInputElement | null>(null);
+    const { data: session } = useSession({
+        required: true,
+    });
     const [loading, setLoading] = useState(false);
-    const [page, setPage] = useState(1);
     const [formData, setFormData] = useState<Partial<MessageInterface>>({
         task_id,
         content: "",
         voice_note_src: "",
         asset: null,
     });
-
-    const { data: session } = useSession({ required: true });
-    const client = getClient(session);
 
     const updateContent = (value: any) =>
         setFormData((formData) => ({

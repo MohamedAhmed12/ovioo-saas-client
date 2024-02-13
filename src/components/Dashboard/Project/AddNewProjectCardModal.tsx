@@ -3,7 +3,7 @@ import { useAppDispatch } from "@/hooks/redux";
 import { useForm } from "@/hooks/useForm";
 import { Project as ProjectInterface } from "@/interfaces";
 import { pushNewProject, replaceProject } from "@/store/features/project";
-import { ApolloClient, gql, useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { Box, TextField } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import Image from "next/image";
@@ -30,12 +30,10 @@ const EDIT_PROJECT = gql`
 export default function AddNewProjectCardModal({
     open,
     handleToggleModal,
-    client,
     projectToEdit,
 }: {
     open: boolean;
     handleToggleModal: () => void;
-    client: ApolloClient<any> | undefined;
     projectToEdit: ProjectInterface | {};
 }) {
     const [loading, setLoading] = useState(true);
@@ -46,8 +44,8 @@ export default function AddNewProjectCardModal({
 
     const dispatch = useAppDispatch();
     const { handleOnChange } = useForm(setFormData);
-    const [createProject] = useMutation(CREATE_PROJECT, { client });
-    const [updateProject] = useMutation(EDIT_PROJECT, { client });
+    const [createProject] = useMutation(CREATE_PROJECT);
+    const [updateProject] = useMutation(EDIT_PROJECT);
 
     useEffect(() => {
         if (Object.keys(projectToEdit).length > 0) {

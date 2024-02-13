@@ -3,10 +3,8 @@
 import { useAppDispatch } from "@/hooks/redux";
 import { TaskInterface, TaskStatus } from "@/interfaces";
 import { dragTask } from "@/store/features/board";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation } from "@apollo/client";
 import { Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { DragEvent, useState } from "react";
 import toast from "react-hot-toast";
 import CreateTaskBackdrop from "./CreateTaskBackdrop";
@@ -32,9 +30,7 @@ export default function Column({
     const [openCreateTask, setOpenCreateTask] = useState<boolean>(false);
 
     const dispatch = useAppDispatch();
-    const { data: session } = useSession({ required: true });
-    const client = getClient(session);
-    const [editTask] = useMutation(EDIT_TASK, { client });
+    const [editTask] = useMutation(EDIT_TASK);
 
     const handleOnDrop = async (e: DragEvent<HTMLDivElement>) => {
         const { task } = JSON.parse(e.dataTransfer.getData("text"));

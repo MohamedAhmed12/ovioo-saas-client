@@ -4,12 +4,10 @@ import DashBoardCard from "@/components/DashBoardCard";
 import { useForm } from "@/hooks/useForm";
 import { useGraphError } from "@/hooks/useGraphError";
 import { AuthProviderEnum } from "@/interfaces";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation } from "@apollo/client";
 import { Button } from "@mui/joy";
 import { IconButton, InputAdornment } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { Session } from "next-auth";
 import { FormEvent, ReactNode, useState } from "react";
 import toast from "react-hot-toast";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -20,13 +18,7 @@ const CHANGE_PASSWORD = gql`
     }
 `;
 
-export default function PasswordSetting({
-    session,
-    user,
-}: {
-    session: Session | null;
-    user: any;
-}): ReactNode {
+export default function PasswordSetting({ user }: { user: any }): ReactNode {
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirmation, setShowPasswordConfirmation] =
         useState(false);
@@ -37,11 +29,10 @@ export default function PasswordSetting({
         password_confirmation: "",
     });
 
-    const client = getClient(session);
     const { errors, errorHandler } = useGraphError({});
     const { handleOnChange } = useForm(setFormData);
 
-    const [changePassword] = useMutation(CHANGE_PASSWORD, { client });
+    const [changePassword] = useMutation(CHANGE_PASSWORD);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();

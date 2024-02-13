@@ -2,12 +2,9 @@
 
 import DashBoardCard from "@/components/DashBoardCard";
 import "@/styles/components/dashboard/project/project-card.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useQuery } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { FormEvent } from "react";
 
 const SHOW_PROJECT = gql`
@@ -21,20 +18,11 @@ const SHOW_PROJECT = gql`
 `;
 
 export default function ProjectDetailedCard({ id }: { id: string }) {
-    const { data: session, status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            redirect("/auth/login");
-        },
-    });
-
-    const apolloClient = getClient(session);
     const {
         loading: graphQLloading,
         error,
         data: project,
     } = useQuery(SHOW_PROJECT, {
-        client: apolloClient,
         variables: {
             id,
         },
@@ -48,10 +36,12 @@ export default function ProjectDetailedCard({ id }: { id: string }) {
     };
 
     return (
-        session &&
         !graphQLloading &&
         project.showProject && (
-            <DashBoardCard handleSubmit={handleSubmit} headerTitle={project.showProject.title}>
+            <DashBoardCard
+                handleSubmit={handleSubmit}
+                headerTitle={project.showProject.title}
+            >
                 <div className="flex flex-col lg:flex-row justify-between items-center w-full p-6">
                     <div className="flex basis-10/12">
                         <Image
@@ -62,8 +52,12 @@ export default function ProjectDetailedCard({ id }: { id: string }) {
                             className="rounded-full max-w-full"
                         />
                         <div className="description-wrapper px-8">
-                            <h5 className="text-xl capitalize mb-3">description</h5>
-                            <p className="text-slate-400">{project.showProject.description}</p>
+                            <h5 className="text-xl capitalize mb-3">
+                                description
+                            </h5>
+                            <p className="text-slate-400">
+                                {project.showProject.description}
+                            </p>
                         </div>
                     </div>
                     <div className="basis-2/12 text-end">

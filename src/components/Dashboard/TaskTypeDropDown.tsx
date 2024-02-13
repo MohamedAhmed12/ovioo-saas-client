@@ -1,10 +1,8 @@
 import { TaskTypeInterface } from "@/interfaces";
 import "@/styles/components/dashboard/task-type-dropdown.scss";
-import { getClient } from "@/utils/getClient";
-import { ApolloClient, gql, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { Icon, Tooltip } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { BsInfoCircleFill } from "react-icons/bs";
 import { MdWarning } from "react-icons/md";
@@ -24,23 +22,14 @@ const LIST_TASK_TYPES = gql`
 
 export default function TaskTypeDropDown({
     onSelected,
-    client,
     initialVal,
     disabled,
 }: {
     onSelected: (selectedVal: string) => void;
-    client?: ApolloClient<any> | undefined;
     initialVal?: string | number;
     disabled?: boolean;
 }) {
-    const { data: session } = useSession({ required: true });
-    client = client || getClient(session);
-
-    const {
-        loading: graphQLloading,
-        error,
-        data,
-    } = useQuery(LIST_TASK_TYPES, { client });
+    const { loading: graphQLloading, error, data } = useQuery(LIST_TASK_TYPES);
 
     const infoComponent = (info: string[], extraInfo: string | null) => {
         return (

@@ -7,7 +7,7 @@ import { getServerSession } from "next-auth";
 
 const GET_TEAM = gql`
     query {
-        getTeam {
+        getUserTeam {
             id
             owner_id
             members {

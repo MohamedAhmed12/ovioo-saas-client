@@ -5,7 +5,7 @@ import { useCustomQuery } from "@/hooks/useCustomQuery";
 import { TaskInterface } from "@/interfaces";
 import { MessageInterface, MessageStatusEnum } from "@/interfaces/message";
 import "@/styles/components/dashboard/task/chat.scss";
-import { ApolloClient, gql, useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import "react-chat-elements/dist/main.css";
 import MessageInput from "./MessageInput";
@@ -13,7 +13,7 @@ import MessagesWrapper from "./MessagesWrapper";
 
 const LIST_MESSAGES = gql`
     query ListMessages($data: ListMessageDto!) {
-        listMessages(data: $data) {
+        listTaskMessages(data: $data) {
             id
             content
             voice_note_src
@@ -65,20 +65,14 @@ const READ_MESSAGES = gql`
     }
 `;
 
-export default function Chat({
-    client,
-    task,
-}: {
-    client: ApolloClient<any> | undefined;
-    task: TaskInterface;
-}) {
+export default function Chat({ task }: { task: TaskInterface }) {
     const authUser = useAppSelector((state) => state.userReducer.user);
     const [showPicker, setShowPicker] = useState<boolean>(false);
     const [messages, setMessages] = useState<any[]>([]);
     const [unreadMessages, setUnreadMessages] = useState<any[]>([]);
 
-    const [sendMessage] = useMutation(SEND_MESSAGE, { client });
-    const [readTaskMessages] = useMutation(READ_MESSAGES, { client });
+    const [sendMessage] = useMutation(SEND_MESSAGE);
+    const [readTaskMessages] = useMutation(READ_MESSAGES);
     const {
         loading: graphQLloading,
         error,
@@ -86,7 +80,6 @@ export default function Chat({
         fetchMore,
         subscribeToMore,
     } = useCustomQuery(
-        client,
         LIST_MESSAGES,
         { task_id: task.id, page: 1 },
         "network-only",
@@ -96,8 +89,8 @@ export default function Chat({
     if (error) throw new Error(JSON.stringify(error));
 
     useEffect(() => {
-        if (data?.listMessages && data?.listMessages?.length > 0) {
-            const msgs = data.listMessages;
+        if (data?.listTaskMessages && data?.listTaskMessages?.length > 0) {
+            const msgs = data.listTaskMessages;
             const read: MessageInterface[] = [];
             const unread: MessageInterface[] = [];
 
@@ -142,7 +135,7 @@ export default function Chat({
 
     return (
         !graphQLloading &&
-        data?.listMessages &&
+        data?.listTaskMessages &&
         messages && (
             <div className="chat basis-1/2 flex flex-col rounded-md text-black border-[0.5px] border-gray-600 focus:border-0 mt-[25px] mr-[25px]">
                 <MessagesWrapper

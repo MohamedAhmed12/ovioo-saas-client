@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { NextAuthProvider } from "@/components/Providers/NextAuthProvider";
 import { ReduxProvider } from "@/components/Providers/ReduxProvider";
 import "@/styles/app/globals.scss";
@@ -37,12 +38,19 @@ const myFont = localFont({
     ],
 });
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({
+    children,
+}: {
+    children: ReactNode;
+}) {
     return (
         <ReduxProvider>
             <NextAuthProvider>
                 <html lang="en">
-                    <body className={myFont.className}>{children}</body>
+                    <body className={myFont.className}>
+                        {children}
+                        <Analytics />
+                    </body>
                 </html>
             </NextAuthProvider>
         </ReduxProvider>

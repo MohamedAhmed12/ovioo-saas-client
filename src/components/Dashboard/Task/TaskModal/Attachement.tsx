@@ -1,9 +1,7 @@
 import AssetList from "@/components/Dashboard/Asset/AssetList";
 import { Asset as AssetInterface, TaskInterface } from "@/interfaces";
 import { setTaskAssets } from "@/store/features/task";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 
@@ -15,9 +13,7 @@ const DELETE_ASSET = gql`
 
 export default function Attachement({ task }: { task: TaskInterface }) {
     const dispatch = useDispatch();
-    const { data: session } = useSession({ required: true });
-    const client = getClient(session);
-    const [deleteAsset] = useMutation(DELETE_ASSET, { client });
+    const [deleteAsset] = useMutation(DELETE_ASSET);
 
     const handleDeleteAsset = async ({ id, alt }: AssetInterface) => {
         try {

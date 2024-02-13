@@ -3,12 +3,10 @@ import DeleteModal from "@/components/Modals/DeleteModal";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { Member, TaskInterface, TaskStatus } from "@/interfaces";
 import { deleteTask as deleteTaskAction } from "@/store/features/board";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation, useSubscription } from "@apollo/client";
 import { Avatar, IconButton, Tooltip } from "@mui/material";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Badge from "@mui/material/Badge";
-import { useSession } from "next-auth/react";
 import { MouseEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdAccountCircle, MdDelete } from "react-icons/md";
@@ -47,11 +45,9 @@ export default function TaskModalHeader({
 
     const dispatch = useAppDispatch();
     const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
-    const session = useSession();
-    const client = getClient(session);
-    const [deleteTask] = useMutation(DELETE_TASK, { client });
+    const [deleteTask] = useMutation(DELETE_TASK);
     const { loading: userStatusChangedLoading, data: userStatusChangedData } =
-        useSubscription(USER_STATUS_CHANGED, { client });
+        useSubscription(USER_STATUS_CHANGED);
 
     const getNumberOfExtraAvatar = (usersCount: any) => {
         if (activeUsers?.length == 0) return 0;

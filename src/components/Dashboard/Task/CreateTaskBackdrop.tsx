@@ -4,11 +4,9 @@ import { useForm } from "@/hooks/useForm";
 import { useGraphError } from "@/hooks/useGraphError";
 import { TaskStatus } from "@/interfaces";
 import "@/styles/components/dashboard/task/create-task-backdrop.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { Button } from "@mui/joy";
 import { Dialog, TextField } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { FormEvent, useState } from "react";
 import OviooDropDown from "../OviooDropDown";
 import TaskTypeDropDown from "../TaskTypeDropDown";
@@ -68,17 +66,13 @@ export default function CreateTaskBackdrop({
 
     const dispatch = useAppDispatch();
     const { handleOnChange } = useForm(setFormData);
-    const { data: session } = useSession({
-        required: true,
-    });
 
-    const client = getClient(session);
     const {
         loading: graphQLloading,
         error,
         data,
-    } = useQuery(LIST_PROJECTS, { client, fetchPolicy: "no-cache" });
-    const [createTask] = useMutation(CREATE_TASK, { client });
+    } = useQuery(LIST_PROJECTS, { fetchPolicy: "no-cache" });
+    const [createTask] = useMutation(CREATE_TASK);
 
     const handlSelectProject = (project_id: string) => {
         setFormData((prevState) => ({ ...prevState, project_id }));
@@ -128,10 +122,7 @@ export default function CreateTaskBackdrop({
                     headerTitle="Add new Task"
                 >
                     <div className="flex flex-col items-center">
-                        <TaskTypeDropDown
-                            onSelected={handlSelectType}
-                            client={client}
-                        />
+                        <TaskTypeDropDown onSelected={handlSelectType} />
 
                         <OviooDropDown
                             inputLabel="Project"

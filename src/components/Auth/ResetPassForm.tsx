@@ -3,7 +3,6 @@
 import { useForm } from "@/hooks/useForm";
 import { useGraphError } from "@/hooks/useGraphError";
 import "@/styles/app/auth/login.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation } from "@apollo/client";
 import { Button as JoyButton } from "@mui/joy";
 import {
@@ -14,7 +13,6 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
@@ -41,9 +39,7 @@ export default function ResetPassForm({ token }: { token: string }) {
     const { errors, setErrors, errorHandler } = useGraphError({});
     const { handleOnChange } = useForm(setFormData);
 
-    const { data: session } = useSession();
-    const client = getClient(session);
-    const [resetPassword] = useMutation(RESET_PASSWORD, { client });
+    const [resetPassword] = useMutation(RESET_PASSWORD);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();

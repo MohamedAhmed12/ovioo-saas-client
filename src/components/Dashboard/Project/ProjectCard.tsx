@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { Project as ProjectInterface } from "@/interfaces";
 import { deleteProject as storeDeleteProject } from "@/store/features/project";
 import "@/styles/components/dashboard/project/project-card.scss";
-import { ApolloClient, gql, useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { Avatar, CardHeader } from "@mui/material";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -30,20 +30,18 @@ export default function ProjectCard({
     project,
     readOnly = false,
     actionURL,
-    client,
     onEditProject,
 }: {
     project: ProjectInterface;
     readOnly?: boolean;
     actionURL: string;
-    client?: ApolloClient<any> | undefined;
     onEditProject?: (project: ProjectInterface) => void;
 }) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
     const dispatch = useAppDispatch();
-    const [deleteProject] = useMutation(DELETE_PROJECT, { client });
+    const [deleteProject] = useMutation(DELETE_PROJECT);
     const isManager = useAppSelector((state) => state.userReducer.isManager);
 
     const handleToggle = (event: MouseEvent<HTMLElement> | null) => {
