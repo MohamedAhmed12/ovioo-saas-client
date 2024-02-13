@@ -155,8 +155,8 @@ export const authOptions = {
             credentials,
         }: {
             user: User | AdapterUser;
-            account: Account;
-            profile: Profile;
+            account: Account | null;
+            profile?: Profile;
             email?: {
                 verificationRequest?: boolean;
             };
@@ -181,7 +181,7 @@ export const authOptions = {
                     });
 
                     // handle google provider case
-                    if (account.provider === "google") {
+                    if (account?.provider === "google") {
                         return (
                             profile?.email_verified &&
                             profile?.email?.endsWith("@gmail.com")
