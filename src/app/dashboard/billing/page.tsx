@@ -2,7 +2,9 @@
 
 import "@/styles/app/dashboard/billing.scss";
 import { gql, useQuery } from "@apollo/client";
+import { useRouter } from "next/navigation";
 import Script from "next/script";
+import toast from "react-hot-toast";
 import { FaArrowLeft } from "react-icons/fa6";
 
 const GENERATE_CUSTOMER_SECRET = gql`
@@ -12,7 +14,15 @@ const GENERATE_CUSTOMER_SECRET = gql`
 `;
 
 export default function Billing() {
-    const { data } = useQuery(GENERATE_CUSTOMER_SECRET);
+    const router = useRouter();
+    const { data, error } = useQuery(GENERATE_CUSTOMER_SECRET);
+
+    if (error) {
+        toast.error("Something went wrong!");
+        setTimeout(() => {
+            router.back();
+        }, 1500);
+    }
 
     return (
         data && (
