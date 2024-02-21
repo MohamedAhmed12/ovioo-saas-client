@@ -15,21 +15,21 @@ const GET_MANAGE_SUBS_URL = gql`
         getManageSubscriptionURL
     }
 `;
+
 export default async function SubscriptionCard() {
     const session = await getServerSession(authOptions);
     const client: ApolloClient<any> | undefined = getClient(session);
 
-    const { data: manageSubURLData, error: manageSubURLErr } =
-        await client.query({
-            query: GET_MANAGE_SUBS_URL,
-        });
+    const { data, error } = await client.query({
+        query: GET_MANAGE_SUBS_URL,
+    });
 
-    if (manageSubURLErr) {
+    if (error) {
         toast.error("Something went wrong!");
     }
 
     return (
-        manageSubURLData && (
+        data && (
             <Card className="ovioo-card with-shadow min-w-[300px] max-w-[580px] rounded-[10px] my-6">
                 <CardContent>
                     <span className="flex justify-between items-center mb-8">
@@ -40,7 +40,7 @@ export default async function SubscriptionCard() {
                             </span>
                         </Typography>
                         <Link
-                            href={manageSubURLData.getManageSubscriptionURL}
+                            href={data.getManageSubscriptionURL}
                             className="text-base text-sm text-slate-400 capitalize p-2 hidden md:flex text-wrap hover:text-white"
                         >
                             manage subscription
@@ -57,15 +57,13 @@ export default async function SubscriptionCard() {
                 </CardContent>
                 <CardActions className="flex-col !items-start justify-start !p-4">
                     <Link
-                        // size="small"
-                        href={manageSubURLData.getManageSubscriptionURL}
+                        href={data.getManageSubscriptionURL}
                         className="hover:bg-transparent dashboard__link !font-[800] !p-0"
                     >
                         Replace credit card
                     </Link>
                     <Link
-                        // size="small"
-                        href={manageSubURLData.getManageSubscriptionURL}
+                        href={data.getManageSubscriptionURL}
                         className="hover:bg-transparent dashboard__link !font-[800] !p-0 !pt-1 !m-0"
                     >
                         View Transactions
