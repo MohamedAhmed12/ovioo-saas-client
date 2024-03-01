@@ -13,9 +13,12 @@ export const ApolloClientProvider = ({ children }: { children: ReactNode }) => {
             redirect("/auth/login");
         },
     });
-    const client: ApolloClient<any> = getClient(session);
+
+    const client: ApolloClient<any> | undefined = session
+        ? getClient(session)
+        : undefined;
 
     return (
-        session && <ApolloProvider client={client}>{children}</ApolloProvider>
+        client && <ApolloProvider client={client}>{children}</ApolloProvider>
     );
 };
