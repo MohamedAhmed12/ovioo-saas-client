@@ -14,7 +14,7 @@ export default function SSOWrapper() {
     const [linkedInBtnloading, setLinkedInBtnloading] = useState(false);
 
     const searchParam = useSearchParams();
-    const callbackUrl = searchParam.get("callback") || undefined;
+    const callbackUrl = searchParam.get("callbackUrl") || undefined;
 
     const SSOLogin = (provider: string) =>
         signIn(provider, { callbackUrl: callbackUrl || "/dashboard/task" });
