@@ -22,12 +22,7 @@ const NavbarTabs = [
         title: "Tasks",
         url: "/dashboard/task",
         icon: <MdTask size="25" />,
-    },
-    {
-        title: "projects",
-        url: "/dashboard/project",
-        icon: <MdProductionQuantityLimits size="25" />,
-    },
+    }
 ];
 const UserNavbarTabs = [
     {

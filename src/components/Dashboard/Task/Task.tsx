@@ -41,7 +41,7 @@ export default function Task({ task }: { task: TaskInterface }) {
                 }}
                 draggable
                 onDragStart={handleOnDrag}
-                className="w-[280px] first:my-5 py-6 px-3 ovioo-card dark:hover:text-[#0ea5e9] cursor-pointer focus-visible:outline-none"
+                className="w-[280px] first:my-5 mt-3 py-6 px-3 ovioo-card dark:hover:text-[#0ea5e9] cursor-pointer focus-visible:outline-none"
             >
                 <p className="font-bold tracking-wide text-black dark:text-white dark:hover:text-[#0ea5e9] hover:text-[#0ea5e9] truncate">
                     {task.title}

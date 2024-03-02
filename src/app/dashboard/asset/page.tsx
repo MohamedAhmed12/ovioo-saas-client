@@ -39,7 +39,7 @@ export default function Asset() {
     return (
         !graphQLloading &&
         !error &&
-        data.listAssets && (
+        data?.listAssets && (
             <div className="asset-container flex justify-start flex-wrap">
                 <AssetListsContainer
                     sortBy="all"
