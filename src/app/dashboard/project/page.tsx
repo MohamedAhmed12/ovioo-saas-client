@@ -4,9 +4,10 @@ import AddNewProjectCard from "@/components/Dashboard/Project/AddNewProjectCard"
 import AddNewProjectCardModal from "@/components/Dashboard/Project/AddNewProjectCardModal";
 import ProjectCard from "@/components/Dashboard/Project/ProjectCard";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { Project as ProjectInterface } from "@/interfaces";
+import { Project as ProjectInterface, UserInterface } from "@/interfaces";
 import { setProjects } from "@/store/features/project";
 import { gql, useQuery } from "@apollo/client";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 const LIST_PROJECTS = gql`
@@ -23,7 +24,8 @@ export default function Projects() {
     const [open, setOpen] = useState(false);
     const [projectToEdit, setProjectToEdit] = useState({});
 
-    const isUser = useAppSelector((state) => state.userReducer.isUser);
+    const { data: session } = useSession();
+    const isUser = (session?.data.user as UserInterface)?.isUser;
     const projects = useAppSelector((state) => state.projectReducer.projects);
     const dispatch = useAppDispatch();
     const { loading: graphQLloading, error, data } = useQuery(LIST_PROJECTS);

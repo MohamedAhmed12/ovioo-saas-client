@@ -1,7 +1,8 @@
-import { useAppSelector } from "@/hooks/redux";
+import { UserInterface } from "@/interfaces";
 import { MessageInterface, MessageStatusEnum } from "@/interfaces/message";
 import { isImage, isVideo } from "@/utils/helpers";
 import { Icon } from "@mui/material";
+import { useSession } from "next-auth/react";
 import { MessageBox } from "react-chat-elements";
 import { BsExclamationCircleFill } from "react-icons/bs";
 
@@ -12,7 +13,8 @@ const OviooMessage = ({
     message: MessageInterface;
     onResend: () => void;
 }) => {
-    const authUser = useAppSelector((state) => state.userReducer.user);
+    const { data: session } = useSession();
+    const authUser = session?.data.user as UserInterface;
 
     const getType = (): any => {
         if (!message?.asset) return "text";
