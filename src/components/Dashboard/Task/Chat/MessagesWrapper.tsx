@@ -246,7 +246,7 @@ export default function MessagesWrapper({
         return () => {
             if (hideUnreadBar) clearTimeout(hideUnreadBar);
         };
-    }, [unreadMessages]);
+    }, [unreadMessages[0].id]);
     useEffect(() => {
         if (messages?.length > 0 && msgsWrapper?.current) {
             // behavior upon loading more msgs or send a message (mostly scrolling behavior)
@@ -260,7 +260,7 @@ export default function MessagesWrapper({
         }
 
         setLastMessage(messages[0]);
-    }, [messages]);
+    }, [messages[0].id]);
     useEffect(() => {
         if (msgsStatusChangedSubsData?.taskMsgsStatusChanged) {
             changeAllMsgsStatus(

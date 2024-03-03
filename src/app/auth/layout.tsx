@@ -14,8 +14,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         if (callbackUrl) {
             toast.error("Something went wrong!");
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [callbackUrl]);
 
     return (
         <main className="flex min-h-screen flex-col justify-between auth-layout">

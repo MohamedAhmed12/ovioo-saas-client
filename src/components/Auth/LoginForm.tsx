@@ -43,7 +43,7 @@ export default function LoginForm() {
     const { value: password, bind: bindPassword } = useInput("");
 
     const searchParam = useSearchParams();
-    const callbackUrl = searchParam.get("callback") || "/dashboard/task";
+    const callbackUrl = searchParam.get("callbackUrl") || "/dashboard/task";
 
     const client = getClient();
     const [login] = useMutation(Login, { client });
