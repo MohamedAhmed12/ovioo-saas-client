@@ -39,17 +39,19 @@ export default async function Pricing() {
     const client = await getClient();
     let data;
 
-    try {
-        const res = await client?.query({ query: LIST_PLANS });
-        if (res) {
-            data = res.data;
+    if (client) {
+        try {
+            const res = await client?.query({ query: LIST_PLANS });
+            if (res) {
+                data = res.data;
+            }
+        } catch (error) {
+            throw new Error(JSON.stringify(error));
         }
-    } catch (error) {
-        throw new Error(JSON.stringify(error));
     }
 
     return (
-        data.listPlans && (
+        data?.listPlans && (
             <div className="w-full">
                 <div className="intro flex mt-36 mb-14 justify-center">
                     <div className="container title text-center px-5">
