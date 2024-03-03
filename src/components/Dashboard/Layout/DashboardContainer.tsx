@@ -5,7 +5,6 @@ import { AllowedRoutes } from "@/constants/AllowedRoutes";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { RoleEnum, UserInterface } from "@/interfaces";
 import { ModeEnum } from "@/interfaces/store/main";
-import { setUser } from "@/store/features/user";
 import "@/styles/app/dashboard/layout.scss";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useSession } from "next-auth/react";
@@ -90,7 +89,6 @@ export default function DashboardContainer({
             const isDesigner = [RoleEnum.Designer, RoleEnum.Agency].includes(
                 userData.me.role
             );
-            dispatch(setUser(userData.me));
 
             if (isDesigner) setNavbarIsHidden(true);
 
