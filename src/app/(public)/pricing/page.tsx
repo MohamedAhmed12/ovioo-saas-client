@@ -37,20 +37,12 @@ const faq: FAQInterface[] = [
 
 export default async function Pricing() {
     const client = await getClient();
-    let data;
+    const { loading, error, data } = await client?.query({ query: LIST_PLANS });
 
-    if (client) {
-        try {
-            const res = await client?.query({ query: LIST_PLANS });
-            if (res) {
-                data = res.data;
-            }
-        } catch (error) {
-            throw new Error(JSON.stringify(error));
-        }
-    }
+    if (error) throw new Error(JSON.stringify(error));
 
     return (
+        !loading &&
         data?.listPlans && (
             <div className="w-full">
                 <div className="intro flex mt-36 mb-14 justify-center">
