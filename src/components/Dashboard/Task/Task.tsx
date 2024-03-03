@@ -11,7 +11,6 @@ export default function Task({ task }: { task: TaskInterface }) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const existInParams = searchParams.get("task");
-    const authUser = useAppSelector((state) => state.userReducer.user);
 
     let completed = 0;
     let subtasks: SubTaskInterface[] | undefined = task.subtasks;

@@ -1,7 +1,7 @@
 import TaskTypeDropDown from "@/components/Dashboard/TaskTypeDropDown";
 import DeleteModal from "@/components/Modals/DeleteModal";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { Member, TaskInterface, TaskStatus } from "@/interfaces";
+import { Member, TaskInterface, TaskStatus, UserInterface } from "@/interfaces";
 import { deleteTask as deleteTaskAction } from "@/store/features/board";
 import { gql, useMutation, useSubscription } from "@apollo/client";
 import { Avatar, IconButton, Tooltip } from "@mui/material";
@@ -11,6 +11,7 @@ import { MouseEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdAccountCircle, MdDelete } from "react-icons/md";
 import OviooDropDown from "../../OviooDropDown";
+import { useSession } from "next-auth/react";
 
 const NUM_SHOWN_ACTIVE_USERS = 3;
 const DELETE_TASK = gql`
@@ -44,7 +45,8 @@ export default function TaskModalHeader({
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const dispatch = useAppDispatch();
-    const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
+    const session = useSession();
+    const isDesigner = !!((session?.data?.user as UserInterface)?.isDesigner);
     const [deleteTask] = useMutation(DELETE_TASK);
     const { loading: userStatusChangedLoading, data: userStatusChangedData } =
         useSubscription(USER_STATUS_CHANGED);

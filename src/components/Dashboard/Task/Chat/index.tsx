@@ -1,11 +1,11 @@
 "use client";
 
-import { useAppSelector } from "@/hooks/redux";
 import { useCustomQuery } from "@/hooks/useCustomQuery";
-import { TaskInterface } from "@/interfaces";
+import { TaskInterface, UserInterface } from "@/interfaces";
 import { MessageInterface, MessageStatusEnum } from "@/interfaces/message";
 import "@/styles/components/dashboard/task/chat.scss";
 import { gql, useMutation } from "@apollo/client";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import "react-chat-elements/dist/main.css";
 import MessageInput from "./MessageInput";
@@ -66,7 +66,9 @@ const READ_MESSAGES = gql`
 `;
 
 export default function Chat({ task }: { task: TaskInterface }) {
-    const authUser = useAppSelector((state) => state.userReducer.user);
+    const session = useSession();
+    const authUser = session?.data?.user as UserInterface;
+
     const [showPicker, setShowPicker] = useState<boolean>(false);
     const [messages, setMessages] = useState<any[]>([]);
     const [unreadMessages, setUnreadMessages] = useState<any[]>([]);

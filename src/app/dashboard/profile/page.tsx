@@ -4,9 +4,12 @@ import NotificationSetting from "@/components/Dashboard/Profile/NotificationSett
 import PasswordSetting from "@/components/Dashboard/Profile/PasswordSetting";
 import ProfileSetting from "@/components/Dashboard/Profile/ProfileSetting";
 import { useAppSelector } from "@/hooks/redux";
+import { UserInterface } from "@/interfaces";
+import { useSession } from "next-auth/react";
 
 export default function Profile() {
-    const user = useAppSelector((state) => state.userReducer.user);
+    const session = useSession();
+    const user = session?.data?.user as UserInterface;
 
     return (
         user && (

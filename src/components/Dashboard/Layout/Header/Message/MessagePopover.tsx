@@ -1,9 +1,10 @@
 import { useAppSelector } from "@/hooks/redux";
-import { TaskInterface, Team } from "@/interfaces";
+import { TaskInterface, Team, UserInterface } from "@/interfaces";
 import "@/styles/components/dashboard/layout/header/notifications-popover.scss";
 import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import IconButton from "@mui/joy/IconButton";
 import { Badge, Box, Divider, List, Popover, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { TbMessageCircle2Filled } from "react-icons/tb";
 import "simplebar-react/dist/simplebar.min.css";
@@ -62,7 +63,9 @@ export default function MessagePopover() {
     const open = Boolean(anchorEl);
     const [allUnreadMsgsCount, setAllUnreadMsgsCount] = useState<number>(0);
 
-    const authUser = useAppSelector((state) => state.userReducer.user);
+    const session = useSession();
+    const authUser = session?.data?.user as UserInterface;
+
     const openedModalTask = useAppSelector(
         (state) => state.taskReducer.selectedTask
     );
@@ -81,7 +84,8 @@ export default function MessagePopover() {
         useSubscription(MESSAGE_SENT, {
             variables: {
                 data: {
-                    teamIds: authUser.teams.map((team: Team) => team.id),
+                    teamIds:
+                        authUser?.teams?.map((team: Team) => team.id) || [],
                 },
             },
         });

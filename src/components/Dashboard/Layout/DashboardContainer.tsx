@@ -3,11 +3,12 @@
 import DashboardHeader from "@/components/Dashboard/Layout/Header/index";
 import { AllowedRoutes } from "@/constants/AllowedRoutes";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { RoleEnum } from "@/interfaces";
+import { RoleEnum, UserInterface } from "@/interfaces";
 import { ModeEnum } from "@/interfaces/store/main";
 import { setUser } from "@/store/features/user";
 import "@/styles/app/dashboard/layout.scss";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import { useSession } from "next-auth/react";
 import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
@@ -48,7 +49,8 @@ export default function DashboardContainer({
 }) {
     const dispatch = useAppDispatch();
     const pathname = usePathname();
-    const currentUser = useAppSelector((state) => state.userReducer.user);
+    const session = useSession();
+    const currentUser = session?.data?.user as UserInterface;
     const mode = useAppSelector((state) => state.mainReducer.mode);
 
     const [open, setOpen] = useState(false);

@@ -1,9 +1,10 @@
 "use client";
 
 import DashBoardCard from "@/components/DashBoardCard";
-import { useAppSelector } from "@/hooks/redux";
+import { UserInterface } from "@/interfaces";
 import { gql, useMutation } from "@apollo/client";
 import Switch from "@mui/joy/Switch";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -26,7 +27,9 @@ const UPDATE_PROFILE = gql`
 `;
 
 export default function NotificationSetting(): ReactNode {
-    const initialData = useAppSelector((state) => state.userReducer.user);
+    const session = useSession();
+    const initialData = session?.data?.user as UserInterface;
+
     const [updateProfile] = useMutation(UPDATE_PROFILE);
 
     const [formData, setFormData] = useState({

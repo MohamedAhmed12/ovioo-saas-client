@@ -63,8 +63,11 @@ export interface UserInterface {
     provider?: string;
     profile?: ProfileInteface;
     role?: RoleEnum;
-    team?: Team;
+    teams?: Team[];
     assignedTasks?: TaskInterface[];
+    isUser: Boolean;
+    isDesigner: Boolean;
+    isManager: Boolean;
 }
 
 export interface ProfileInteface {
