@@ -63,8 +63,8 @@ export default function MessagePopover() {
     const open = Boolean(anchorEl);
     const [allUnreadMsgsCount, setAllUnreadMsgsCount] = useState<number>(0);
 
-    const session = useSession();
-    const authUser = session?.data?.user as UserInterface;
+    const { data: session } = useSession();
+    const authUser = session?.data.user as UserInterface;
 
     const openedModalTask = useAppSelector(
         (state) => state.taskReducer.selectedTask

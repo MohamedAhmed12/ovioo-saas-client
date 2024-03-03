@@ -66,7 +66,7 @@ const READ_MESSAGES = gql`
 `;
 
 export default function Chat({ task }: { task: TaskInterface }) {
-    const session = useSession();
+    const { data: session } = useSession();
     const authUser = session?.data?.user as UserInterface;
 
     const [showPicker, setShowPicker] = useState<boolean>(false);

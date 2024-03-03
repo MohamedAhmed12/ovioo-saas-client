@@ -124,13 +124,13 @@ export default function TaskModal({
     const [initialDataLoaded, setInitialDataLoaded] = useState(false);
 
     const theme = useTheme();
-    const session = useSession();
+    const { data: session } = useSession();
     const dispatch = useAppDispatch();
     const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
     const task: TaskInterface | null = useAppSelector(
         (state) => state.taskReducer.selectedTask
     );
-    const isDesigner = (session?.data?.user as UserInterface)?.isDesigner;
+    const isDesigner = (session?.data.user as UserInterface)?.isDesigner;
 
     const [editTask] = useMutation(EDIT_TASK);
     const {

@@ -17,8 +17,8 @@ export default function TaskModalBody({
     handleOnChange: (name: string, value: any) => void;
 }) {
     const dispatch = useAppDispatch();
-    const session = useSession();
-    const isDesigner = !!((session?.data?.user as UserInterface)?.isDesigner);
+    const { data: session } = useSession();
+    const isDesigner = !!((session?.data.user as UserInterface)?.isDesigner);
     const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
         handleOnChange("title", e.target.value);
         dispatch(updateTaskTitle({ task, title: e.target.value }));

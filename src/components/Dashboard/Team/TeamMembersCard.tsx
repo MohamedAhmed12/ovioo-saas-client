@@ -14,8 +14,8 @@ export default function TeamMembersCard({
     headerTitle: string;
     team: Team;
 }) {
-    const session = useSession();
-    const currentUser = session?.data?.user as UserInterface;
+    const { data: session } = useSession();
+    const currentUser = session?.data.user as UserInterface;
 
     if (!currentUser) return;
 

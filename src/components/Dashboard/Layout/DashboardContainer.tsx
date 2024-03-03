@@ -48,8 +48,8 @@ export default function DashboardContainer({
 }) {
     const dispatch = useAppDispatch();
     const pathname = usePathname();
-    const session = useSession();
-    const currentUser = session?.data?.user as UserInterface;
+    const { data: session } = useSession();
+    const currentUser = session?.data.user as UserInterface;
     const mode = useAppSelector((state) => state.mainReducer.mode);
 
     const [open, setOpen] = useState(false);

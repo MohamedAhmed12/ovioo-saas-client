@@ -42,8 +42,8 @@ export default function NotificationPopover() {
     const [page, setPage] = useState<number>(1);
     const [offsetPlus, setOffsetPlus] = useState<number>(0);
     const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
-    const session = useSession();
-    const authUser = session?.data?.user as UserInterface;
+    const { data: session } = useSession();
+    const authUser = session?.data.user as UserInterface;
     const {
         loading,
         error,

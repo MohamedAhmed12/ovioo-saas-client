@@ -33,8 +33,8 @@ const userMenuOptions = [
 
 export default function AccountPopover() {
     const [open, setOpen] = useState<HTMLElement | null>(null);
-    const session = useSession();
-    const currentUser = session?.data?.user as UserInterface;
+    const { data: session } = useSession();
+    const currentUser = session?.data.user as UserInterface;
 
     const handleToggle = (event: MouseEvent<HTMLElement> | null) => {
         setOpen(event ? event.currentTarget : null);

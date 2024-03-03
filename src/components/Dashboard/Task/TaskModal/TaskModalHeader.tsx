@@ -45,8 +45,8 @@ export default function TaskModalHeader({
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const dispatch = useAppDispatch();
-    const session = useSession();
-    const isDesigner = !!((session?.data?.user as UserInterface)?.isDesigner);
+    const { data: session } = useSession();
+    const isDesigner = !!((session?.data.user as UserInterface)?.isDesigner);
     const [deleteTask] = useMutation(DELETE_TASK);
     const { loading: userStatusChangedLoading, data: userStatusChangedData } =
         useSubscription(USER_STATUS_CHANGED);

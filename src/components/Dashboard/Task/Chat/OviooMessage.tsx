@@ -13,8 +13,8 @@ const OviooMessage = ({
     message: MessageInterface;
     onResend: () => void;
 }) => {
-    const session = useSession();
-    const authUser = session?.data?.user as UserInterface;
+    const { data: session } = useSession();
+    const authUser = session?.data.user as UserInterface;
 
     const getType = (): any => {
         if (!message?.asset) return "text";

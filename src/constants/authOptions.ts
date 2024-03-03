@@ -185,12 +185,10 @@ export const authOptions = {
             token,
             account,
             user,
-            session,
         }: {
             token: JWT;
             account: Account | null;
             user: User;
-            session: Session;
         }) {
             if (account) {
                 token.provider = account?.provider;

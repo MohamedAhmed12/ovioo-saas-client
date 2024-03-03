@@ -71,7 +71,7 @@ export default function MessagesWrapper({
     const [lastMessage, setLastMessage] = useState<MessageInterface>();
     const [prevScrollTop, setPrevScrollTop] = useState<number>(0);
     const msgsWrapper = useRef<HTMLDivElement | null>(null);
-    const session = useSession();
+    const { data: session } = useSession();
     const authUser = session?.data?.user as UserInterface;
 
     const {

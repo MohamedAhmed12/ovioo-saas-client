@@ -39,8 +39,8 @@ const UserNavbarTabs = [
 ];
 
 export default function Navbar() {
-    const session = useSession();
-    const isUser = (session?.data?.user as UserInterface)?.isUser;
+    const { data: session } = useSession();
+    const isUser = (session?.data.user as UserInterface)?.isUser;
 
     const navbarLinks: () => {
         title: string;

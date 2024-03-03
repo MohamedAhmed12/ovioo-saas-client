@@ -42,7 +42,7 @@ export default function ProjectCard({
     const open = Boolean(anchorEl);
 
     const dispatch = useAppDispatch();
-    const session = useSession();
+    const { data: session } = useSession();
     const [deleteProject] = useMutation(DELETE_PROJECT);
     const isManager = (session?.data?.user as UserInterface)?.isManager;
 

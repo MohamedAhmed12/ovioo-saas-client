@@ -27,13 +27,13 @@ const UPDATE_PROFILE = gql`
 `;
 
 export default function NotificationSetting(): ReactNode {
-    const session = useSession();
-    const initialData = session?.data?.user as UserInterface;
+    const { data: session } = useSession();
+    const initialData = session?.data.user as UserInterface;
 
     const [updateProfile] = useMutation(UPDATE_PROFILE);
 
     const [formData, setFormData] = useState({
-        id: null,
+        id: "",
         push_notification_enabled: false,
         mail_notification_enabled: false,
     });
@@ -69,9 +69,9 @@ export default function NotificationSetting(): ReactNode {
                 ...prevState,
                 id: initialData.profile.id,
                 push_notification_enabled:
-                    initialData.profile.push_notification_enabled,
+                    initialData?.profile?.push_notification_enabled,
                 mail_notification_enabled:
-                    initialData.profile.mail_notification_enabled,
+                    initialData?.profile?.mail_notification_enabled,
             }));
         }
     }, [initialData]);

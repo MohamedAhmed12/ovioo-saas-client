@@ -24,8 +24,8 @@ export default function Projects() {
     const [open, setOpen] = useState(false);
     const [projectToEdit, setProjectToEdit] = useState({});
 
-    const session = useSession();
-    const isUser = (session?.data?.user as UserInterface)?.isUser;
+    const { data: session } = useSession();
+    const isUser = (session?.data.user as UserInterface)?.isUser;
     const projects = useAppSelector((state) => state.projectReducer.projects);
     const dispatch = useAppDispatch();
     const { loading: graphQLloading, error, data } = useQuery(LIST_PROJECTS);

@@ -31,8 +31,8 @@ const TASK_CREATED = gql`
 `;
 
 export default function Task() {
-    const session = useSession();
-    const isDesigner = (session?.data?.user as UserInterface)?.isDesigner;
+    const { data: session } = useSession();
+    const isDesigner = (session?.data.user as UserInterface)?.isDesigner;
     const tasks = useAppSelector((state) => state.boardReducer.tasks);
     const dispatch = useAppDispatch();
     const {

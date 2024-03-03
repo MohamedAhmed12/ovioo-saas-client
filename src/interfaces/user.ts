@@ -57,11 +57,12 @@ export interface User {
 export interface UserInterface {
     id: string;
     fullname?: string;
+    email: string;
     avatar?: string;
     company?: string;
     phone?: number;
     provider?: string;
-    profile?: ProfileInteface;
+    profile: ProfileInteface;
     role: RoleEnum;
     teams: Team[];
     assignedTasks?: TaskInterface[];
@@ -71,7 +72,7 @@ export interface UserInterface {
 }
 
 export interface ProfileInteface {
-    id: number;
+    id: string;
     company_name?: string;
     company_website?: string;
     business_info?: string;
