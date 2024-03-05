@@ -25,6 +25,7 @@ export default async function CreditCard() {
 
     const { data, error } = await client.query({
         query: FETCH_USER_WITH_PROFILE,
+        fetchPolicy: "network-only",
     });
 
     if (error) {
@@ -32,7 +33,7 @@ export default async function CreditCard() {
     }
 
     return (
-        data && (
+        data?.me?.teams[0]?.subscriptions?.length > 0 && (
             <Card className="ovioo-card with-shadow min-w-[300px] max-w-[350px] rounded-[10px] my-6">
                 <CardContent>
                     <Typography

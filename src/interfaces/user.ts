@@ -62,8 +62,8 @@ export interface UserInterface {
     phone?: number;
     provider?: string;
     profile?: ProfileInteface;
-    role?: RoleEnum;
-    team?: Team;
+    role: RoleEnum;
+    teams: Team[];
     assignedTasks?: TaskInterface[];
 }
 
