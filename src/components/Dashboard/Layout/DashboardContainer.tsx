@@ -1,14 +1,13 @@
 "use client";
 
 import DashboardHeader from "@/components/Dashboard/Layout/Header/index";
-import { AllowedRoutes } from "@/constants/AllowedRoutes";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import useSubscriptionRedirect from "@/hooks/useSubscriptionRedirect";
 import { RoleEnum } from "@/interfaces";
 import { ModeEnum } from "@/interfaces/store/main";
 import { setUser } from "@/store/features/user";
 import "@/styles/app/dashboard/layout.scss";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 
@@ -35,6 +34,10 @@ const FETCH_USER_WITH_PROFILE = gql`
             }
             teams {
                 id
+                stripe_client_reference_id
+                subscriptions {
+                    id
+                }
             }
         }
     }
@@ -45,77 +48,51 @@ export default function DashboardContainer({
 }: {
     children: React.ReactNode;
 }) {
+    const isRedirecting = useSubscriptionRedirect();
     const dispatch = useAppDispatch();
-    const pathname = usePathname();
     const currentUser = useAppSelector((state) => state.userReducer.user);
     const mode = useAppSelector((state) => state.mainReducer.mode);
 
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [isRedirecting, setIsRedirecting] = useState(true);
     const [navbarIsHidden, setNavbarIsHidden] = useState(false);
 
     const [toggleUserStatus] = useMutation(TOGGLE_USER_STATUS);
-    const {
-        loading: graphQLloading,
-        data: userData,
-        error,
-    } = useQuery(FETCH_USER_WITH_PROFILE, { fetchPolicy: "no-cache" });
-    if (error) throw new Error(JSON.stringify(error));
-
-    const handleBeforeUnload = () =>
-        toggleUserStatus({
-            variables: {
-                isActive: false,
+    const { loading: graphQLloading, error } = useQuery(
+        FETCH_USER_WITH_PROFILE,
+        {
+            fetchPolicy: "network-only",
+            onCompleted: (data) => {
+                const isDesigner = [
+                    RoleEnum.Designer,
+                    RoleEnum.Agency,
+                ].includes(data.me.role);
+                dispatch(setUser(data.me));
+                setNavbarIsHidden(isDesigner);
             },
-        });
+        }
+    );
 
     useEffect(() => {
-        toggleUserStatus({
-            variables: {
-                isActive: true,
-            },
-        });
+        toggleUserStatus({ variables: { isActive: true } });
+
+        const handleBeforeUnload = () =>
+            toggleUserStatus({ variables: { isActive: false } });
         window.addEventListener("beforeunload", handleBeforeUnload);
 
-        return () => {
+        return () =>
             window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
     }, []);
-    useEffect(() => {
-        if (!graphQLloading && userData?.me) {
-            const isDesigner = [RoleEnum.Designer, RoleEnum.Agency].includes(
-                userData.me.role
-            );
-            dispatch(setUser(userData.me));
 
-            if (isDesigner) setNavbarIsHidden(true);
-
-            if (
-                AllowedRoutes[userData.me.role] &&
-                !AllowedRoutes[userData.me.role].includes(pathname)
-            ) {
-                redirect("/unauthorize");
-            } else {
-                setIsRedirecting(false);
-            }
-        }
-    }, [userData, graphQLloading]);
     useEffect(() => {
         const htmlElement: HTMLElement = document.documentElement;
-
-        if (htmlElement.classList.contains(ModeEnum.Dark))
-            htmlElement.classList.remove(ModeEnum.Dark);
-
-        if (htmlElement.classList.contains(ModeEnum.Light))
-            htmlElement.classList.remove(ModeEnum.Light);
-
+        htmlElement.classList.remove(ModeEnum.Dark, ModeEnum.Light);
         htmlElement.classList.add(mode);
-        setLoading(false);
     }, [mode]);
 
+    if (error) throw new Error(JSON.stringify(error));
+
     return (
-        !loading &&
+        !graphQLloading &&
         currentUser &&
         !isRedirecting && (
             <main
