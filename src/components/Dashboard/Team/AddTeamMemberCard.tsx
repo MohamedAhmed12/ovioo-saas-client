@@ -1,6 +1,7 @@
 "use client";
 
 import DashBoardCard from "@/components/DashBoardCard";
+import { useAppSelector } from "@/hooks/redux";
 import { useForm } from "@/hooks/useForm";
 import { useGraphError } from "@/hooks/useGraphError";
 import { Team, User as UserInterface } from "@/interfaces";
@@ -11,7 +12,6 @@ import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { Session } from "next-auth";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -50,8 +50,7 @@ export default function AddTeamMemberCard({
 
     const router = useRouter();
     const { handleOnChange } = useForm(setFormData);
-    const currentUser = session?.data?.user as UserInterface;
-
+    const currentUser = useAppSelector((state) => state.userReducer.user);
     const { errors, errorHandler } = useGraphError({});
     const client = getClient(session);
     const [createMember] = useMutation(CREATE_MEMBER, {

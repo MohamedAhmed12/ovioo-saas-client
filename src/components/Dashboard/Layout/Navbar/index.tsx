@@ -1,4 +1,4 @@
-import { UserInterface } from "@/interfaces";
+import { useAppSelector } from "@/hooks/redux";
 import {
     Box,
     List,
@@ -6,7 +6,6 @@ import {
     ListItemIcon,
     ListItemText,
 } from "@mui/material";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -23,7 +22,7 @@ const NavbarTabs = [
         title: "Tasks",
         url: "/dashboard/task",
         icon: <MdTask size="25" />,
-    },
+    }
 ];
 const UserNavbarTabs = [
     {
@@ -39,9 +38,7 @@ const UserNavbarTabs = [
 ];
 
 export default function Navbar() {
-    const { data: session } = useSession();
-    const isUser = (session?.data.user as UserInterface)?.isUser;
-
+    const isUser = useAppSelector((state) => state.userReducer.isUser);
     const navbarLinks: () => {
         title: string;
         url: string;

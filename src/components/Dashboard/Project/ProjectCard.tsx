@@ -1,7 +1,7 @@
 "use client";
 
-import { useAppDispatch } from "@/hooks/redux";
-import { Project as ProjectInterface, UserInterface } from "@/interfaces";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { Project as ProjectInterface } from "@/interfaces";
 import { deleteProject as storeDeleteProject } from "@/store/features/project";
 import "@/styles/components/dashboard/project/project-card.scss";
 import { gql, useMutation } from "@apollo/client";
@@ -13,7 +13,6 @@ import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { MouseEvent, useState } from "react";
 import toast from "react-hot-toast";
@@ -42,9 +41,8 @@ export default function ProjectCard({
     const open = Boolean(anchorEl);
 
     const dispatch = useAppDispatch();
-    const { data: session } = useSession();
     const [deleteProject] = useMutation(DELETE_PROJECT);
-    const isManager = (session?.data?.user as UserInterface)?.isManager;
+    const isManager = useAppSelector((state) => state.userReducer.isManager);
 
     const handleToggle = (event: MouseEvent<HTMLElement> | null) => {
         setAnchorEl(event?.currentTarget ? event.currentTarget : null);

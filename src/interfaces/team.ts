@@ -1,10 +1,7 @@
-import { Subscription } from "./subscription";
-
 export interface Team {
     id: string;
     owner_id: string;
     members: Member[];
-    subscriptions: Subscription[];
 }
 
 export interface Member {

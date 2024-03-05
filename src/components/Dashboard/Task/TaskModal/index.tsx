@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { TaskInterface, UserInterface } from "@/interfaces";
+import { TaskInterface } from "@/interfaces";
 import { updateTaskTitle } from "@/store/features/board";
 import { setSelectedTask } from "@/store/features/task";
 import "@/styles/components/dashboard/task/task-modal.scss";
@@ -7,7 +7,6 @@ import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import { useMediaQuery } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import { useTheme } from "@mui/material/styles";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Chat from "../Chat";
@@ -124,13 +123,12 @@ export default function TaskModal({
     const [initialDataLoaded, setInitialDataLoaded] = useState(false);
 
     const theme = useTheme();
-    const { data: session } = useSession();
     const dispatch = useAppDispatch();
     const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
     const task: TaskInterface | null = useAppSelector(
         (state) => state.taskReducer.selectedTask
     );
-    const isDesigner = (session?.data.user as UserInterface)?.isDesigner;
+    const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
 
     const [editTask] = useMutation(EDIT_TASK);
     const {

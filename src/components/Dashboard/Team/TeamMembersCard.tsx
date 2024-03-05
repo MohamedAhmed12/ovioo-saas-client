@@ -1,9 +1,9 @@
 "use client";
 
 import DashBoardCard from "@/components/DashBoardCard";
-import { Member, Team, UserInterface } from "@/interfaces";
+import { useAppSelector } from "@/hooks/redux";
+import { Member, Team } from "@/interfaces";
 import { Avatar, Grid, Stack } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { MdStar } from "react-icons/md";
 import MembersActionDropDown from "./MembersActionDropDown";
 
@@ -14,8 +14,7 @@ export default function TeamMembersCard({
     headerTitle: string;
     team: Team;
 }) {
-    const { data: session } = useSession();
-    const currentUser = session?.data.user as UserInterface;
+    const currentUser = useAppSelector((state) => state.userReducer.user);
 
     if (!currentUser) return;
 
@@ -28,7 +27,7 @@ export default function TeamMembersCard({
                     {team.members.length > 0 &&
                         team.members.map((member: Member, index: number) => (
                             <Grid
-                                key={index}
+                            key={index}
                                 container
                                 spacing={{ sm: "2", lg: "5" }}
                                 alignItems="center"

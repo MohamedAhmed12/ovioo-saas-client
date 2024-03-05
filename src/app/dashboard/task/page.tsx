@@ -3,11 +3,10 @@
 import Column from "@/components/Dashboard/Task/Column";
 import { TaskKanbanColors } from "@/constants/TaskKanbanColors";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { DesignerTaskStatus, TaskStatus, UserInterface } from "@/interfaces";
+import { DesignerTaskStatus, TaskStatus } from "@/interfaces";
 import { pushNewTask, resetTasks, setTasks } from "@/store/features/board";
 import "@/styles/app/unauth/home.scss";
 import { gql, useQuery, useSubscription } from "@apollo/client";
-import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 
 const LIST_TASKS = gql`
@@ -31,9 +30,8 @@ const TASK_CREATED = gql`
 `;
 
 export default function Task() {
-    const { data: session } = useSession();
-    const isDesigner = (session?.data.user as UserInterface)?.isDesigner;
     const tasks = useAppSelector((state) => state.boardReducer.tasks);
+    const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
     const dispatch = useAppDispatch();
     const {
         loading: graphQLloading,

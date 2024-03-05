@@ -1,7 +1,5 @@
-import { NextRequest } from "next/server";
+import { withAuth } from "next-auth/middleware";
 
-export async function middleware(req: NextRequest) {
-  
-}
+export default withAuth(function middleware(req) {});
 
 export const config = { matcher: ["/dashboard/:path*"] };

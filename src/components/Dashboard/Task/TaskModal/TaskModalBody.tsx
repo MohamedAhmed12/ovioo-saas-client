@@ -1,11 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { Project, RoleEnum, TaskInterface, UserInterface } from "@/interfaces";
+import { Project, RoleEnum, TaskInterface } from "@/interfaces";
 import OviooDropDown from "../../OviooDropDown";
 import Attachement from "./Attachement";
 import { ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { updateTaskTitle } from "@/store/features/board";
-import { useSession } from "next-auth/react";
 
 export default function TaskModalBody({
     task,
@@ -17,8 +16,7 @@ export default function TaskModalBody({
     handleOnChange: (name: string, value: any) => void;
 }) {
     const dispatch = useAppDispatch();
-    const { data: session } = useSession();
-    const isDesigner = !!((session?.data.user as UserInterface)?.isDesigner);
+    const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
     const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
         handleOnChange("title", e.target.value);
         dispatch(updateTaskTitle({ task, title: e.target.value }));

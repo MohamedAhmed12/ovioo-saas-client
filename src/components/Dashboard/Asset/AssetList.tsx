@@ -50,7 +50,7 @@ export default function AssetList({
     readOnly?: boolean;
     handleDelete: (asset: AssetInterface) => void;
 }) {
-    const { data: session } = useSession({
+    const { data: session, status } = useSession({
         required: true,
     });
     const [loading, setLoading] = useState(false);

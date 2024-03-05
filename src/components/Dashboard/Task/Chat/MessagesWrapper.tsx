@@ -1,8 +1,8 @@
-import { TaskInterface, UserInterface } from "@/interfaces";
+import { useAppSelector } from "@/hooks/redux";
+import { TaskInterface } from "@/interfaces";
 import { MessageInterface, MessageStatusEnum } from "@/interfaces/message";
 import { gql, useSubscription } from "@apollo/client";
 import { Badge, Fab } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import OviooMessage from "./OviooMessage";
@@ -71,8 +71,9 @@ export default function MessagesWrapper({
     const [lastMessage, setLastMessage] = useState<MessageInterface>();
     const [prevScrollTop, setPrevScrollTop] = useState<number>(0);
     const msgsWrapper = useRef<HTMLDivElement | null>(null);
-    const { data: session } = useSession();
-    const authUser = session?.data?.user as UserInterface;
+    const unreadMsgsWrapper = useRef<HTMLDivElement | null>(null);
+    const unreadMsgsBar = useRef<HTMLDivElement | null>(null);
+    const authUser = useAppSelector((state) => state.userReducer.user);
 
     const {
         data: msgsStatusChangedSubsData,
