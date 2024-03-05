@@ -46,7 +46,7 @@ export default function AssetList({
     handleDelete,
 }: {
     task?: TaskInterface;
-    assets?: AssetInterface[];
+    assets: AssetInterface[];
     readOnly?: boolean;
     handleDelete: (asset: AssetInterface) => void;
 }) {
@@ -133,14 +133,17 @@ export default function AssetList({
                 flexDirection="row"
                 className="flex gap-6 flex-wrap"
             >
-                {assets &&
+                {assets.length > 0 ? (
                     assets.map((asset) => (
                         <AssetWrapper
                             key={asset.id}
                             handleDelete={handleDelete}
                             asset={asset}
                         />
-                    ))}
+                    ))
+                ) : (
+                    <h3 className="text-xl">No assets uploaded yet.</h3>
+                )}
 
                 {!readOnly && (
                     <AddAssetCard
