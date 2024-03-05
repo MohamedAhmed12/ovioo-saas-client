@@ -1,12 +1,8 @@
-import { UserInterface } from "@/interfaces";
-import "next-auth";
+import type { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
     interface Session {
         access_token: string;
-        data: {
-            user: UserInterface;
-        };
     }
     interface Profile {
         id: string;

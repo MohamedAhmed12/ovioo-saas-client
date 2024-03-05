@@ -9,7 +9,7 @@ export default async function DashboardLayout({
 }) {
     return (
         <ApolloClientProvider>
-            <DashboardContainer>{children}</DashboardContainer>
+            <DashboardContainer>{children}</DashboardContainer>;
         </ApolloClientProvider>
     );
 }

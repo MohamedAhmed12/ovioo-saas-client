@@ -1,4 +1,3 @@
-import { determineUserRoleGroup } from "@/utils/determineUserRoleGroup";
 import { getClient } from "@/utils/getClient";
 import { gql } from "@apollo/client";
 import { sign } from "jsonwebtoken";
@@ -12,31 +11,6 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 import LinkedInProvider from "next-auth/providers/linkedin";
 
-const FETCH_USER_WITH_PROFILE = gql`
-    query {
-        me {
-            id
-            fullname
-            email
-            company
-            phone
-            provider
-            avatar
-            role
-            profile {
-                id
-                push_notification_enabled
-                mail_notification_enabled
-            }
-            teams {
-                id
-                subscriptions {
-                    id
-                }
-            }
-        }
-    }
-`;
 const FindOrCreateSSOUser = gql`
     mutation ($user: CreateSsoUserDto!) {
         findOrCreateSsoUser(user: $user) {
@@ -154,31 +128,6 @@ export const authOptions = {
                 token,
                 process.env.NEXTAUTH_SECRET as Secret
             );
-
-            const client = getClient(session);
-
-            try {
-                const {
-                    data: { me },
-                } = await client.query({
-                    query: FETCH_USER_WITH_PROFILE,
-                    fetchPolicy: "no-cache",
-                });
-
-                const { isUser, isDesigner, isManager } =
-                    determineUserRoleGroup(me.role);
-
-                session.user = {
-                    ...me,
-                    isUser,
-                    isDesigner,
-                    isManager,
-                };
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-                throw new Error("Failed to fetch user profile data");
-            }
-
             return Promise.resolve(session);
         },
         async jwt({

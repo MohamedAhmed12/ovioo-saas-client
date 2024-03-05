@@ -1,10 +1,9 @@
 "use client";
 
 import DashBoardCard from "@/components/DashBoardCard";
-import { UserInterface } from "@/interfaces";
+import { useAppSelector } from "@/hooks/redux";
 import { gql, useMutation } from "@apollo/client";
 import Switch from "@mui/joy/Switch";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -27,13 +26,11 @@ const UPDATE_PROFILE = gql`
 `;
 
 export default function NotificationSetting(): ReactNode {
-    const { data: session } = useSession();
-    const initialData = session?.data.user as UserInterface;
-
+    const initialData = useAppSelector((state) => state.userReducer.user);
     const [updateProfile] = useMutation(UPDATE_PROFILE);
 
     const [formData, setFormData] = useState({
-        id: "",
+        id: null,
         push_notification_enabled: false,
         mail_notification_enabled: false,
     });
@@ -69,9 +66,9 @@ export default function NotificationSetting(): ReactNode {
                 ...prevState,
                 id: initialData.profile.id,
                 push_notification_enabled:
-                    initialData?.profile?.push_notification_enabled,
+                    initialData.profile.push_notification_enabled,
                 mail_notification_enabled:
-                    initialData?.profile?.mail_notification_enabled,
+                    initialData.profile.mail_notification_enabled,
             }));
         }
     }, [initialData]);

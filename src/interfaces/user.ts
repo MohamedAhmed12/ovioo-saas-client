@@ -57,22 +57,18 @@ export interface User {
 export interface UserInterface {
     id: string;
     fullname?: string;
-    email: string;
     avatar?: string;
     company?: string;
     phone?: number;
     provider?: string;
-    profile: ProfileInteface;
-    role: RoleEnum;
-    teams: Team[];
+    profile?: ProfileInteface;
+    role?: RoleEnum;
+    team?: Team;
     assignedTasks?: TaskInterface[];
-    isUser: Boolean;
-    isDesigner: Boolean;
-    isManager: Boolean;
 }
 
 export interface ProfileInteface {
-    id: string;
+    id: number;
     company_name?: string;
     company_website?: string;
     business_info?: string;

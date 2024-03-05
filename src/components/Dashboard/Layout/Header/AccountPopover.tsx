@@ -1,4 +1,5 @@
-import { RoleEnum, UserInterface } from "@/interfaces/user";
+import { useAppSelector } from "@/hooks/redux";
+import { RoleEnum } from "@/interfaces/user";
 import {
     Box,
     Divider,
@@ -9,7 +10,7 @@ import {
     Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { MouseEvent, useState } from "react";
 import OviooAvatar from "../../OviooAvatar";
@@ -33,8 +34,7 @@ const userMenuOptions = [
 
 export default function AccountPopover() {
     const [open, setOpen] = useState<HTMLElement | null>(null);
-    const { data: session } = useSession();
-    const currentUser = session?.data.user as UserInterface;
+    const currentUser = useAppSelector((state) => state.userReducer.user);
 
     const handleToggle = (event: MouseEvent<HTMLElement> | null) => {
         setOpen(event ? event.currentTarget : null);
