@@ -7,7 +7,6 @@ import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import { useMediaQuery } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import { useTheme } from "@mui/material/styles";
-import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Chat from "../Chat";
 import TaskModalBody from "./TaskModalBody";
@@ -102,14 +101,6 @@ const EDIT_TASK = gql`
         }
     }
 `;
-const LIST_PROJECTS = gql`
-    query {
-        listProjects {
-            id
-            title
-        }
-    }
-`;
 
 export default function TaskModal({
     open,
@@ -120,10 +111,8 @@ export default function TaskModal({
     taskId: string;
     onClose: () => void;
 }) {
-    const [initialDataLoaded, setInitialDataLoaded] = useState(false);
-
-    const theme = useTheme();
     const dispatch = useAppDispatch();
+    const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
     const task: TaskInterface | null = useAppSelector(
         (state) => state.taskReducer.selectedTask
@@ -131,49 +120,29 @@ export default function TaskModal({
     const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
 
     const [editTask] = useMutation(EDIT_TASK);
-    const {
-        loading: graphQLloading,
-        error: showTaskError,
-        data: showTaskData,
-    } = useQuery(SHOW_TASK, {
-        variables: {
-            id: taskId,
-        },
+    useQuery(SHOW_TASK, {
+        variables: { id: taskId },
         fetchPolicy: "no-cache",
+        skip: !taskId,
+        onCompleted: (data) => dispatch(setSelectedTask(data?.showTask)),
     });
 
-    if (showTaskError) throw new Error(showTaskError.message);
+    useSubscription(TASK_UPDATED, {
+        variables: { taskId },
+        onSubscriptionData: ({ subscriptionData }) => {
+            const updatedTask: TaskInterface & { title: string } =
+                subscriptionData?.data?.taskUpdated;
 
-    const { error: listProjectError, data: listProjectData } = useQuery(
-        LIST_PROJECTS,
-        {
-            fetchPolicy: "no-cache",
-        }
-    );
-
-    if (listProjectError) throw new Error(JSON.stringify(listProjectError));
-
-    const { data: taskUpdatedSubsData, loading: taskUpdatedSubsLoading } =
-        useSubscription(TASK_UPDATED, { variables: { taskId } });
-
-    useEffect(() => {
-        const updatedTask: TaskInterface & { title: string } =
-            taskUpdatedSubsData?.taskUpdated;
-
-        if (!taskUpdatedSubsLoading && task && updatedTask) {
-            if (task.title != updatedTask.title) {
-                dispatch(updateTaskTitle({ task, title: updatedTask.title }));
+            if (updatedTask && task) {
+                dispatch(setSelectedTask(updatedTask));
+                if (task?.title !== updatedTask.title) {
+                    dispatch(
+                        updateTaskTitle({ task, title: updatedTask.title })
+                    );
+                }
             }
-
-            dispatch(setSelectedTask(updatedTask));
-        }
-    }, [taskUpdatedSubsData, taskUpdatedSubsLoading]);
-    useEffect(() => {
-        if (!graphQLloading && showTaskData?.showTask) {
-            dispatch(setSelectedTask(showTaskData?.showTask));
-            setInitialDataLoaded(true);
-        }
-    }, [graphQLloading, showTaskData, showTaskData?.showTask]);
+        },
+    });
 
     const handleOnChange = (name: string, value: any) =>
         dispatch(setSelectedTask({ ...task, [name]: value }));
@@ -194,8 +163,6 @@ export default function TaskModal({
     };
 
     return (
-        initialDataLoaded &&
-        listProjectData?.listProjects &&
         task && (
             <Dialog
                 fullScreen={fullScreen}
@@ -222,7 +189,6 @@ export default function TaskModal({
                         <TaskModalBody
                             task={task}
                             handleOnChange={handleOnChange}
-                            projects={listProjectData.listProjects}
                         />
 
                         {!isDesigner && <Chat task={task} />}
