@@ -1,6 +1,7 @@
 export interface Team {
     id: string;
     owner_id: string;
+    card_last4?: string;
     members: Member[];
 }
 
