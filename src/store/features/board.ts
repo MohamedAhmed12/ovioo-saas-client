@@ -63,11 +63,11 @@ export const boardSlice = createSlice({
         updateTaskTitle(
             state,
             {
-                payload: { task, title },
+                payload: { task: updatedTask, title },
             }: { payload: { task: TaskInterface; title: string } }
         ) {
-            state.tasks[task.status].map((task) => {
-                if (task.id != task.id) return task;
+            state.tasks[updatedTask.status].map((task) => {
+                if (updatedTask.id != task.id) return task;
 
                 task.title = title;
                 return task;
