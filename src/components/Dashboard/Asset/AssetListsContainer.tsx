@@ -85,9 +85,6 @@ export default function AssetListsContainer({
         setLoading(false);
     };
 
-    const handleSortBySelected = (selectedVal: string) =>
-        router.push(sortbyOptions[+selectedVal].path);
-
     const handleDeleteAsset = async ({ id, alt }: AssetInterface) => {
         try {
             await deleteAsset({
@@ -121,25 +118,6 @@ export default function AssetListsContainer({
                 </Button>
             }
         >
-            <div className="flex items-center mb-3">
-                <p className="text-lg">Sort by :</p>
-                <OviooDropDownWrapper
-                    initialVal={sortbyOptions.findIndex(
-                        (option) => option.title == sortBy
-                    )}
-                    onSelected={handleSortBySelected}
-                    className="!mx-4"
-                >
-                    {sortbyOptions.map((sortbyOption, i) => (
-                        <MenuItem key={sortbyOption.title} value={i}>
-                            {/* <Link href={sortbyOption.path}> */}
-                            {sortbyOption.title}
-                            {/* </Link> */}
-                        </MenuItem>
-                    ))}
-                </OviooDropDownWrapper>
-            </div>
-
             <AssetList
                 assets={assets}
                 handleDelete={handleDeleteAsset}
