@@ -183,7 +183,7 @@ export default function Chat({ task }: { task: TaskInterface }) {
         !graphQLloading &&
         data?.listTaskMessages &&
         messages && (
-            <div className="chat flex flex-col basis-1/2 pr-[25px] mt-1">
+            <div className="chat flex flex-col basis-1/2 mt-1">
                 {activeUsers && activeUsers?.length > 0 && (
                     <AvatarGroup
                         slotProps={{

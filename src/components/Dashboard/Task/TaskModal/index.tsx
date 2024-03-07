@@ -185,7 +185,7 @@ export default function TaskModal({
                         handleOnChange={handleOnChange}
                     />
 
-                    <div className="flex flex-col-reverse lg:flex-row task__body-wrapper">
+                    <div className="flex flex-col-reverse lg:flex-row task__body-wrapper px-[25px]">
                         <TaskModalBody
                             task={task}
                             handleOnChange={handleOnChange}

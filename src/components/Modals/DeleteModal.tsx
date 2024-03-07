@@ -21,6 +21,7 @@ function DeleteModal({
                 }
                 setIsDeleteModalOpen(false);
             }}
+            className="z-[999]"
         >
             <div className="max-h-[95vh] my-auto bg-white dark:bg-[#2b2c37] text-black dark:text-white font-bold shadow-md shadow-[#364e7e1a] max-w-md mx-auto w-full px-8 py-8 rounded-xl border border-[#32383e]">
                 <h3 className=" font-bold text-red-500 text-xl">
