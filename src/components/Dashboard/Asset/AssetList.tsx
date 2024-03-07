@@ -144,7 +144,12 @@ export default function AssetList({
                 ) : (
                     <h3 className="text-xl">No assets uploaded yet.</h3>
                 )}
-
+            </Box>
+            <Box
+                component="ul"
+                flexDirection="row"
+                className="flex gap-6 flex-wrap mt-8"
+            >
                 {!readOnly && (
                     <AddAssetCard
                         handleAssetsUpload={handleAssetsUpload}
