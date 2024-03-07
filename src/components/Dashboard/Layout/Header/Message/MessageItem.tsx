@@ -12,10 +12,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MdAccessTime, MdAccountCircle } from "react-icons/md";
 
-export default function MessageItem({ task }: { task: TaskInterface }) {
+export default function MessageItem({
+    task,
+    onClick,
+}: {
+    task: TaskInterface;
+    onClick: (task: TaskInterface) => void;
+}) {
     const router = useRouter();
-    const handleOpenMessageTask = () =>
-        router.push(`/dashboard/task?task=${task.id}`);
     const title = (
         <Typography variant="subtitle2" className="flex flex-col">
             {task.messages[0].sender?.fullname}
@@ -32,7 +36,10 @@ export default function MessageItem({ task }: { task: TaskInterface }) {
             </Typography>
         </Typography>
     );
-
+    const handleOpenMessageTask = async () => {
+        await onClick(task);
+        router.push(`/dashboard/task?task=${task.id}`);
+    };
     return (
         <ListItemButton
             sx={{

@@ -4,7 +4,7 @@ import "@/styles/components/dashboard/layout/header/notifications-popover.scss";
 import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import IconButton from "@mui/joy/IconButton";
 import { Badge, Box, Divider, List, Popover, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TbMessageCircle2Filled } from "react-icons/tb";
 import "simplebar-react/dist/simplebar.min.css";
 import MessageItem from "./MessageItem";
@@ -66,6 +66,7 @@ export default function MessagePopover() {
     const openedModalTask = useAppSelector(
         (state) => state.taskReducer.selectedTask
     );
+
     const [receiveTaskMessages] = useMutation(RECEIVE_MESSAGES);
     const {
         loading: graphQLloading,
@@ -73,113 +74,93 @@ export default function MessagePopover() {
         data,
     } = useQuery(LIST_UNREAD_MESSAGES, {
         fetchPolicy: "no-cache",
-    });
+        onCompleted: (data) => {
+            const unreadMessages = data?.listUnreadMessages || [];
 
-    if (error) throw new Error(JSON.stringify(error));
-
-    const { data: messageSentSubsData, loading: messageSentSubsLoading } =
-        useSubscription(MESSAGE_SENT, {
-            variables: {
-                data: {
-                    teamIds: authUser.teams.map((team: Team) => team.id),
-                },
-            },
-        });
-
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    useEffect(() => {
-        if (
-            !messageSentSubsLoading &&
-            messageSentSubsData?.messageSent &&
-            data?.listUnreadMessages
-        ) {
-            // if task modal/chat alreay opened then no need to proceed
-            if (
-                openedModalTask &&
-                openedModalTask.id == messageSentSubsData.messageSent.task.id
-            )
-                return;
-
-            // if task exist in listUnreadMessages
-            const taskIndex = data.listUnreadMessages.findIndex(
-                (task: Partial<TaskInterface>) =>
-                    task.id == messageSentSubsData.messageSent.task.id
-            );
-
-            if (taskIndex !== -1) {
-                data.listUnreadMessages[taskIndex].messages = [
-                    messageSentSubsData.messageSent,
-                ];
-                data.listUnreadMessages[taskIndex].unreadMessagesCount =
-                    data.listUnreadMessages[taskIndex].unreadMessagesCount + 1;
-                setAllUnreadMsgsCount((prevCount) => prevCount + 1);
-            } else {
-                data.listUnreadMessages.push({
-                    id: messageSentSubsData.messageSent.task.id,
-                    messages: [
-                        {
-                            id: messageSentSubsData.messageSent.id,
-                            content: messageSentSubsData.messageSent.content,
-                            status: messageSentSubsData.messageSent.status,
-                            created_at:
-                                messageSentSubsData.messageSent.created_at,
-                            sender: {
-                                fullname:
-                                    messageSentSubsData.messageSent.sender
-                                        .fullname,
-                                avatar: messageSentSubsData.messageSent.sender
-                                    .avatar,
-                            },
-                        },
-                    ],
-                    unreadMessagesCount: 1,
-                });
-                setAllUnreadMsgsCount((prevCount) => prevCount + 1);
-            }
-
-            receiveTaskMessages({
-                variables: {
-                    taskId: messageSentSubsData.messageSent.task.id,
-                },
-            });
-        }
-    }, [messageSentSubsData, messageSentSubsLoading]);
-    useEffect(() => {
-        if (data?.listUnreadMessages) {
-            const allUnreadMsgsCount = data?.listUnreadMessages.reduce(
+            let totalUnreadCount = unreadMessages.reduce(
                 (acc: number, task: TaskInterface) => {
                     receiveTaskMessages({ variables: { taskId: task.id } });
 
-                    if (task.unreadMessagesCount) {
-                        return acc + task.unreadMessagesCount;
+                    if (!openedModalTask || task.id !== openedModalTask?.id) {
+                        return acc + (task.unreadMessagesCount || 0);
                     }
                 },
                 0
             );
 
-            setAllUnreadMsgsCount(allUnreadMsgsCount);
-        }
-    }, [data]);
-    useEffect(() => {
-        if (openedModalTask && data?.listUnreadMessages) {
-            data.listUnreadMessages = data.listUnreadMessages.filter(
-                (task: Partial<TaskInterface>) => {
-                    if (task.id != openedModalTask.id) return task;
+            setAllUnreadMsgsCount(totalUnreadCount);
+        },
+    });
 
-                    if (!task?.unreadMessagesCount) return;
+    if (error) throw new Error(JSON.stringify(error));
 
-                    setAllUnreadMsgsCount((prevCount) =>
-                        prevCount == 0
-                            ? 0
-                            : prevCount - (task?.unreadMessagesCount as number)
-                    );
+    const { loading } = useSubscription(MESSAGE_SENT, {
+        variables: {
+            data: {
+                teamIds: authUser.teams.map((team: Team) => team.id),
+            },
+        },
+        onData: (subscriptionData) => {
+            const existedMsgs = data?.listUnreadMessages;
+            const sentMsg = subscriptionData?.data?.data?.messageSent;
+            if (existedMsgs && sentMsg) {
+                // if task modal/chat alreay opened then no need to proceed
+                if (openedModalTask?.id == sentMsg.task.id) return;
+
+                // if task exist in listUnreadMessages
+                const taskIndex = data.listUnreadMessages.findIndex(
+                    (task: Partial<TaskInterface>) => task.id == sentMsg.task.id
+                );
+
+                if (taskIndex !== -1) {
+                    existedMsgs[taskIndex].messages = [sentMsg];
+                    existedMsgs[taskIndex].unreadMessagesCount++;
+                } else {
+                    existedMsgs.push({
+                        id: sentMsg.task.id,
+                        messages: [
+                            {
+                                id: sentMsg.id,
+                                content: sentMsg.content,
+                                status: sentMsg.status,
+                                created_at: sentMsg.created_at,
+                                sender: {
+                                    fullname: sentMsg.sender.fullname,
+                                    avatar: sentMsg.sender.avatar,
+                                },
+                            },
+                        ],
+                        unreadMessagesCount: 1,
+                    });
                 }
+
+                setAllUnreadMsgsCount((prevCount) => prevCount + 1);
+                receiveTaskMessages({
+                    variables: {
+                        taskId: sentMsg.task.id,
+                    },
+                });
+            }
+        },
+    });
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleOnClick = (task: TaskInterface) => {
+        const taskIndex = data.listUnreadMessages.findIndex(
+            (task: Partial<TaskInterface>) => task.id == task.id
+        );
+
+        if (taskIndex !== -1) {
+            data.listUnreadMessages.splice(taskIndex, 1);
+            setAnchorEl(null);
+            setAllUnreadMsgsCount(
+                (prevCount) => prevCount - (task?.unreadMessagesCount || 0)
             );
         }
-    }, [openedModalTask, data]);
+    };
 
     return (
         !graphQLloading &&
@@ -236,7 +217,11 @@ export default function MessagePopover() {
 
                     <List disablePadding>
                         {data?.listUnreadMessages.map((task: TaskInterface) => (
-                            <MessageItem key={+task.id} task={task} />
+                            <MessageItem
+                                key={+task.id}
+                                task={task}
+                                onClick={() => handleOnClick(task)}
+                            />
                         ))}
                     </List>
                 </Popover>
