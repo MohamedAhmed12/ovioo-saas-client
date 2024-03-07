@@ -19,7 +19,7 @@ export default function TaskModalBody({
     };
     return (
         <div
-            className={`task-modal__body p-[25px] ${
+            className={`task-modal__body p-[25px] pt-16 ${
                 !isDesigner ? "basis-1/2" : ""
             }`}
         >
