@@ -5,19 +5,23 @@ import "@/styles/components/dashboard/layout/header/notifications-popover.scss";
 import { gql, useQuery } from "@apollo/client";
 import IconButton from "@mui/joy/IconButton";
 import { Badge, Box, Divider, List, Popover, Typography } from "@mui/material";
-import { MouseEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { UIEvent, useEffect, useState } from "react";
 import { IoNotificationsSharp } from "react-icons/io5";
 import "simplebar-react/dist/simplebar.min.css";
 
 const LIST_NOTIFICATIONS = gql`
     query ListNotifications($data: ListNotificationsDto!) {
         listNotifications(data: $data) {
-            id
-            content
-            action
-            is_read
-            created_at
-            userId
+            notifications {
+                id
+                content
+                action
+                is_read
+                created_at
+                userId
+            }
+            unreadCount
         }
     }
 `;
@@ -35,153 +39,128 @@ const NOTIFICATION_SENT = gql`
 `;
 
 export default function NotificationPopover() {
-    const [notifications, setNotifications] = useState<NotificationInterface[]>(
-        []
-    );
-    const [open, setOpen] = useState<HTMLElement | null>(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const open = Boolean(anchorEl);
     const [page, setPage] = useState<number>(1);
-    const [offsetPlus, setOffsetPlus] = useState<number>(0);
-    const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
+
+    const router = useRouter();
     const authUser = useAppSelector((state) => state.userReducer.user);
-    const {
-        loading,
-        error,
-        data: notificationData,
-        fetchMore,
-        subscribeToMore,
-    } = useQuery(LIST_NOTIFICATIONS, {
-        variables: { data: { page } },
-        fetchPolicy: "network-only",
-    });
 
-    if (error) throw new Error(JSON.stringify(error));
-
-    const handleOnScroll = ({ currentTarget }: any) => {
-        if (
-            Math.floor(currentTarget.scrollHeight - currentTarget.scrollTop) ==
-            currentTarget.clientHeight
-        ) {
-            setPage((page) => page + 1);
-            fetchMore({
-                variables: {
-                    data: {
-                        page: page + 1,
-                        offsetPlus,
-                    },
-                },
-                updateQuery: (
-                    prev: any,
-                    { fetchMoreResult }: { fetchMoreResult: any }
-                ) => {
-                    if (
-                        !fetchMoreResult ||
-                        fetchMoreResult?.listNotifications?.length == 0
-                    ) {
-                        return;
-                    }
-
-                    const newNotifications = [
-                        ...notifications,
-                        ...fetchMoreResult.listNotifications,
-                    ];
-
-                    setNotifications(newNotifications);
-                    getNotificationsCount(newNotifications);
-                },
-            });
+    const { error, data, fetchMore, subscribeToMore } = useQuery(
+        LIST_NOTIFICATIONS,
+        {
+            variables: { data: { page: 1 } },
+            fetchPolicy: "network-only",
         }
-    };
-    const handleToggle = (event: MouseEvent<HTMLElement> | null) => {
-        setOpen(event ? event.currentTarget : null);
-    };
-    const handleMarkAsRead = (id: number) => {
-        setNotifications(
-            notifications.map((notification) => {
-                if (notification.id == id) {
-                    return {
-                        ...notification,
-                        isUnRead: false,
-                    };
-                }
-                return notification;
-            })
-        );
-    };
-    const getNotificationsCount = (notifications: NotificationInterface[]) => {
-        const unread = notifications.filter(
-            (item: NotificationInterface) => !item.is_read
-        );
-        setUnreadNotifications(
-            (unreadNotification) => unreadNotification + unread.length
-        );
-    };
+    );
 
     useEffect(() => {
-        const unsubscribeNotificationSent = subscribeToMore({
+        const unsubscribe = subscribeToMore({
             document: NOTIFICATION_SENT,
             variables: { data: { userId: authUser.id } },
             updateQuery: (
                 prev: any,
                 { subscriptionData }: { subscriptionData: any }
             ) => {
-                if (!subscriptionData?.data?.notificationReceived) {
-                    return;
-                }
+                if (!subscriptionData?.data?.notificationReceived) return prev;
 
-                setOffsetPlus((offsetPlus) => offsetPlus + 1); // to prevent fetching notifications already exist
+                const newNotification =
+                    subscriptionData.data.notificationReceived;
+                console.log("subscriptionData.data", subscriptionData.data);
 
-                setNotifications([
-                    subscriptionData.data.notificationReceived,
-                    ...prev.listNotifications,
-                ]);
-
-                if (!subscriptionData.data.notificationReceived.is_read) {
-                    setUnreadNotifications((count) => count + 1);
-                }
+                return {
+                    ...prev,
+                    listNotifications: {
+                        ...prev.listNotifications,
+                        unreadCount: prev.listNotifications.unreadCount + 1,
+                        notifications: [
+                            newNotification,
+                            ...prev.listNotifications.notifications,
+                        ],
+                    },
+                };
             },
         });
 
-        return () => {
-            unsubscribeNotificationSent();
-        };
-    }, []);
-    useEffect(() => {
-        if (notificationData && notifications.length == 0) {
-            setNotifications(notificationData.listNotifications);
-            getNotificationsCount(notificationData.listNotifications);
+        return unsubscribe;
+    }, [subscribeToMore, authUser.id]);
+
+    if (error) throw new Error(JSON.stringify(error));
+
+    const handleOnScroll = async (event: UIEvent<HTMLElement>) => {
+        const target = event.currentTarget;
+
+        if (
+            Math.floor(target.scrollHeight - target.scrollTop) ==
+            target.clientHeight
+        ) {
+            const nextPage = page + 1;
+
+            setPage(nextPage);
+            await fetchMore({
+                variables: {
+                    data: {
+                        page: nextPage,
+                    },
+                },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) return prev;
+
+                    return {
+                        ...prev,
+                        listNotifications: {
+                            ...prev.listNotifications,
+                            notifications: [
+                                ...prev.listNotifications.notifications,
+                                ...fetchMoreResult.listNotifications
+                                    .notifications,
+                            ],
+                        },
+                    };
+                },
+            });
         }
-    }, [notificationData]);
+    };
+    const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleOnClick = (notification: NotificationInterface) => {
+        handleMarkAsRead(notification.id);
+    };
 
     return (
-        notifications && (
+        data?.listNotifications && (
             <div>
                 <IconButton
                     className={`notification__icon-button toolbar-icon ${
                         open ? "opened" : "closed"
                     }`}
-                    onClick={handleToggle}
+                    onClick={handleOpen}
                 >
-                    <Badge badgeContent={unreadNotifications} color="error">
+                    <Badge
+                        badgeContent={data.listNotifications.unreadCount}
+                        color="error"
+                    >
                         <IoNotificationsSharp size="26" />
                     </Badge>
                 </IconButton>
 
                 <Popover
                     open={Boolean(open)}
-                    anchorEl={open}
-                    onClose={() => handleToggle(null)}
+                    anchorEl={anchorEl}
+                    onClose={() => setAnchorEl(null)}
                     anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
+                    sx={{ maxHeight: 400 }}
                     slotProps={{
                         paper: {
                             sx: {
                                 mt: 1.5,
                                 ml: 0.75,
                                 width: 360,
-                                overflow: "hidden",
                             },
                             className:
-                                "notifications-popover__paper custom-scrollbar",
+                                "notifications-popover__paper overflow-y-auto",
                             onScroll: handleOnScroll,
                         },
                     }}
@@ -202,7 +181,8 @@ export default function NotificationPopover() {
                                 variant="body2"
                                 sx={{ color: "text.secondary" }}
                             >
-                                You have {unreadNotifications} unread messages
+                                You have {data.listNotifications.unreadCount}{" "}
+                                unread messages
                             </Typography>
                         </Box>
                     </Box>
@@ -210,15 +190,15 @@ export default function NotificationPopover() {
                     <Divider sx={{ borderStyle: "dashed" }} />
 
                     <List disablePadding>
-                        {notifications.map((notification) => (
-                            <NotificationItem
-                                key={notification.id}
-                                notification={notification}
-                                onClick={() =>
-                                    handleMarkAsRead(notification.id)
-                                }
-                            />
-                        ))}
+                        {data.listNotifications.notifications.map(
+                            (notification: NotificationInterface) => (
+                                <NotificationItem
+                                    key={notification.id}
+                                    notification={notification}
+                                    onClick={() => handleOnClick(notification)}
+                                />
+                            )
+                        )}
                     </List>
                 </Popover>
             </div>
