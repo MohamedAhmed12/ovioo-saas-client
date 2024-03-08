@@ -1,10 +1,12 @@
 import NotificationItem from "@/components/Dashboard/Layout/Header/Notification/NotificationItem";
 import { useAppSelector } from "@/hooks/redux";
-import { NotificationInterface } from "@/interfaces";
+import { ListNotificationInterface, NotificationInterface } from "@/interfaces";
 import "@/styles/components/dashboard/layout/header/notifications-popover.scss";
-import { gql, useQuery } from "@apollo/client";
+import { getClient } from "@/utils/getClient";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import IconButton from "@mui/joy/IconButton";
 import { Badge, Box, Divider, List, Popover, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { UIEvent, useEffect, useState } from "react";
 import { IoNotificationsSharp } from "react-icons/io5";
@@ -37,8 +39,23 @@ const NOTIFICATION_SENT = gql`
         }
     }
 `;
+const MARK_AS_READ = gql`
+    mutation MarkNotificationAsRead($id: String!) {
+        markNotificationAsRead(id: $id) {
+            id
+            content
+            action
+            is_read
+            created_at
+            userId
+        }
+    }
+`;
 
 export default function NotificationPopover() {
+    const { data: session } = useSession({ required: true });
+    const client = getClient(session);
+
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = Boolean(anchorEl);
     const [page, setPage] = useState<number>(1);
@@ -50,9 +67,45 @@ export default function NotificationPopover() {
         LIST_NOTIFICATIONS,
         {
             variables: { data: { page: 1 } },
-            fetchPolicy: "network-only",
+            fetchPolicy: "cache-and-network",
         }
     );
+
+    const [markNotificationAsRead] = useMutation(MARK_AS_READ, {
+        update(cache, { data: { markNotificationAsRead } }) {
+            if (!markNotificationAsRead) return;
+
+            const existingData = cache.readQuery<{
+                listNotifications: ListNotificationInterface;
+            }>({
+                query: LIST_NOTIFICATIONS,
+                variables: { data: { page: 1 } },
+            });
+
+            if (!existingData || !existingData.listNotifications) return;
+
+            const existingNotifications =
+                existingData.listNotifications.notifications;
+
+            const updatedNotifications = existingNotifications.map(
+                (notification) =>
+                    notification.id === markNotificationAsRead.id
+                        ? { ...notification, is_read: true }
+                        : notification
+            );
+
+            cache.writeQuery({
+                query: LIST_NOTIFICATIONS,
+                variables: { data: { page: 1 } },
+                data: {
+                    listNotifications: {
+                        ...existingData.listNotifications,
+                        notifications: updatedNotifications,
+                    },
+                },
+            });
+        },
+    });
 
     useEffect(() => {
         const unsubscribe = subscribeToMore({
@@ -124,8 +177,10 @@ export default function NotificationPopover() {
     const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleOnClick = (notification: NotificationInterface) => {
-        handleMarkAsRead(notification.id);
+    const handleOnClick = async (notification: NotificationInterface) => {
+        await markNotificationAsRead({ variables: { id: notification.id } });
+        setAnchorEl(null);
+        router.push(notification.action);
     };
 
     return (
