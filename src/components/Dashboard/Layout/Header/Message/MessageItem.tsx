@@ -19,7 +19,6 @@ export default function MessageItem({
     task: TaskInterface;
     onClick: (task: TaskInterface) => void;
 }) {
-    const router = useRouter();
     const title = (
         <Typography variant="subtitle2" className="flex flex-col">
             {task.messages[0].sender?.fullname}
@@ -36,10 +35,7 @@ export default function MessageItem({
             </Typography>
         </Typography>
     );
-    const handleOpenMessageTask = async () => {
-        await onClick(task);
-        router.push(`/dashboard/task?task=${task.id}`);
-    };
+
     return (
         <ListItemButton
             sx={{
@@ -50,7 +46,7 @@ export default function MessageItem({
                     bgcolor: "action.selected",
                 }),
             }}
-            onClick={handleOpenMessageTask}
+            onClick={() => onClick(task)}
         >
             <ListItemAvatar className="mr-2">
                 {task.messages[0]?.sender?.avatar ? (

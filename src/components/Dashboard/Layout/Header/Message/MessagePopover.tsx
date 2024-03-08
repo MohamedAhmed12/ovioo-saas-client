@@ -8,6 +8,7 @@ import { useState } from "react";
 import { TbMessageCircle2Filled } from "react-icons/tb";
 import "simplebar-react/dist/simplebar.min.css";
 import MessageItem from "./MessageItem";
+import { useRouter } from "next/navigation";
 
 const LIST_UNREAD_MESSAGES = gql`
     query ListUnreadMessages {
@@ -62,6 +63,7 @@ export default function MessagePopover() {
     const open = Boolean(anchorEl);
     const [allUnreadMsgsCount, setAllUnreadMsgsCount] = useState<number>(0);
 
+    const router = useRouter();
     const authUser = useAppSelector((state) => state.userReducer.user);
     const openedModalTask = useAppSelector(
         (state) => state.taskReducer.selectedTask
@@ -150,7 +152,7 @@ export default function MessagePopover() {
 
     const handleOnClick = (task: TaskInterface) => {
         const taskIndex = data.listUnreadMessages.findIndex(
-            (task: Partial<TaskInterface>) => task.id == task.id
+            (elm: Partial<TaskInterface>) => elm.id == task.id
         );
 
         if (taskIndex !== -1) {
@@ -160,6 +162,8 @@ export default function MessagePopover() {
                 (prevCount) => prevCount - (task?.unreadMessagesCount || 0)
             );
         }
+
+        router.push(`/dashboard/task?task=${task.id}`);
     };
 
     return (
@@ -189,7 +193,7 @@ export default function MessagePopover() {
                                 width: 360,
                             },
                             className:
-                                "notifications-popover__paper custom-scrollbar",
+                                "notifications-popover__paper",
                         },
                     }}
                 >
