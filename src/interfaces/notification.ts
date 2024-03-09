@@ -6,3 +6,8 @@ export interface NotificationInterface {
     created_at: Date;
     userId: number;
 }
+
+export interface ListNotificationInterface {
+    notifications: NotificationInterface[];
+    unreadCount: number;
+}

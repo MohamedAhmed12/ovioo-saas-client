@@ -5,11 +5,27 @@ import { useCustomQuery } from "@/hooks/useCustomQuery";
 import { TaskInterface } from "@/interfaces";
 import { MessageInterface, MessageStatusEnum } from "@/interfaces/message";
 import "@/styles/components/dashboard/task/chat.scss";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useSubscription } from "@apollo/client";
+import { Avatar, Tooltip } from "@mui/material";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import Badge from "@mui/material/Badge";
 import { useEffect, useState } from "react";
 import "react-chat-elements/dist/main.css";
 import MessageInput from "./MessageInput";
 import MessagesWrapper from "./MessagesWrapper";
+
+const NUM_SHOWN_ACTIVE_USERS = 3;
+
+const USER_STATUS_CHANGED = gql`
+    subscription UserStatusChanged {
+        userStatusChanged {
+            id
+            avatar
+            fullname
+            isActive
+        }
+    }
+`;
 
 const LIST_MESSAGES = gql`
     query ListMessages($data: ListMessageDto!) {
@@ -66,6 +82,9 @@ const READ_MESSAGES = gql`
 `;
 
 export default function Chat({ task }: { task: TaskInterface }) {
+    const [activeUsers, setActiveUsers] = useState<Member[]>(
+        task?.team?.members.filter((member) => member.isActive) || []
+    );
     const authUser = useAppSelector((state) => state.userReducer.user);
     const [showPicker, setShowPicker] = useState<boolean>(false);
     const [messages, setMessages] = useState<any[]>([]);
@@ -85,8 +104,28 @@ export default function Chat({ task }: { task: TaskInterface }) {
         "network-only",
         "network-only"
     );
+    const { loading: userStatusChangedLoading, data: userStatusChangedData } =
+        useSubscription(USER_STATUS_CHANGED);
 
     if (error) throw new Error(JSON.stringify(error));
+
+    useEffect(() => {
+        if (!userStatusChangedLoading && userStatusChangedData) {
+            const changedUser = userStatusChangedData.userStatusChanged;
+            const changedUserIndex: number = activeUsers.findIndex(
+                (user) => user.id == changedUser.id
+            );
+
+            if (changedUser.isActive == true && changedUserIndex == -1) {
+                setActiveUsers((users) => [...users, changedUser]);
+            }
+            if (changedUser.isActive == false && changedUserIndex != -1) {
+                setActiveUsers((users) =>
+                    users.filter((user) => user.id !== changedUser.id)
+                );
+            }
+        }
+    }, [activeUsers, userStatusChangedData, userStatusChangedLoading]);
 
     useEffect(() => {
         if (data?.listTaskMessages && data?.listTaskMessages?.length > 0) {
@@ -132,30 +171,90 @@ export default function Chat({ task }: { task: TaskInterface }) {
             setMessages((message) => [...message, newMessage]);
         }
     };
+    const getNumberOfExtraAvatar = (usersCount: any) => {
+        if (activeUsers?.length == 0) return 0;
+
+        return usersCount - NUM_SHOWN_ACTIVE_USERS <= 99
+            ? `+${usersCount - NUM_SHOWN_ACTIVE_USERS}`
+            : +99;
+    };
 
     return (
         !graphQLloading &&
         data?.listTaskMessages &&
         messages && (
-            <div className="chat basis-1/2 flex flex-col rounded-md text-black border-[0.5px] border-gray-600 focus:border-0 mt-[25px] mr-[25px]">
-                <MessagesWrapper
-                    task={task}
-                    setShowPicker={setShowPicker}
-                    setMessages={setMessages}
-                    messages={messages}
-                    setUnreadMessages={setUnreadMessages}
-                    unreadMessages={unreadMessages}
-                    handleSendMessage={handleSendMessage}
-                    fetchMore={fetchMore}
-                    subscribeToMore={subscribeToMore}
-                    readTaskMessages={readTaskMessages}
-                />
-                <MessageInput
-                    task_id={task.id}
-                    showPicker={showPicker}
-                    setShowPicker={setShowPicker}
-                    onMessageSend={handleSendMessage}
-                />
+            <div className="chat flex flex-col basis-1/2 mt-1">
+                {activeUsers && activeUsers?.length > 0 && (
+                    <AvatarGroup
+                        slotProps={{
+                            additionalAvatar: {
+                                slot: "testasasd",
+                                contextMenu: "ssada",
+                            },
+                        }}
+                    >
+                        {activeUsers
+                            .slice(0, NUM_SHOWN_ACTIVE_USERS)
+                            .map((member) => (
+                                <Badge
+                                    key={member.id}
+                                    overlap="circular"
+                                    anchorOrigin={{
+                                        vertical: "bottom",
+                                        horizontal: "right",
+                                    }}
+                                    variant="dot"
+                                >
+                                    <Tooltip title={member.fullname}>
+                                        <Avatar
+                                            alt={member.fullname}
+                                            src={member.avatar}
+                                        />
+                                    </Tooltip>
+                                </Badge>
+                            ))}
+
+                        {activeUsers.length > NUM_SHOWN_ACTIVE_USERS && (
+                            <Tooltip
+                                title={activeUsers
+                                    .slice(NUM_SHOWN_ACTIVE_USERS)
+                                    .map((member) => (
+                                        <span
+                                            key={member.id}
+                                            className="flex flex-wrap"
+                                        >
+                                            {member.fullname}
+                                        </span>
+                                    ))}
+                            >
+                                <Avatar>
+                                    {getNumberOfExtraAvatar(activeUsers.length)}
+                                </Avatar>
+                            </Tooltip>
+                        )}
+                    </AvatarGroup>
+                )}
+
+                <div className="flex flex-1 flex-col flex-wrap mt-4 text-black focus:border-0 rounded-md border-[0.5px] border-gray-600">
+                    <MessagesWrapper
+                        task={task}
+                        setShowPicker={setShowPicker}
+                        setMessages={setMessages}
+                        messages={messages}
+                        setUnreadMessages={setUnreadMessages}
+                        unreadMessages={unreadMessages}
+                        handleSendMessage={handleSendMessage}
+                        fetchMore={fetchMore}
+                        subscribeToMore={subscribeToMore}
+                        readTaskMessages={readTaskMessages}
+                    />
+                    <MessageInput
+                        task_id={task.id}
+                        showPicker={showPicker}
+                        setShowPicker={setShowPicker}
+                        onMessageSend={handleSendMessage}
+                    />
+                </div>
             </div>
         )
     );

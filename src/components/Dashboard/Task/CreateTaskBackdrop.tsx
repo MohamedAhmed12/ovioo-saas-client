@@ -1,25 +1,14 @@
 import DashBoardCard from "@/components/DashBoardCard";
-import { useAppDispatch } from "@/hooks/redux";
 import { useForm } from "@/hooks/useForm";
 import { useGraphError } from "@/hooks/useGraphError";
 import { TaskStatus } from "@/interfaces";
 import "@/styles/components/dashboard/task/create-task-backdrop.scss";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { Button } from "@mui/joy";
-import { Dialog, TextField } from "@mui/material";
+import { Dialog, FormHelperText, TextField } from "@mui/material";
+import Alert from "@mui/material/Alert";
 import { FormEvent, useState } from "react";
-import OviooDropDown from "../OviooDropDown";
 import TaskTypeDropDown from "../TaskTypeDropDown";
-
-const LIST_PROJECTS = gql`
-    query {
-        listProjects {
-            id
-            title
-            description
-        }
-    }
-`;
 
 const CREATE_TASK = gql`
     mutation CreateTask($data: CreateTaskDto!) {
@@ -37,9 +26,6 @@ const CREATE_TASK = gql`
                 title
             }
             status
-            project {
-                id
-            }
         }
     }
 `;
@@ -58,25 +44,14 @@ export default function CreateTaskBackdrop({
     const [formData, setFormData] = useState({
         title: "",
         type_id: "",
-        project_id: "",
         status:
             Object.values(TaskStatus).find((value) => value === status) ||
             "In queue",
     });
 
-    const dispatch = useAppDispatch();
     const { handleOnChange } = useForm(setFormData);
 
-    const {
-        loading: graphQLloading,
-        error,
-        data,
-    } = useQuery(LIST_PROJECTS, { fetchPolicy: "no-cache" });
     const [createTask] = useMutation(CREATE_TASK);
-
-    const handlSelectProject = (project_id: string) => {
-        setFormData((prevState) => ({ ...prevState, project_id }));
-    };
 
     const handlSelectType = (type_id: string) => {
         setFormData((prevState) => ({ ...prevState, type_id }));
@@ -94,6 +69,7 @@ export default function CreateTaskBackdrop({
             });
 
             handleClose();
+            errorHandler({});
         } catch (e: any) {
             errorHandler(e);
         }
@@ -101,59 +77,54 @@ export default function CreateTaskBackdrop({
     };
 
     return (
-        !graphQLloading &&
-        !error &&
-        data.listProjects && (
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="responsive-dialog-title"
-                PaperProps={{
-                    style: {
-                        backgroundColor: "transparent",
-                    },
-                    className:
-                        "!my-0 !max-h-none w-[80%] md:w-[45%] lg:w-[30%]",
-                }}
-                className="create-task-backdrop"
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="responsive-dialog-title"
+            PaperProps={{
+                style: {
+                    backgroundColor: "transparent",
+                },
+                className: "!my-0 !max-h-none w-[80%] md:w-[45%] lg:w-[30%]",
+            }}
+            className="create-task-backdrop"
+        >
+            <DashBoardCard
+                handleSubmit={handleSubmit}
+                headerTitle="Add new Task"
             >
-                <DashBoardCard
-                    handleSubmit={handleSubmit}
-                    headerTitle="Add new Task"
-                >
-                    <div className="flex flex-col items-center">
-                        <TaskTypeDropDown onSelected={handlSelectType} />
+                <div className="flex flex-col items-center">
+                    <TaskTypeDropDown onSelected={handlSelectType} />
+                    {errors.type_id && (
+                        <FormHelperText error className="!-mt-3">
+                            {errors.type_id.replace("type_id", "type")}
+                        </FormHelperText>
+                    )}
 
-                        <OviooDropDown
-                            inputLabel="Project"
-                            options={data?.listProjects}
-                            onSelected={handlSelectProject}
-                        />
-
-                        <TextField
-                            className="dashboard-input !w-[80%]"
-                            margin="normal"
-                            fullWidth
-                            label="Title"
-                            name="title"
-                            value={formData.title || ""}
-                            onChange={handleOnChange}
-                            autoFocus
-                        />
-                    </div>
-                    <div className="flex justify-end mt-6 justify-center">
-                        <span className="w-[80%] flex justify-end">
-                            <Button
-                                loading={loading}
-                                type="submit"
-                                className="bg-[--dashboard-primary] text-white "
-                            >
-                                create
-                            </Button>
-                        </span>
-                    </div>
-                </DashBoardCard>
-            </Dialog>
-        )
+                    <TextField
+                        className="dashboard-input !w-[80%]"
+                        margin="normal"
+                        fullWidth
+                        label="Title"
+                        name="title"
+                        value={formData.title || ""}
+                        onChange={handleOnChange}
+                        autoFocus
+                        error={errors.hasOwnProperty("title")}
+                    />
+                </div>
+                <div className="flex justify-end mt-6 justify-center">
+                    <span className="w-[80%] flex justify-end">
+                        <Button
+                            loading={loading}
+                            type="submit"
+                            className="bg-[--dashboard-primary] text-white "
+                        >
+                            create
+                        </Button>
+                    </span>
+                </div>
+            </DashBoardCard>
+        </Dialog>
     );
 }

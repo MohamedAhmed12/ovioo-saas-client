@@ -20,7 +20,7 @@ export default function NotificationItem({
                     bgcolor: "action.selected",
                 }),
             }}
-            onClick={() => onClick}
+            onClick={() => onClick(notification)}
         >
             <ListItemText
                 primary={

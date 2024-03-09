@@ -22,7 +22,7 @@ const CREATE_MEMBER = gql`
             email
             provider
             role
-            team {
+            teams {
                 id
             }
             profile {

@@ -142,20 +142,12 @@ export default function MessageInput({
                     </>
                 }
                 rightButtons={
-                    formData.content ? (
-                        <IoSendSharp
-                            size={iconSize}
-                            title="send"
-                            cursor="pointer"
-                            onClick={() => handlePressSend("content", formData)}
-                        />
-                    ) : (
-                        <BiSolidMicrophone
-                            size={iconSize}
-                            title="voice note"
-                            cursor="pointer"
-                        />
-                    )
+                    <IoSendSharp
+                        size={iconSize}
+                        title="send"
+                        cursor="pointer"
+                        onClick={() => handlePressSend("content", formData)}
+                    />
                 }
             />
 

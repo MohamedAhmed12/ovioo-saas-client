@@ -1,8 +1,10 @@
 "use client";
 
 import DashBoardCard from "@/components/DashBoardCard";
+import { useAppDispatch } from "@/hooks/redux";
 import { useForm } from "@/hooks/useForm";
 import { useGraphError } from "@/hooks/useGraphError";
+import { setUser } from "@/store/features/user";
 import { uploadFiles } from "@/utils/helpers";
 import { gql, useMutation } from "@apollo/client";
 import { Button } from "@mui/joy";
@@ -29,6 +31,7 @@ const UPDATE_USER = gql`
 `;
 
 export default function ProfileSetting({ user }: { user: any }): ReactNode {
+    const dispatch = useAppDispatch();
     const { data: session } = useSession({ required: true });
     const [loading, setLoading] = useState(false);
     const [refreshAvatar, setRefreshAvatar] = useState(0);
@@ -59,6 +62,9 @@ export default function ProfileSetting({ user }: { user: any }): ReactNode {
                     variables: {
                         data,
                     },
+                    onCompleted: (data) => {
+                        dispatch(setUser({ ...user, ...data.updateUser }));
+                    },
                 });
 
                 setFormData(() => data);
@@ -81,6 +87,9 @@ export default function ProfileSetting({ user }: { user: any }): ReactNode {
             await updateUser({
                 variables: {
                     data: formData,
+                },
+                onCompleted: (data) => {
+                    dispatch(setUser({ ...user, ...data.updateUser }));
                 },
             });
             toast.success("Profile settings updated successfully");

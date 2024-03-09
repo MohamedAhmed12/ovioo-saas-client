@@ -23,11 +23,7 @@ export default async function Team() {
     const session = await getServerSession(authOptions);
     const client: ApolloClient<any> | undefined = getClient(session);
 
-    const {
-        loading: graphQLloading,
-        error,
-        data: team,
-    } = await client?.query({
+    const { error, data } = await client?.query({
         query: GET_TEAM,
         fetchPolicy: "no-cache",
     });
@@ -35,20 +31,17 @@ export default async function Team() {
     if (error) throw new Error();
 
     return (
-        session &&
-        !graphQLloading &&
-        !error &&
-        team.getTeam && (
+        data.getUserTeam && (
             <div className="team-card flex flex-col lg:flex-row w-full justify-between flex-wrap max-w-full">
                 <AddTeamMemberCard
-                    team={team.getTeam}
+                    team={data.getUserTeam}
                     headerTitle="Add new member"
                     session={session}
                 />
-                {team.getTeam.members.length > 1 && (
+                {data.getUserTeam.members.length > 1 && (
                     <TeamMembersCard
                         headerTitle="your team"
-                        team={team.getTeam}
+                        team={data.getUserTeam}
                     />
                 )}
             </div>
