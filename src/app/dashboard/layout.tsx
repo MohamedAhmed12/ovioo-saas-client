@@ -8,7 +8,7 @@ export default async function DashboardLayout({
     children: React.ReactNode;
 }) {
     return (
-        <ApolloClientProvider>
+        <ApolloClientProvider required={true}>
             <DashboardContainer>{children}</DashboardContainer>
         </ApolloClientProvider>
     );
