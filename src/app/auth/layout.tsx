@@ -1,12 +1,17 @@
 "use client";
 
 import LeftSideCover from "@/components/Auth/LeftSideCover";
+import { ApolloClientProvider } from "@/components/Providers/ApolloClientProvider";
 import "@/styles/app/auth/layout.scss";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function PublicLayout({ children }: { children: React.ReactNode }) {
+export default function PublicLayout({
+    children,
+}: {
+    children: ReactNode;
+}) {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("error");
 
@@ -17,21 +22,23 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
     }, [callbackUrl]);
 
     return (
-        <main className="flex min-h-screen flex-col justify-between auth-layout">
-            <div className="login flex w-full">
-                <LeftSideCover />
-                <div className="form__wrapper flex flex-1 bg-white text-black py-24 px-5 lg:px-0">
-                    {children}
-                    <Toaster
-                        position="top-right"
-                        toastOptions={{
-                            style: {
-                                maxWidth: 600,
-                            },
-                        }}
-                    />
+        <ApolloClientProvider required={false}>
+            <main className="flex min-h-screen flex-col justify-between auth-layout">
+                <div className="login flex w-full">
+                    <LeftSideCover />
+                    <div className="form__wrapper flex flex-1 bg-white text-black py-24 px-5 lg:px-0">
+                        {children}
+                        <Toaster
+                            position="top-right"
+                            toastOptions={{
+                                style: {
+                                    maxWidth: 600,
+                                },
+                            }}
+                        />
+                    </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </ApolloClientProvider>
     );
 }
