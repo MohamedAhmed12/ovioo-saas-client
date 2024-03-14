@@ -2,26 +2,16 @@
 
 import { getClient } from "@/utils/getClient";
 import { ApolloClient, ApolloProvider } from "@apollo/client";
-import { UseSessionOptions, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { Session } from "next-auth";
 import { ReactNode } from "react";
 
 export const ApolloClientProvider = ({
     children,
-    required,
+    session,
 }: {
     children: ReactNode;
-    required: boolean;
+    session: Session | null;
 }) => {
-    const sessionParams: UseSessionOptions<boolean> = { required };
-
-    if (required) {
-        sessionParams.onUnauthenticated = () => {
-            redirect("/auth/login");
-        };
-    }
-
-    const { data: session } = useSession(sessionParams);
     const client: ApolloClient<any> = getClient(session);
 
     return (

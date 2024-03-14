@@ -3,17 +3,20 @@
 import LeftSideCover from "@/components/Auth/LeftSideCover";
 import { ApolloClientProvider } from "@/components/Providers/ApolloClientProvider";
 import "@/styles/app/auth/layout.scss";
-import { useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { redirect, useSearchParams } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function PublicLayout({
-    children,
-}: {
-    children: ReactNode;
-}) {
+export default function PublicLayout({ children }: { children: ReactNode }) {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("error");
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            redirect("/auth/login");
+        },
+    });
 
     useEffect(() => {
         if (callbackUrl) {
@@ -22,7 +25,7 @@ export default function PublicLayout({
     }, [callbackUrl]);
 
     return (
-        <ApolloClientProvider required={false}>
+        <ApolloClientProvider session={session}>
             <main className="flex min-h-screen flex-col justify-between auth-layout">
                 <div className="login flex w-full">
                     <LeftSideCover />
