@@ -21,8 +21,8 @@ export const PyramidSection = () => {
             description: `Access our global community of top talent.`,
         },
         {
-            label: "24 Hour Turnaround",
-            description: "Get daily updates to your tasks.",
+            label: "24 Hour Updates",
+            description: "Receive updates every 24 business hours.",
         },
         {
             label: "Save up to $5k per month",

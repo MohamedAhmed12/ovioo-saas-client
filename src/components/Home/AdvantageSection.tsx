@@ -10,7 +10,7 @@ import { FaXmark } from "react-icons/fa6";
 export const AdvantageSection = () => {
     const disAdvantages: string[] = [
         "Searching for a freelancer",
-        "Unvetted designers",
+        "Unqualified designers",
         "Slow turnaround times",
         "Scrolling through 100s of portfolios",
         "Conducting dozens of interviews",
