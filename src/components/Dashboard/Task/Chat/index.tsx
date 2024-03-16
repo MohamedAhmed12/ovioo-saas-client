@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/hooks/redux";
 import { useCustomQuery } from "@/hooks/useCustomQuery";
-import { TaskInterface } from "@/interfaces";
+import { Member, TaskInterface } from "@/interfaces";
 import { MessageInterface, MessageStatusEnum } from "@/interfaces/message";
 import "@/styles/components/dashboard/task/chat.scss";
 import { gql, useMutation, useSubscription } from "@apollo/client";

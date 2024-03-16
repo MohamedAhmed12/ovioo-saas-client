@@ -45,7 +45,7 @@ export default function Attachement({ task }: { task: TaskInterface }) {
             </p>
             <AssetList
                 task={task}
-                assets={task.assets}
+                assets={task.assets || []}
                 handleDelete={handleDeleteAsset}
             />
         </>

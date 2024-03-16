@@ -250,7 +250,9 @@ export default function NotificationPopover() {
                                 <NotificationItem
                                     key={notification.id}
                                     notification={notification}
-                                    onClick={() => handleOnClick(notification)}
+                                    onClick={(
+                                        notification: NotificationInterface
+                                    ) => handleOnClick(notification)}
                                 />
                             )
                         )}
