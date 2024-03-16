@@ -70,6 +70,11 @@ export default function AssetList({
             `tasks/${task.id}/assets`,
             true
         );
+
+        if (!assets) {
+            return setLoading(false);
+        }
+
         assets = assets.map(
             ({ type, s3Path }: { type: string; s3Path: s3PathInterface }) => ({
                 alt: s3Path.Key,
@@ -100,9 +105,9 @@ export default function AssetList({
         } catch (e: any) {
             toast.error("Something went wrong!");
             AssetUploadCleanup(assets);
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false);
     };
 
     const AssetUploadCleanup = (assets: AssetInterface[]) => {
