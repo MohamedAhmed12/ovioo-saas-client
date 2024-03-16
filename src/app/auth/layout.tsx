@@ -11,12 +11,7 @@ import toast, { Toaster } from "react-hot-toast";
 export default function PublicLayout({ children }: { children: ReactNode }) {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("error");
-    const { data: session } = useSession({
-        required: true,
-        onUnauthenticated() {
-            redirect("/auth/login");
-        },
-    });
+    const { data: session } = useSession();
 
     useEffect(() => {
         if (callbackUrl) {
