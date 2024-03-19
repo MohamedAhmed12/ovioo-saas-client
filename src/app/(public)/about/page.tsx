@@ -18,11 +18,7 @@ export default function Home() {
         },
     ];
 
-    const statistics: string[] = [
-        "Innovation",
-        "Passion",
-        "Punctuality",
-    ];
+    const statistics: string[] = ["Innovation", "Passion", "Punctuality"];
 
     return (
         <div className="about">
@@ -75,7 +71,7 @@ export default function Home() {
                 <div className="container w-full flex-col  flex items-center justify-between">
                     <div className="basis-1/2 mt-8">
                         <Image
-                            src="/svg/pyramid.svg"
+                            src="/gif/values-pyramid.gif"
                             alt="quality pyramid"
                             width={550}
                             height={0}

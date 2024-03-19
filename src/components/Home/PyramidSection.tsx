@@ -50,17 +50,17 @@ export const PyramidSection = () => {
 
     return (
         <div className="pyramid-section__stars-bg flex w-full justify-center">
-            <div className="container pyramid-section flex flex-col lg:flex-row mt-10 mb-5 lg:mb-20 px-[5%]">
+            <div className="container pyramid-section flex flex-col lg:flex-row mt-10 lg:mt-0 mb-5 px-[5%]">
                 <div className="text-3xl basis-2/3 mb-14 lg:mb-0">
                     <Image
-                        src="/svg/pyramid.svg"
+                        src="/gif/pyramid.gif"
                         alt="pyramid"
-                        width={420}
+                        width={550}
                         height={0}
                         unoptimized
                     /> 
                 </div>
-                <div className="text-4xl basis-1/3 font-bold mt-3">
+                <div className="text-4xl basis-1/3 font-bold mt-14">
                     <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
                         <Breadcrumbs aria-label="breadcrumb" className="mb-12">
                             {titles.map((title, index) => (
