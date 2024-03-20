@@ -14,8 +14,7 @@
         }
     }
     .swiper {
-        width: 100rem;
-        height: 100%;
+        max-width: 100%;
         .swiper-slide {
             max-width: 360px;
             max-height: 280px;

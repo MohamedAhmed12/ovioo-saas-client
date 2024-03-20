@@ -3,7 +3,6 @@
 import { useGraphError } from "@/hooks/useGraphError";
 import { useInput } from "@/hooks/useInput";
 import "@/styles/app/auth/login.scss";
-import { getClient } from "@/utils/getClient";
 import { gql, useMutation } from "@apollo/client";
 import { Button } from "@mui/joy";
 import {
@@ -45,8 +44,7 @@ export default function LoginForm() {
     const searchParam = useSearchParams();
     const callbackUrl = searchParam.get("callbackUrl") || "/dashboard/task";
 
-    const client = getClient();
-    const [login] = useMutation(Login, { client });
+    const [login] = useMutation(Login);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();

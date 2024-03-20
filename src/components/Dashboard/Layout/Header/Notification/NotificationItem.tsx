@@ -3,12 +3,13 @@ import "@/styles/components/dashboard/layout/header/notifications-popover.scss";
 import { fToNow } from "@/utils/formatTime";
 import { ListItemButton, ListItemText, Typography } from "@mui/material";
 import { MdAccessTime } from "react-icons/md";
+
 export default function NotificationItem({
     notification,
     onClick,
 }: {
     notification: NotificationInterface;
-    onClick: () => void;
+    onClick: (notification: NotificationInterface) => void;
 }) {
     return (
         <ListItemButton

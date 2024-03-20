@@ -21,7 +21,7 @@ export const StatsSection = ({ title }: { title?: string }) => (
                         10000+
                     </h1>
                     <p className="text-lg sm:text-xl text-white w-56">
-                        successfully completed tasks
+                        Successfully completed tasks
                     </p>
                 </div>
                 <div className="flex justify-between p-5">
@@ -29,7 +29,7 @@ export const StatsSection = ({ title }: { title?: string }) => (
                         1500+
                     </h1>
                     <p className="text-lg sm:text-xl text-white w-56">
-                        businesses uses Ovioo designs
+                    Businesses trust Ovioo
                     </p>
                 </div>
             </div>

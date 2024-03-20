@@ -3,9 +3,7 @@
 import { useGraphError } from "@/hooks/useGraphError";
 import { useInput } from "@/hooks/useInput";
 import { AuthProviderEnum } from "@/interfaces";
-import { getClient } from "@/utils/getClient";
-import { gql } from "@apollo/client";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { gql, useMutation } from "@apollo/client";
 import { Button as JoyButton } from "@mui/joy";
 import {
     IconButton,
@@ -18,6 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import SSOWrapper from "./SSOWrapper";
 
 const Register = gql`
@@ -35,7 +34,6 @@ const Register = gql`
 
 export default function RegisterForm() {
     const router = useRouter();
-    const client = getClient();
 
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -51,13 +49,14 @@ export default function RegisterForm() {
         useInput("");
     const { value: phone, bind: bindPhone } = useInput("");
 
+    const [register] = useMutation(Register);
+
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setLoading(true);
 
         try {
-            await client.mutate({
-                mutation: Register,
+            await register({
                 variables: {
                     user: {
                         fullname,
