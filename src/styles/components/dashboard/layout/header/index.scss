@@ -25,11 +25,6 @@
             .dark & {
                 color: var(--dashboard-dark-icon-color);
             }
-            @media screen and (min-width: 991px) {
-               &.hamburger-btn {
-                   display: none;
-               } 
-            }
         }
     }
 }

@@ -24,12 +24,17 @@ export default function Home() {
         <div className="about">
             <div className="intro flex flex-col">
                 <div className="container title uppercase text-center">
-                    <h2>
+                    <h2 className="text-3xl leading-[40px] md:text-[40px] md:leading-[60px] lg:text-5xl lg:leading-[80px]">
                         <span className="text-gradient font-bold">ovioo</span>
-                        <span className="title-span ml-4 mr-4">=</span>
-                        <span className="font-bold">Exceptional </span>clients
-                        <br />+ <span className="font-bold">Cosmic </span>
-                        designers
+                        <span className="title-span ml-4 mr-4 block sm:inline">=</span>
+                        <span>
+                            <span className="font-bold"> Exceptional</span> clients
+                        </span>
+                        <br />
+                        <span className="title-span inline-block w-full sm:w-auto">+</span>
+                        <span>
+                            <span className="font-bold"> Cosmic</span> designers
+                        </span>
                     </h2>
                 </div>
 
