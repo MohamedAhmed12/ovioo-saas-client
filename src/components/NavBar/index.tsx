@@ -1,9 +1,9 @@
 "use client";
 
 import { Route as RouteInterface } from "@/interfaces";
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Desktop from "./Desktop";
-import Mobile from "./Mobile";
+import MobileNavBar from "./MobileNavBar";
 
 function NavBar() {
     const pages: RouteInterface[] = [
@@ -20,16 +20,7 @@ function NavBar() {
         { url: "/logout", title: "Logout" },
     ];
 
-    const [anchorElNav, setAnchorElNav] = useState<boolean>(false);
-    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const [scrolling, setScrolling] = useState<boolean>(false);
-
-    const handleToggleNavMenu = (val: boolean) => {
-        setAnchorElNav(val);
-    };
-    const handleToggleUserMenu = (event: MouseEvent<HTMLElement> | null) => {
-        setAnchorElUser(event ? event.currentTarget : null);
-    };
 
     useEffect(() => {
         const handleScroling = () => {
@@ -45,15 +36,7 @@ function NavBar() {
     return (
         <>
             <Desktop pages={pages} scrolling={scrolling} />
-            <Mobile
-                pages={pages}
-                settings={settings}
-                scrolling={scrolling}
-                handleToggleNavMenu={handleToggleNavMenu}
-                handleToggleUserMenu={handleToggleUserMenu}
-                anchorElNav={anchorElNav}
-                anchorElUser={anchorElUser}
-            />
+            <MobileNavBar pages={pages} settings={settings} scrolling={scrolling} />
         </>
     );
 }

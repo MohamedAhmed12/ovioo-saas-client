@@ -18,19 +18,33 @@ export default function Desktop({
     return (
         <HideOnScroll>
             <AppBar
-                className={`navbar-container justify-center px-10 ${scrolling ? "navbar-blur" : ""}`}
+                className={`navbar-container justify-center px-10 ${
+                    scrolling ? "navbar-blur" : ""
+                }`}
                 style={{
                     backgroundColor: "transparent",
                     boxShadow: "none",
                     position: "sticky",
                 }}
             >
-                <Toolbar disableGutters className="w-full justify-center h-full">
+                <Toolbar
+                    disableGutters
+                    className="w-full justify-center h-full"
+                >
                     <div className="navbar-desktop-bg w-full h-full justify-center items-center flex">
                         <div className="navbar-desktop hidden lg:flex">
-                            <a href="/" aria-current="page" className="main-logo h-full max-w-full pt-[5px]">
-                                <Image src="/svg/logo.svg" className="slef-center" width={800} height={800} alt="logo"/>
-                            </a>
+                            <Link
+                                href="/"
+                                className="main-logo h-full max-w-full pt-[5px]"
+                            >
+                                <Image
+                                    src="/svg/logo.svg"
+                                    className="slef-center"
+                                    width={800}
+                                    height={800}
+                                    alt="logo"
+                                />
+                            </Link>
                             <Box
                                 sx={{ display: { xs: "none", md: "flex" } }}
                                 className="self-center"

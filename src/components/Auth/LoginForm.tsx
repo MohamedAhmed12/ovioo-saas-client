@@ -71,7 +71,7 @@ export default function LoginForm() {
     };
 
     return (
-        <div className="login__form w-[360px] lg:w-[400px]">
+        <div className="login__form w-full max-w-[360px] lg:max-w-[400px]">
             <Typography variant="h4" gutterBottom>
                 Sign in to Ovioo
             </Typography>

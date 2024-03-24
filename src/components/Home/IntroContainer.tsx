@@ -6,7 +6,7 @@ import { FcLike } from "react-icons/fc";
 import GetStartedBtns from "../GetStartedBtns";
 
 export const IntroContainer = () => (
-    <div className="public-container w-full intro-container flex flex-col items-center mt-[65px] lg:mt-[105px] leading-normal lg:leading-relaxed">
+    <div className="public-container w-full intro-container flex flex-col items-center mt-[105px] leading-normal lg:leading-relaxed">
         <h1 className="title font-bold uppercase text-center text-[25px] sm:text-[30px] lg:text-[52px] tracking-normal lg:tracking-wide max-w-[925px]">
             all of your
             <span className="gradient-h1"> design tasks </span>

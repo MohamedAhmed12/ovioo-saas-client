@@ -15,8 +15,8 @@ export const StatsSection = ({ title }: { title?: string }) => (
             }`}
             style={{ color: "#fee4a5" }}
         >
-            <div className="flex flex-col flex-1">
-                <div className="flex justify-between p-5">
+            <div className="flex flex-col flex-1 max-w-full">
+                <div className="flex justify-between max-w-full p-5">
                     <h1 className="text-3xl sm:text-5xl lg:text-6xl min-w-[145px]">
                         10000+
                     </h1>
@@ -24,7 +24,7 @@ export const StatsSection = ({ title }: { title?: string }) => (
                         Successfully completed tasks
                     </p>
                 </div>
-                <div className="flex justify-between p-5">
+                <div className="flex justify-between max-w-full p-5">
                     <h1 className="text-3xl sm:text-5xl lg:text-6xl min-w-[145px]">
                         1500+
                     </h1>
@@ -33,8 +33,8 @@ export const StatsSection = ({ title }: { title?: string }) => (
                     </p>
                 </div>
             </div>
-            <div className="flex flex-col flex-1">
-                <div className="flex justify-between p-5">
+            <div className="flex flex-col flex-1 max-w-full">
+                <div className="flex justify-between max-w-full p-5">
                     <h1 className="text-3xl sm:text-5xl lg:text-6xl min-w-[145px] lg:mr-0">
                         5000+
                     </h1>

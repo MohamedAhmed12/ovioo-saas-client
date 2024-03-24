@@ -16,8 +16,10 @@
     .swiper {
         max-width: 100%;
         .swiper-slide {
-            max-width: 360px;
-            max-height: 280px;
+            max-width: 225px !important;
+            max-height: 225px !important;
+            min-width: 160px !important;
+            min-height: 160px !important;
             background-color: transparent !important;
             text-align: center;
             font-size: 18px;
@@ -33,10 +35,26 @@
                 height: 100%;
                 object-fit: cover;
             }
-            @media screen and (max-width: 991px) {
-                max-width: 300px;
-                max-height: 245px;
+        }
+        .swiper-pagination-bullet {
+            background-color: var(--dashboard-primary);
+            &.swiper-pagination-bullet-active {
+                background-color: var(--secondary);
             }
+            @media screen and (max-width: 479px) {
+                display: none;
+            }
+        }
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: var(--secondary);
+            @media screen and (max-width: 479px) {
+                display: none;
+            }
+        }
+        @media screen and (max-width: 991px) {
+            max-width: 300px;
+            max-height: 245px;
         }
     }
 }

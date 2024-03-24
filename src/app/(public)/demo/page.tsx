@@ -31,36 +31,36 @@ export default function Demo() {
     }, []);
 
     return (
-        <div className="min-h-screen">
+        <div className="demo min-h-screen w-full">
             <div className={loading ? "" : "hidden"}>
                 <Loading bgTransparent />
             </div>
 
             <div
-                className={`demo w-full flex items-center flex-col mt-28 mb-28 ${
+                className={`w-full flex items-center flex-col mt-28 mb-28 ${
                     loading ? "hidden" : ""
                 }`}
             >
-                <h3
-                    className="title text-[1.6rem] leading-relaxed lg:text-5xl lg:!leading-[3.6rem] max-w-5xl font-medium capitalize text-center"
-                >
+                <h3 className="title text-[1.6rem] leading-relaxed lg:text-5xl lg:!leading-[3.6rem] max-w-5xl font-medium capitalize text-center">
                     book your demo with one
                     <br /> of our team{" "}
                     <span className="text-gradient">heroes</span>
                 </h3>
 
-                <div className="flex flex-row justify-center lg:justify-between ">
+                <div className="flex flex-row justify-center lg:justify-between w-full">
                     <div
                         id="calendly-container"
-                        className="calendly-inline-widget lg:basis-1/2"
+                        className="calendly-inline-widget basis-1/2"
                         data-url="https://calendly.com/mohamed-gad3633/demo-call?hide_gdpr_banner=1"
                     ></div>
                     <div className="basis-1/2 hidden lg:flex">
                         <Image
-                            src="/images/smile.jpg"
-                            alt="smile"
-                            width={800}
-                            height={720}
+                            src="/gif/values-pyramid.gif"
+                            alt="quality pyramid"
+                            width={550}
+                            height={0}
+                            className="w-full max-h-[500px]"
+                            // sx={{ maxHeight: 200 }}
                         />
                     </div>
 
