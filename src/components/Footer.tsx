@@ -27,7 +27,7 @@ export default function Footer() {
                         <div className="footer__contacts flex flex-col lg:flex-row">
                             <div className="menu-adress-left ">
                                 <div className="text-adress">
-                                    <p className="text-sm md:text-lg">Ovioo Inc.</p>
+                                    <p className="text-sm md:text-lg">Ovioo LLC.</p>
                                 </div>
                                 <div className="contact-text street">
                                 <p className="text-sm md:text-lg">
