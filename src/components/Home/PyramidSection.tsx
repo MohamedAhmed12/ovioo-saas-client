@@ -51,7 +51,7 @@ export const PyramidSection = () => {
     return (
         <div className="pyramid-section__stars-bg flex w-full justify-center">
             <div className="container pyramid-section flex flex-col lg:flex-row mt-10 lg:mt-0 mb-5 px-[5%]">
-                <div className="text-3xl basis-2/3 mb-14 lg:mb-0">
+                <div className="lg:basis-1/2 xl:basis-2/3 text-3xl mb-14 lg:mb-0">
                     <Image
                         src="/gif/pyramid.gif"
                         alt="pyramid"
@@ -60,14 +60,14 @@ export const PyramidSection = () => {
                         unoptimized
                     /> 
                 </div>
-                <div className="text-4xl basis-1/3 font-bold mt-14">
-                    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+                <div className="lg:basis-1/2 xl:basis-1/3 text-4xl flex font-bold mt-14">
+                    <Box className="flex-1 px-[5%]">
                         <Breadcrumbs aria-label="breadcrumb" className="mb-12">
                             {titles.map((title, index) => (
                                 <Typography
                                     variant="body1"
                                     key={title}
-                                    className={`text-2xl
+                                    className={`text-xl md:text-2xl
                                         ${
                                             activeStep == index
                                                 ? "selected text-secondary underline underline-offset-[20px]"
@@ -79,13 +79,13 @@ export const PyramidSection = () => {
                                 </Typography>
                             ))}
                         </Breadcrumbs>
-                        <Box className="mb-4 text-secondary">
-                            <Typography variant="h5">
+                        <Box className="!mb-4 text-secondary">
+                            <Typography variant="h5" className="text-xl md:text-2xl">
                                 {steps[activeStep].label}
                             </Typography>
                         </Box>
                         <Box className="description-box">
-                            <Typography>
+                            <Typography className="text-sm lg:text-xl">
                                 {steps[activeStep].description}
                             </Typography>
                         </Box>
