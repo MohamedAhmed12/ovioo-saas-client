@@ -54,13 +54,19 @@ export default function Demo() {
                         data-url="https://calendly.com/mohamed-gad3633/demo-call?hide_gdpr_banner=1"
                     ></div>
                     <div className="basis-1/2 hidden lg:flex">
-                        <Image
+                        {/* <Image
                             src="/gif/values-pyramid.gif"
                             alt="quality pyramid"
                             width={550}
                             height={0}
                             className="w-full max-h-[500px]"
-                            // sx={{ maxHeight: 200 }}
+                        /> */}
+                        <Image
+                            src="/svg/planet.svg"
+                            alt="login"
+                            width={200}
+                            height={200}
+                            className="w-full h-auto"
                         />
                     </div>
 
