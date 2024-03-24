@@ -80,7 +80,7 @@ export default function RegisterForm() {
     };
 
     return (
-        <div className="register__form w-[360px] lg:w-[400px]">
+        <div className="register__form w-full max-w-[360px] lg:max-w-[400px]">
             <Typography variant="h4" gutterBottom>
                 Create your account
             </Typography>

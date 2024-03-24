@@ -7,6 +7,7 @@ import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import ListItem from "@mui/joy/ListItem";
 import ListItemDecorator from "@mui/joy/ListItemDecorator";
+import { Typography } from "@mui/material";
 import Image from "next/image";
 
 export default function PlansHelpCard() {
@@ -17,7 +18,10 @@ export default function PlansHelpCard() {
                 invertedColors
                 className="flex flex-row plans__help-card mt-20 !px-12 !py-10 rounded-lg shadow-xl"
             >
-                <CardContent orientation="horizontal" className="flex flex-wrap">
+                <CardContent
+                    orientation="horizontal"
+                    className="flex flex-wrap max-w-full"
+                >
                     <div className="flex-1 pricing__add-ons">
                         <Chip
                             size="md"
@@ -28,7 +32,7 @@ export default function PlansHelpCard() {
                             Add-on
                         </Chip>
                         <List aria-labelledby="decorated-list-demo">
-                            <ListItem className="flex flex-row !text-2xl !p-0 !pt-4">
+                            <ListItem className="flex flex-row md:!text-2xl !p-0 !pt-4">
                                 <span className="basis-4/5">
                                     <ListItemDecorator>
                                         <Image
@@ -44,7 +48,7 @@ export default function PlansHelpCard() {
                                     $500
                                 </span>
                             </ListItem>
-                            <ListItem className="flex flex-row !text-2xl !p-0 !pt-4">
+                            <ListItem className="flex flex-row  md:!text-2xl !p-0 !pt-4">
                                 <span className="basis-4/5">
                                     <ListItemDecorator>📹</ListItemDecorator>{" "}
                                     Video editing
@@ -55,9 +59,14 @@ export default function PlansHelpCard() {
                             </ListItem>
                         </List>
                     </div>
-                    <div className="pricing__not-sure flex-1 flex-col pt-10 lg:pt-0 px-3">
-                        <h2>Not sure what to choose?</h2>
-                        <p>
+                    <div className="pricing__not-sure flex-1 flex-col pt-10 lg:pt-0 px-3 max-w-full">
+                        <Typography
+                            variant="h2"
+                            className="font-bold text-2xl lg:text-4xl"
+                        >
+                            Not sure what to choose?
+                        </Typography>
+                        <p className="text-base lg:text-lg">
                             We will help you build a plan acording to you needs
                         </p>
                         <div className="mt-12 flex justify-end">

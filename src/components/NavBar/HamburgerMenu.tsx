@@ -5,20 +5,18 @@ import { Backdrop, Divider, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Link from "next/link";
+import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaArrowRight, FaXmark } from "react-icons/fa6";
 
-export default function HamburgerMenu({
-    pages,
-    anchorElNav,
-    handleToggleNavMenu,
-}: {
-    pages: RouteInterface[];
-    anchorElNav: boolean;
-    handleToggleNavMenu: (val: boolean) => void;
-}) {
+export default function HamburgerMenu({ pages }: { pages: RouteInterface[] }) {
+    const [anchorElNav, setAnchorElNav] = useState<boolean>(false);
+    const handleToggleNavMenu = (val: boolean) => {
+        setAnchorElNav(val);
+    };
+
     return (
-        <Box className="hamburger-btn block lg:hidden">
+        <Box className="hamburger-btn lg:hidden">
             <Tooltip
                 title="Open menu"
                 onClick={() => handleToggleNavMenu(true)}
@@ -57,27 +55,32 @@ export default function HamburgerMenu({
                     </Tooltip>
                 </div>
                 <div className="menu-container w-full flex flex-1 flex-col justify-between items-between">
-                    <div className="links">
+                    <div
+                        className="links"
+                        onClick={() => handleToggleNavMenu(false)}
+                    >
+                        {pages.map(({ url, title }, index) => (
+                            <span key={index}>
+                                <Link href={url} className="navlink block">
+                                    {title}
+                                </Link>
 
-                    {pages.map(({ url, title }, index) => (
-                        <span key={index}>
-                            <Link href={url} className="navlink block">
-                                {title}
-                            </Link>
-
-                            {index + 1 != pages.length && (
-                                <Divider
-                                    variant="fullWidth"
-                                    component="li"
-                                    light={false}
-                                    className="list-none list-divider mb-6 mt-6"
-                                />
-                            )}
-                        </span>
-                    ))}
+                                {index + 1 != pages.length && (
+                                    <Divider
+                                        variant="fullWidth"
+                                        component="li"
+                                        light={false}
+                                        className="list-none list-divider mb-6 mt-6"
+                                    />
+                                )}
+                            </span>
+                        ))}
                     </div>
 
-                    <div className="book-btn flex w-full justify-center border-2 rounded-md">
+                    <div
+                        className="book-btn flex w-full justify-center border-2 rounded-md"
+                        onClick={() => handleToggleNavMenu(false)}
+                    >
                         <Link href="/demo" className="navlink block">
                             Book a Demo
                         </Link>

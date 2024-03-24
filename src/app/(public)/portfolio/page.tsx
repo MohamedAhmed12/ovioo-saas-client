@@ -317,7 +317,7 @@ export default function Portfolio() {
       <div className="portfolio container flex flex-col pr-5 pl-5 mt-20 mb-40">
         <h2 className="mb-10 text-[2.5rem] text-center">Ovioo <strong>projects</strong></h2>
         <Tabs aria-label="Basic tabs" defaultValue={0}>
-          <TabList className=" w-full justify-center flex flex-col lg:flex-row">
+          <TabList className="w-full justify-center flex !flex-col lg:!flex-row">
             {steps.map(({ title }, i) => (
               <Tab key={i + '-tab'}>{title}</Tab>
             ))}

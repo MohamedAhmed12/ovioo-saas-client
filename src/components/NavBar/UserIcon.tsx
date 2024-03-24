@@ -2,17 +2,14 @@ import { Route as RouteInterface } from "@/interfaces";
 import { Avatar, MenuItem } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
 
-export default function UserIcon({
-    settings,
-    anchorElUser,
-    handleToggleUserMenu,
-}: {
-    settings: RouteInterface[];
-    anchorElUser: HTMLElement | null;
-    handleToggleUserMenu: (event: MouseEvent<HTMLElement> | null) => void;
-}) {
+export default function UserIcon({ settings }: { settings: RouteInterface[] }) {
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    const handleToggleUserMenu = (event: MouseEvent<HTMLElement> | null) => {
+        setAnchorElUser(event ? event.currentTarget : null);
+    };
+
     return (
         <div>
             <IconButton
@@ -42,7 +39,10 @@ export default function UserIcon({
                 onClose={() => handleToggleUserMenu(null)}
             >
                 {settings.map((setting) => (
-                    <MenuItem key={setting.title} onClick={() => handleToggleUserMenu(null)}>
+                    <MenuItem
+                        key={setting.title}
+                        onClick={() => handleToggleUserMenu(null)}
+                    >
                         {setting.title}
                     </MenuItem>
                 ))}

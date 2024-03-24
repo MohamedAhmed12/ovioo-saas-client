@@ -27,32 +27,32 @@ export default function Footer() {
                         <div className="footer__contacts flex flex-col lg:flex-row">
                             <div className="menu-adress-left ">
                                 <div className="text-adress">
-                                    <p className="text-style-m">Ovioo Inc.</p>
+                                    <p className="text-sm md:text-lg">Ovioo Inc.</p>
                                 </div>
                                 <div className="contact-text street">
-                                    <p className="text-style-m">
+                                <p className="text-sm md:text-lg">
                                         Ovioo is headquartered
                                         <br />
-                                        in Dubai, UAE.
+                                        in Wyoming, USA.
                                     </p>
                                 </div>
                             </div>
                             <div className="menu-adress-right justify-end">
                                 <div className="contact-text phone">
-                                    <p className="text-style-m"></p>
+                                    <p className="text-sm md:text-lg"></p>
                                 </div>
                                 <a
-                                    href="mailto:hi@ovioo.io"
+                                    href="mailto:info@ovioo.ai"
                                     className="contact-text email w-full inline-block mt-4 lg:mt-6"
                                 >
-                                    <p className="text-style-m">help@ovioo.io</p>
+                                    <p className="text-sm md:text-lg">info@ovioo.ai</p>
                                 </a>
                                 <a
                                     href="/"
                                     target="_blank"
-                                    className="contact-text help-center w-full inline-block mt-4 lg:mt-0"
+                                    className="contact-text help-center w-full inline-block lg:mt-0"
                                 >
-                                    <p className="text-style-m">ovioo Help Center</p>
+                                    <p className="text-sm md:text-lg">ovioo Help Center</p>
                                 </a>
                             </div>
                         </div>
@@ -60,24 +60,24 @@ export default function Footer() {
                     <div className="menu-wrapper_footer hidden lg:flex pt-14">
                         <div className="col_footer">
                             <div className="link_footer">
-                                <a href="/portfolio" className="footer_nav-text">
+                                <a href="/portfolio" className="text-sm md:text-lg">
                                     Portfolio
                                 </a>
                             </div>
-                            <div className="link_footer mt-7">
-                                <a href="/pricing" className="footer_nav-text">
+                            <div className="link_footer mt-3 md:mt-4 lg:mt-7">
+                                <a href="/pricing" className="text-sm md:text-lg">
                                     Pricing
                                 </a>
                             </div>
                         </div>
                         <div className="col_footer">
                             <div className="link_footer">
-                                <a href="/how-it-works" className="footer_nav-text">
+                                <a href="/how-it-works" className="text-sm md:text-lg">
                                     How it Works
                                 </a>
                             </div>
-                            <div className="link_footer mt-7">
-                                <a href="/about" className="footer_nav-text">
+                            <div className="link_footer mt-3 md:mt-4 lg:mt-7">
+                                <a href="/about" className="text-sm md:text-lg">
                                     About Us
                                 </a>
                             </div>
@@ -85,37 +85,37 @@ export default function Footer() {
                         <div className="col_footer last">
                             <div className="row-footer">
                                 <div className="link_footer">
-                                    <a href="/" className="footer_nav-text">
+                                    <a href="/" className="text-sm md:text-lg">
                                         Hiring 🔥
                                     </a>
                                 </div>
                             </div>
                             <div className="link_footer last">
-                                <a href="/terms" className="footer_nav-text">
+                                <a href="/terms" className="text-sm md:text-lg">
                                     Terms &amp; Policies
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div className="menu-wrapper-mobile flex lg:hidden mt-20 flex-col w-full">
+                    <div className="menu-wrapper-mobile flex lg:hidden mt-16 lg:mt-20 flex-col w-full">
                         <div className="footer-menu flex flex-wrap">
                             <div className="col_footer">
                                 <a href="/portfolio" className="link_footer w-full inline-block">
-                                    <p className="footer_nav-text">Portfolio</p>
+                                    <p className="text-sm md:text-lg">Portfolio</p>
                                 </a>
-                                <a href="/pricing" className="link_footer mt-7 w-full inline-block">
-                                    <p className="footer_nav-text">Pricing</p>
+                                <a href="/pricing" className="link_footer mt-3 md:mt-4 lg:mt-7 w-full inline-block">
+                                    <p className="text-sm md:text-lg">Pricing</p>
                                 </a>
                                 <a
                                     href="/about-us"
-                                    className="link_footer mt-7 w-full inline-block"
+                                    className="link_footer mt-3 md:mt-4 lg:mt-7 w-full inline-block"
                                 >
-                                    <p className="footer_nav-text">About Us</p>
+                                    <p className="text-sm md:text-lg">About Us</p>
                                 </a>
-                                <div className="link_footer mt-7">
+                                <div className="link_footer mt-3 md:mt-4 lg:mt-7">
                                     <a
                                         href="/affiliate-terms-conditions"
-                                        className="footer_nav-text"
+                                        className="text-sm md:text-lg"
                                     >
                                         Affiliates
                                     </a>
@@ -126,16 +126,16 @@ export default function Footer() {
                                     href="/how-it-works"
                                     className="link_footer w-full inline-block mt-7 sm:mt-0"
                                 >
-                                    <p className="footer_nav-text">What You Get</p>
+                                    <p className="text-sm md:text-lg">What You Get</p>
                                 </a>
                                 <a
                                     href="/terms-of-service"
-                                    className="link_footer mt-7 w-full inline-block"
+                                    className="link_footer mt-3 md:mt-4 lg:mt-7 w-full inline-block"
                                 >
-                                    <p className="footer_nav-text">Terms &amp; Policies</p>
+                                    <p className="text-sm md:text-lg">Terms &amp; Policies</p>
                                 </a>
-                                <div className="link_footer mt-7 mob">
-                                    <a href="/" className="footer_nav-text">
+                                <div className="link_footer mt-3 md:mt-4 lg:mt-7 mob">
+                                    <a href="/" className="text-sm md:text-lg">
                                         Hiring 🔥
                                     </a>
                                 </div>
@@ -223,12 +223,12 @@ export default function Footer() {
                         </a>
                     </div>
                     <div className="footer-motto">
-                        <p className="text-style-m center mob-ver">
+                        <p className="text-sm sm:block md:hidden center mob-ver">
                             Ovioo - awesome
                             <br />
                             on a cosmic level
                         </p>
-                        <p className="text-style-m center desk">
+                        <p className="text-lg hidden md:block center desk">
                             Ovioo - awesome on a cosmic level
                         </p>
                     </div>

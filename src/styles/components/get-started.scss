@@ -76,7 +76,7 @@
                         font-size: 40px;
                         font-weight: 300;
                         line-height: 60px;
-                        @media screen and (max-width: 479px) {
+                        @media screen and (max-width: 767px) {
                             padding-left: 0;
                             padding-right: 0;
                             font-size: 28px;
@@ -93,7 +93,7 @@
             max-width: 360px;
         }
     }
-    @media screen and (max-width: 479px) {
-        padding-bottom: 238px;
+    @media screen and (max-width: 767px) {
+        padding-bottom: 150px;
     }
 }

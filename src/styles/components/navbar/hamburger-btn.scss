@@ -1,15 +1,12 @@
 .hamburger-btn {
-    position: fixed;
-    flex-grow: 0;
-    right: 5%;
-    top: 22px;
-    z-index: 999;
+    z-index: 99999!important;
     button {
         backdrop-filter: blur(2em);
         padding-left: 0;
         padding-right: 0;
     }
     .burger-menu {
+        height: 100vh;
         background-color: rgb(34, 34, 54);
         display: flex;
         flex-direction: column;
@@ -19,7 +16,7 @@
             height: 88px;
         }
         .menu-container {
-            margin-top: 64px;
+            margin-top: 20px;
             .navlink {
                 color: #fff;
                 font-size: 20px;
