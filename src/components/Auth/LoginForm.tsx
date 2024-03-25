@@ -71,12 +71,12 @@ export default function LoginForm() {
     };
 
     return (
-        <div className="login__form w-full max-w-[360px] lg:max-w-[400px]">
+        <div className="login__form w-full max-w-[300px] lg:max-w-[370px]">
             <Typography variant="h4" gutterBottom>
                 Sign in to Ovioo
             </Typography>
 
-            <Typography variant="body2" sx={{ mb: 5 }}>
+            <Typography variant="body2" className="!mb-7">
                 Don’t have an account?
                 <Link
                     href="/auth/register"
@@ -128,10 +128,8 @@ export default function LoginForm() {
                     />
                 </Stack>
                 <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="space-between"
                     sx={{ my: 2 }}
+                    className="flex-col sm:!flex-row items-start sm:items-center justify-between"
                 >
                     <FormControlLabel
                         control={<Checkbox />}

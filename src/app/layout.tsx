@@ -1,7 +1,7 @@
-import { Analytics } from "@vercel/analytics/react";
 import { NextAuthProvider } from "@/components/Providers/NextAuthProvider";
 import { ReduxProvider } from "@/components/Providers/ReduxProvider";
 import "@/styles/app/globals.scss";
+import { Analytics } from "@vercel/analytics/react";
 import localFont from "next/font/local";
 import { ReactNode } from "react";
 
@@ -47,6 +47,7 @@ export default async function RootLayout({
         <ReduxProvider>
             <NextAuthProvider>
                 <html lang="en">
+                    <link rel="icon" href="/svg/logo.svg" />
                     <body className={myFont.className}>
                         {children}
                         <Analytics />

@@ -10,8 +10,7 @@ import { useState } from "react";
 
 export default function SSOWrapper() {
     const [googleBtnloading, setGoogleBtnloading] = useState(false);
-    const [facebookBtnloading, setFacebookBtnloading] = useState(false);
-    const [linkedInBtnloading, setLinkedInBtnloading] = useState(false);
+    const [icloudBtnloading, setIcloudBtnloading] = useState(false);
 
     const searchParam = useSearchParams();
     const callbackUrl = searchParam.get("callbackUrl") || undefined;
@@ -21,65 +20,47 @@ export default function SSOWrapper() {
 
     return (
         <>
-            <div className="flex flex-row spacing-2 social-btn-group">
-                <Button
-                    fullWidth
-                    size="lg"
-                    variant="outlined"
-                    loading={googleBtnloading}
-                    onClick={() => {
-                        SSOLogin("google");
-                        setGoogleBtnloading(true);
-                    }}
-                >
-                    {!googleBtnloading && (
+            <div className="flex flex-col spacing-2 social-btn-group items-center">
+                {!googleBtnloading && (
+                    <Button
+                        fullWidth
+                        size="lg"
+                        variant="outlined"
+                        loading={googleBtnloading}
+                        onClick={() => {
+                            SSOLogin("google");
+                            setGoogleBtnloading(true);
+                        }}
+                    >
                         <Image
-                            src="/svg/social/google.svg"
+                            src="/images/google.png"
                             width={22}
                             height={22}
                             alt="linkedin icon"
                         ></Image>
-                    )}
-                </Button>
-                <Button
-                    fullWidth
-                    size="lg"
-                    variant="outlined"
-                    className="!mx-5"
-                    loading={facebookBtnloading}
-                    onClick={() => {
-                        SSOLogin("facebook");
-                        setFacebookBtnloading(true);
-                    }}
-                >
-                    {!facebookBtnloading && (
+                        <p className="m-auto text-black">Continue with Google</p>
+                    </Button>
+                )}
+                {!icloudBtnloading && (
+                    <Button
+                        fullWidth
+                        size="lg"
+                        loading={icloudBtnloading}
+                        onClick={() => {
+                            SSOLogin("linkedin");
+                            setIcloudBtnloading(true);
+                        }}
+                        className="!bg-black hover:!bg-black !mt-3"
+                    >
                         <Image
-                            src="/svg/social/facebook.svg"
+                            src="/images/apple.png"
                             width={22}
                             height={22}
                             alt="linkedin icon"
                         ></Image>
-                    )}
-                </Button>
-                <Button
-                    fullWidth
-                    size="lg"
-                    variant="outlined"
-                    loading={linkedInBtnloading}
-                    onClick={() => {
-                        SSOLogin("linkedin");
-                        setLinkedInBtnloading(true);
-                    }}
-                >
-                    {!linkedInBtnloading && (
-                        <Image
-                            src="/svg/social/linkedin.svg"
-                            width={22}
-                            height={22}
-                            alt="linkedin icon"
-                        ></Image>
-                    )}
-                </Button>
+                        <p className="m-auto">Continue with Apple</p>
+                    </Button>
+                )}
             </div>
 
             <Divider sx={{ my: 3 }}>
