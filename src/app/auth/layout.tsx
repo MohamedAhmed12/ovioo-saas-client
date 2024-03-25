@@ -24,7 +24,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
             <main className="flex min-h-screen flex-col justify-between auth-layout">
                 <div className="login flex w-full">
                     <LeftSideCover />
-                    <div className="form__wrapper flex flex-1 bg-white text-black py-24 px-5 lg:px-0">
+                    <div className="form__wrapper flex flex-1 bg-white text-black p-0 sm:py-24 sm:px-5 lg:px-0">
                         {children}
                         <Toaster
                             position="top-right"
