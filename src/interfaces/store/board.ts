@@ -1,5 +1,6 @@
 import { Asset } from "../asset";
 import { MessageInterface } from "../message";
+import { PlanInterface } from "../plan";
 import { Project } from "../project";
 import { Team } from "../team";
 import { UserInterface } from "../user";
@@ -27,7 +28,7 @@ export interface TaskTypeInterface {
     title: string;
     info: string[];
     extraInfo: string;
-    plan: string;
+    plan: PlanInterface;
 }
 
 export interface SubTaskInterface {
