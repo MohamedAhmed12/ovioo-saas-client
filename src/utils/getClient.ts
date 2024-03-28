@@ -14,7 +14,7 @@ const httpLink = new HttpLink({
 const wsLink = (session: any) =>
     new GraphQLWsLink(
         createClient({
-            url: `ws://localhost:3000/graphql`,
+            url: `${process.env.NEXT_PUBLIC_WEBSOCKET_URL}/graphql`,
             shouldRetry: () => true,
             connectionParams: () => {
                 return {

@@ -15,7 +15,9 @@ const LIST_TASK_TYPES = gql`
             title
             info
             extraInfo
-            plan
+            plan {
+                title
+            }
         }
     }
 `;
@@ -82,11 +84,11 @@ export default function TaskTypeDropDown({
                         >
                             <span className="basis-[90%] flex items-center">
                                 <Tooltip
-                                    title={plan}
+                                    title={plan.title}
                                     className="task-type__option-text mr-2"
                                 >
                                     <Image
-                                        src={`/svg/${plan}.svg`}
+                                        src={`/svg/${plan.title}.svg`}
                                         width={20}
                                         height={20}
                                         alt="pro icon"

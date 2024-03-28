@@ -129,7 +129,7 @@ export default function LoginForm() {
                 </Stack>
                 <Stack
                     sx={{ my: 2 }}
-                    className="flex-col sm:!flex-row items-start sm:items-center justify-between"
+                    className="flex-col lg:!flex-row items-start lg:items-center justify-between"
                 >
                     <FormControlLabel
                         control={<Checkbox />}
