@@ -21,46 +21,53 @@ export default function SSOWrapper() {
     return (
         <>
             <div className="flex flex-col spacing-2 social-btn-group items-center">
-                {!googleBtnloading && (
-                    <Button
-                        fullWidth
-                        size="lg"
-                        variant="outlined"
-                        loading={googleBtnloading}
-                        onClick={() => {
-                            SSOLogin("google");
-                            setGoogleBtnloading(true);
-                        }}
-                    >
-                        <Image
-                            src="/images/google.png"
-                            width={22}
-                            height={22}
-                            alt="linkedin icon"
-                        ></Image>
-                        <p className="m-auto text-black">Continue with Google</p>
-                    </Button>
-                )}
-                {!icloudBtnloading && (
-                    <Button
-                        fullWidth
-                        size="lg"
-                        loading={icloudBtnloading}
-                        onClick={() => {
-                            SSOLogin("linkedin");
-                            setIcloudBtnloading(true);
-                        }}
-                        className="!bg-black hover:!bg-black !mt-3"
-                    >
-                        <Image
-                            src="/images/apple.png"
-                            width={22}
-                            height={22}
-                            alt="linkedin icon"
-                        ></Image>
-                        <p className="m-auto">Continue with Apple</p>
-                    </Button>
-                )}
+                <Button
+                    fullWidth
+                    size="lg"
+                    variant="outlined"
+                    loading={googleBtnloading}
+                    onClick={() => {
+                        SSOLogin("google");
+                        setGoogleBtnloading(true);
+                    }}
+                >
+                    {!googleBtnloading && (
+                        <>
+                            <Image
+                                src="/images/google.png"
+                                width={22}
+                                height={22}
+                                alt="linkedin icon"
+                            ></Image>
+                            <p className="m-auto text-black">
+                                Continue with Google
+                            </p>
+                        </>
+                    )}
+                </Button>
+                {/* commented for now till I apply for apple developer program */}
+                {/* <Button
+                    fullWidth
+                    size="lg"
+                    loading={icloudBtnloading}
+                    onClick={() => {
+                        SSOLogin("apple");
+                        setIcloudBtnloading(true);
+                    }}
+                    className="!bg-black hover:!bg-black !mt-3"
+                >
+                    {!icloudBtnloading && (
+                        <>
+                            <Image
+                                src="/images/apple.png"
+                                width={22}
+                                height={22}
+                                alt="apple icon"
+                            ></Image>
+                            <p className="m-auto">Continue with Apple</p>
+                        </>
+                    )}
+                </Button> */}
             </div>
 
             <Divider sx={{ my: 3 }}>
