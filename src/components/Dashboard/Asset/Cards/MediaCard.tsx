@@ -2,7 +2,7 @@
 
 import { Asset as AssetInterface } from "@/interfaces";
 import "@/styles/components/dashboard/asset/cards/media-card.scss";
-import { isVideo as isVideoHelper} from "@/utils/helpers";
+import { isVideo as isVideoHelper } from "@/utils/helpers";
 import { Backdrop } from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
 import Image from "next/image";
@@ -32,7 +32,9 @@ export default function MediaCard({ asset }: { asset: AssetInterface }) {
                     ></video>
                 ) : (
                     <span
-                        style={{ backgroundImage: `url(${asset.src})` }}
+                        style={{
+                            backgroundImage: `url(${encodeURI(asset.src)})`,
+                        }}
                         className="assets__media-card__cover"
                     />
                 )}
@@ -70,7 +72,13 @@ export default function MediaCard({ asset }: { asset: AssetInterface }) {
                 className="overflow-y-auto"
             >
                 {isVideo ? (
-                    <video autoPlay loop muted src={asset.src} className="max-w-[80%]"/>
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        src={asset.src}
+                        className="max-w-[80%]"
+                    />
                 ) : (
                     <Image
                         src={asset.src}
