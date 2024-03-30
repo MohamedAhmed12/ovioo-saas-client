@@ -235,7 +235,7 @@ export default function Chat({ task }: { task: TaskInterface }) {
                     </AvatarGroup>
                 )}
 
-                <div className="flex flex-1 flex-col flex-wrap mt-4 text-black focus:border-0 rounded-md border-[0.5px] border-gray-600">
+                <div className="flex flex-1 flex-col flex-wrap mt-4 text-black focus:border-0 rounded-md border-[0.5px] border-gray-600 max-h-[700px]">
                     <MessagesWrapper
                         task={task}
                         setShowPicker={setShowPicker}
