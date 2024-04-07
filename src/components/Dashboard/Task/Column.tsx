@@ -1,7 +1,7 @@
 "use client";
 
-import { useAppDispatch } from "@/hooks/redux";
-import { TaskInterface, TaskStatus } from "@/interfaces";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { RoleEnum, TaskInterface, TaskStatus } from "@/interfaces";
 import { dragTask } from "@/store/features/board";
 import { gql, useMutation } from "@apollo/client";
 import { Typography } from "@mui/material";
@@ -27,6 +27,7 @@ export default function Column({
     title: TaskStatus;
     color: string;
 }) {
+    const authUser = useAppSelector((state) => state.userReducer.user);
     const [openCreateTask, setOpenCreateTask] = useState<boolean>(false);
 
     const dispatch = useAppDispatch();
@@ -73,13 +74,16 @@ export default function Column({
             {tasks &&
                 tasks.map((task, index) => <Task key={index} task={task} />)}
 
-            <Typography
-                variant="body1"
-                className="new-task-btn !mt-4 capitalize font-bold text-[#0ea5e9] cursor-pointer"
-                onClick={() => setOpenCreateTask(true)}
-            >
-                + new task
-            </Typography>
+            {(authUser.role == RoleEnum.Designer ||
+                title != TaskStatus.DONE) && (
+                <Typography
+                    variant="body1"
+                    className="new-task-btn !mt-4 capitalize font-bold text-[#0ea5e9] cursor-pointer"
+                    onClick={() => setOpenCreateTask(true)}
+                >
+                    + new task
+                </Typography>
+            )}
 
             {openCreateTask && (
                 <CreateTaskBackdrop

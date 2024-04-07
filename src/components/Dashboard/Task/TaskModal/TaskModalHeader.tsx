@@ -4,10 +4,10 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { TaskInterface, TaskStatus } from "@/interfaces";
 import { deleteTask as deleteTaskAction } from "@/store/features/board";
 import { gql, useMutation } from "@apollo/client";
-import { Avatar, IconButton } from "@mui/material";
+import { Avatar, IconButton, Tooltip } from "@mui/material";
 import { MouseEvent, useState } from "react";
 import toast from "react-hot-toast";
-import { MdAccountCircle, MdDelete } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import OviooDropDown from "../../OviooDropDown";
 
 const DELETE_TASK = gql`
@@ -25,13 +25,12 @@ export default function TaskModalHeader({
     onClose: (val: boolean) => void;
     handleOnChange: (name: string, value: any) => void;
 }) {
-
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const dispatch = useAppDispatch();
     const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
     const [deleteTask] = useMutation(DELETE_TASK);
-   
+
     const setOpenDeleteModal = () => {
         setIsDeleteModalOpen(true);
     };
@@ -76,16 +75,15 @@ export default function TaskModalHeader({
                     disabled={isDesigner}
                 />
 
-                {!isDesigner &&
-                    (task?.designer?.avatar ? (
+                {!isDesigner && (
+                    <Tooltip title={task?.designer?.fullname}>
                         <Avatar
                             alt={task?.designer?.fullname || "designer"}
                             sx={{ width: 55, height: 55 }}
                             src={task?.designer?.avatar}
                         />
-                    ) : (
-                        <MdAccountCircle className="!text-[60px]" />
-                    ))}
+                    </Tooltip>
+                )}
             </div>
 
             {!isDesigner && (

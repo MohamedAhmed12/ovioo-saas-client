@@ -1,10 +1,6 @@
 "use client";
 
-import {
-    Asset as AssetInterface,
-    TaskInterface,
-    s3PathInterface,
-} from "@/interfaces";
+import { Asset as AssetInterface, TaskInterface } from "@/interfaces";
 import { setTaskAssets } from "@/store/features/task";
 import "@/styles/components/dashboard/asset/asset-list.scss";
 import { uploadFiles } from "@/utils/helpers";
@@ -76,9 +72,17 @@ export default function AssetList({
         }
 
         assets = assets.map(
-            ({ type, s3Path }: { type: string; s3Path: s3PathInterface }) => ({
-                alt: s3Path.Key,
-                src: s3Path.Location,
+            ({
+                type,
+                gcsPath,
+                alt,
+            }: {
+                type: string;
+                gcsPath: string;
+                alt: string;
+            }) => ({
+                alt: alt,
+                src: gcsPath,
                 type,
             })
         );

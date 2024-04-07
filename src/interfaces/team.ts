@@ -1,3 +1,5 @@
+import { RoleEnum } from "./user";
+
 export interface Team {
     id: string;
     owner_id: string;
@@ -11,4 +13,5 @@ export interface Member {
     email: string;
     avatar: string;
     isActive: boolean;
+    role?: RoleEnum;
 }
