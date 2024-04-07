@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/hooks/redux";
 import { useCustomQuery } from "@/hooks/useCustomQuery";
-import { Member, TaskInterface } from "@/interfaces";
+import { Member, RoleEnum, TaskInterface } from "@/interfaces";
 import { MessageInterface, MessageStatusEnum } from "@/interfaces/message";
 import "@/styles/components/dashboard/task/chat.scss";
 import { gql, useMutation, useSubscription } from "@apollo/client";
@@ -83,7 +83,9 @@ const READ_MESSAGES = gql`
 
 export default function Chat({ task }: { task: TaskInterface }) {
     const [activeUsers, setActiveUsers] = useState<Member[]>(
-        task?.team?.members.filter((member) => member.isActive) || []
+        task?.team?.members.filter(
+            (member) => member.isActive && member.role != RoleEnum.Designer
+        ) || []
     );
     const authUser = useAppSelector((state) => state.userReducer.user);
     const [showPicker, setShowPicker] = useState<boolean>(false);
