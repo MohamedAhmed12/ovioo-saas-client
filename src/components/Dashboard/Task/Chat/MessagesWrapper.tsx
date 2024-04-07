@@ -274,7 +274,7 @@ export default function MessagesWrapper({
             ref={msgsWrapper}
             onScroll={handleOnScroll}
             onClick={() => setShowPicker(false)}
-            className="messages__wrapper rounded-t-md flex flex-col-reverse space-y-3 w-full bg-[#fae8bc] overflow-auto"
+            className="messages__wrapper rounded-t-md flex flex-col-reverse space-y-3 w-full bg-[#fae8bc]"
         >
             {unreadMessages?.length > 0 && (
                 <>
