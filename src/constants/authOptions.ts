@@ -7,9 +7,7 @@ import { JWT, Secret } from "next-auth/jwt";
 import CredentialsProvider, {
     CredentialInput,
 } from "next-auth/providers/credentials";
-import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
-import LinkedInProvider from "next-auth/providers/linkedin";
 
 const FindOrCreateSSOUser = gql`
     mutation ($user: CreateSsoUserDto!) {
@@ -63,43 +61,6 @@ export const authOptions = {
             */
             clientId: process.env.GOOGLE_CLIENT_ID || "",
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-        }),
-        FacebookProvider({
-            /* facbook callback (https://developers.facebook.com/apps/300419836037505/dashboard/)
-                { // user
-                    id: '7392282184121141',
-                    name: 'Mohamed Ahmed',
-                    email: 'mohamed_7el17@yahoo.com',
-                    image: 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=7392282184121141&height=50&width=50&ext=1698370998&hash=AeRSDWmnLbZwoDouMGE'
-                }
-                { // account
-                    provider: 'facebook',
-                    type: 'oauth',
-                    providerAccountId: '7392282184121141',
-                    access_token: 'EAAEROvGcSYEBO1vbMYt2xQCh2Vr4IAgbGPVoZB0xmGqwZCNEAyetZAYKeQ90F74r2uopHtmtIgoLuJuaMXpkDUpZC1fivuVfvDbMvTbYRMZAurytZATlSTXJz5oCyeOPiBImnXxzado7JMnTGZAjUeZAHvMq0jUAYJloybNNyn3ZALu3wnt0WqUxXr9JB5hbasNR2Pz5eZBaReU6ZB14aDiUieEZAC8nC5GObPVj1Tfie3IyBCv6n1ZAZCzZAaT',
-                    token_type: 'bearer',
-                    expires_at: 1700962897
-                }
-                { // profile
-                    id: '7392282184121141',
-                    name: 'Mohamed Ahmed',
-                    email: 'mohamed_7el17@yahoo.com',
-                    picture: {
-                        data: {
-                        height: 50,
-                        is_silhouette: false,
-                        url: 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=7392282184121141&height=50&width=50&ext=1698370998&hash=AeRSDWmnLbZwoDouMGE',
-                        width: 50
-                        }
-                    }
-                } 
-            */
-            clientId: process.env.FACEBOOK_CLIENT_ID || "",
-            clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "",
-        }),
-        LinkedInProvider({
-            clientId: process.env.LINKEDIN_CLIENT_ID || "",
-            clientSecret: process.env.LINKEDIN_CLIENT_SECRET || "",
         }),
         CredentialsProvider({
             type: "credentials",
