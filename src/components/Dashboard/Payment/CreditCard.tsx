@@ -2,6 +2,7 @@ import { Subscription } from "@/interfaces/subscription";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { IoMdTime } from "react-icons/io";
 
 export default async function CreditCard({
     subscription,
@@ -24,7 +25,12 @@ export default async function CreditCard({
                         align="center"
                         className="!my-5 !text-[45px]"
                     >
-                        ${subscription.remaining_credit_hours}
+                        {subscription.remaining_credit_hours}
+                        <span className="inline-flex text-[28px] items-end">
+                            {" "}
+                            <span className="ml-2 mr-1">hrs</span> 
+                            <IoMdTime />
+                        </span>
                     </Typography>
                 </CardContent>
             </Card>

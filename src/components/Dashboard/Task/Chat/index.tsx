@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/hooks/redux";
 import { useCustomQuery } from "@/hooks/useCustomQuery";
-import { Member, TaskInterface } from "@/interfaces";
+import { Member, RoleEnum, TaskInterface } from "@/interfaces";
 import { MessageInterface, MessageStatusEnum } from "@/interfaces/message";
 import "@/styles/components/dashboard/task/chat.scss";
 import { gql, useMutation, useSubscription } from "@apollo/client";
@@ -83,7 +83,9 @@ const READ_MESSAGES = gql`
 
 export default function Chat({ task }: { task: TaskInterface }) {
     const [activeUsers, setActiveUsers] = useState<Member[]>(
-        task?.team?.members.filter((member) => member.isActive) || []
+        task?.team?.members.filter(
+            (member) => member.isActive && member.role != RoleEnum.Designer
+        ) || []
     );
     const authUser = useAppSelector((state) => state.userReducer.user);
     const [showPicker, setShowPicker] = useState<boolean>(false);
@@ -235,7 +237,7 @@ export default function Chat({ task }: { task: TaskInterface }) {
                     </AvatarGroup>
                 )}
 
-                <div className="flex flex-1 flex-col flex-wrap mt-4 text-black focus:border-0 rounded-md border-[0.5px] border-gray-600">
+                <div className="flex flex-1 flex-col flex-wrap mt-4 text-black focus:border-0 rounded-md border-[0.5px] border-gray-600 max-h-[700px]">
                     <MessagesWrapper
                         task={task}
                         setShowPicker={setShowPicker}

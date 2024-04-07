@@ -32,6 +32,8 @@
         }
     }
     .messages__wrapper {
+        overflow-y: auto;
+        max-height: 100%;
         min-height: 550px;
         flex: 1;
         padding-bottom: 1rem;

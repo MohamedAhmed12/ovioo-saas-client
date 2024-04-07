@@ -30,8 +30,7 @@ const OviooMessage = ({
                 height: 200,
                 status: {
                     click: true,
-                    loading: 0.5,
-                    download: false,
+                    download: true,
                 },
             };
     };

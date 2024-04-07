@@ -52,10 +52,10 @@ export default function ProfileSetting({ user }: { user: any }): ReactNode {
         try {
             const res = await uploadFiles(e, session, `avatars/${user.id}`);
 
-            if (res?.[0]?.s3Path?.Location) {
+            if (res?.[0]?.gcsPath) {
                 const data = {
                     ...formData,
-                    avatar: res?.[0]?.s3Path?.Location,
+                    avatar: res?.[0]?.gcsPath,
                 };
 
                 await updateUser({
@@ -121,7 +121,7 @@ export default function ProfileSetting({ user }: { user: any }): ReactNode {
                     <div className="basis-1/5 flex flex-col">
                         {user.avatar ? (
                             <Image
-                                src={`${formData.avatar}?refreshKey=${refreshAvatar}`}
+                                src={formData.avatar}
                                 width="500"
                                 height="500"
                                 alt="profile"

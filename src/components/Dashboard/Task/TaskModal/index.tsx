@@ -48,7 +48,12 @@ const SHOW_TASK = gql`
                     avatar
                     fullname
                     isActive
+                    role
                 }
+            }
+            designer {
+                fullname
+                avatar
             }
         }
     }
@@ -129,7 +134,7 @@ export default function TaskModal({
 
     useSubscription(TASK_UPDATED, {
         variables: { taskId },
-        onSubscriptionData: ({ subscriptionData }) => {
+        onSubscriptionData: ({ subscriptionData }) => { // Replace with onData as it will deprecate in future
             const updatedTask: TaskInterface & { title: string } =
                 subscriptionData?.data?.taskUpdated;
 

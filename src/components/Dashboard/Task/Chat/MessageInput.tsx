@@ -1,6 +1,7 @@
 import { MessageInterface } from "@/interfaces/message";
 import { uploadFiles } from "@/utils/helpers";
 import emojiData from "@emoji-mart/data";
+import { CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import {
@@ -104,8 +105,8 @@ export default function MessageInput({
                 handlePressSend("asset", {
                     ...formData,
                     asset: {
-                        alt: assets[0].s3Path.Key,
-                        src: assets[0].s3Path.Location,
+                        alt: assets[0].alt,
+                        src: assets[0].gcsPath,
                         type: assets[0].type,
                     },
                 });
@@ -137,7 +138,13 @@ export default function MessageInput({
                             cursor="pointer"
                         />
                         <label htmlFor="fileInput" className="ml-2 mr-1">
-                            <FaPlus size={iconSize} cursor="pointer" />
+                            {!loading ? (
+                                <FaPlus size={iconSize} cursor="pointer" />
+                            ) : (
+                                <CircularProgress
+                                 className="!text-black !w-[20px] !h-[20px]"
+                                ></CircularProgress>
+                            )}
                         </label>
                     </>
                 }
