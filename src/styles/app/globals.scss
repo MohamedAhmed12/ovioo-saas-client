@@ -9,12 +9,12 @@
     --secondary: #fae8bc;
     --dashboard-icon-color: var(
         --joy-palette-neutral-plainColor,
-        var(--joy-palette-neutral-700, #32383e)
+        var(--joy-palette-neutral-700, #555d66)
     );
     --dashboard-border: rgba(0, 0, 0, 0.08);
     --dashboard-dark-icon-color: rgb(203 213 225);
     --dashboard-dark-border: rgba(100, 116, 139, 0.5);
-    --dashboard-bg: #f4f7fd;
+    --dashboard-bg: #FFF;
     --dashboard-dark-bg: #20212c;
     --dashboard-primary: #1976d2;
 }
@@ -61,7 +61,7 @@ body {
         --tw-text-opacity: 1;
         --tw-bg-opacity: 1;
         border-radius: 0.5rem;
-        background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+        background-color: lightgray;
         .dark & {
             color: rgb(255 255 255 / var(--tw-text-opacity));
             background-color: rgb(43 44 55 / var(--tw-bg-opacity));

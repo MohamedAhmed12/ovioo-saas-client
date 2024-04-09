@@ -75,7 +75,7 @@ export default function Task() {
         tasks && (
             <div
                 className={
-                    "bg-[#f4f7fd] flex flex-1 dark:bg-[#20212c] gap-6 pb-14 overflow-x-auto"
+                    "bg-[#FFF] flex flex-1 dark:bg-[#20212c] gap-6 pb-14 overflow-x-auto"
                 }
             >
                 {getTaskStatuses().map((key: any) => {

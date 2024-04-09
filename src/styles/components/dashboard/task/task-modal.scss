@@ -1,13 +1,22 @@
 .task-modal {
-    .MuiPaper-root {     
+    .MuiPaper-root {
         &::-webkit-scrollbar-track {
             border-radius: 0;
             border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px; 
+            border-bottom-right-radius: 5px;
         }
-        .ovioo-card{
+        &::-webkit-scrollbar-thumb {
+            .dark & {
+                background-color: gray;
+            }
+        }
+        .ovioo-card {
+            background-color: #f2f2f2;
             border-top-right-radius: 0;
-            border-bottom-right-radius: 0; 
+            border-bottom-right-radius: 0;
+            .dark & {
+                background-color: var(--dashboard-dark-bg);
+            }
         }
         .asset-list .MuiCard-root,
         .add-asset-card {
