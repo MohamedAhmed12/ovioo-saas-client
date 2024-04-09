@@ -1,6 +1,5 @@
 "use client";
 
-import NotificationSetting from "@/components/Dashboard/Profile/NotificationSetting";
 import PasswordSetting from "@/components/Dashboard/Profile/PasswordSetting";
 import ProfileSetting from "@/components/Dashboard/Profile/ProfileSetting";
 import { useAppSelector } from "@/hooks/redux";
@@ -14,9 +13,12 @@ export default function Profile() {
                 <div className="profile-setting">
                     <ProfileSetting user={user} />
                 </div>
-                <div className="notification-setting">
-                    <NotificationSetting />
-                </div>
+                {/* 
+                    // TO-DO: hide till we enable email & push notification
+                    <div className="notification-setting">
+                        <NotificationSetting />
+                    </div> 
+                */}
                 <div className="password-setting">
                     <PasswordSetting user={user} />
                 </div>
