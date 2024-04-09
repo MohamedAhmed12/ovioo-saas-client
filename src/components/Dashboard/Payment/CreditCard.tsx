@@ -29,7 +29,7 @@ export default async function CreditCard({
                         <span className="inline-flex text-[28px] items-end">
                             {" "}
                             <span className="ml-2 mr-1">hrs</span> 
-                            <IoMdTime />
+                            <IoMdTime size="20" className="mb-1" />
                         </span>
                     </Typography>
                 </CardContent>
