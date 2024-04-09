@@ -74,16 +74,16 @@ export default function Column({
             {tasks &&
                 tasks.map((task, index) => <Task key={index} task={task} />)}
 
-            {(authUser.role == RoleEnum.Designer ||
-                title != TaskStatus.DONE) && (
-                <Typography
-                    variant="body1"
-                    className="new-task-btn !mt-4 capitalize font-bold text-[#0ea5e9] cursor-pointer"
-                    onClick={() => setOpenCreateTask(true)}
-                >
-                    + new task
-                </Typography>
-            )}
+            {authUser.role !== RoleEnum.Designer &&
+                title != TaskStatus.DONE && (
+                    <Typography
+                        variant="body1"
+                        className="new-task-btn !mt-4 capitalize font-bold text-[#0ea5e9] cursor-pointer"
+                        onClick={() => setOpenCreateTask(true)}
+                    >
+                        + new task
+                    </Typography>
+                )}
 
             {openCreateTask && (
                 <CreateTaskBackdrop
