@@ -4,11 +4,9 @@ import Column from "@/components/Dashboard/Task/Column";
 import { TaskKanbanColors } from "@/constants/TaskKanbanColors";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { DesignerTaskStatus, TaskStatus } from "@/interfaces";
-import { pushNewTask, resetTasks, setTasks } from "@/store/features/board";
+import { pushNewTask, setTasks } from "@/store/features/board";
 import "@/styles/app/unauth/home.scss";
 import { gql, useQuery, useSubscription } from "@apollo/client";
-import { useEffect } from "react";
-
 const LIST_TASKS = gql`
     query ListTasks {
         listTasks {
@@ -37,12 +35,20 @@ export default function Task() {
         loading: graphQLloading,
         error,
         data,
-    } = useQuery(LIST_TASKS, { fetchPolicy: "no-cache" });
+    } = useQuery(LIST_TASKS, {
+        fetchPolicy: "no-cache",
+        onCompleted: (data) => {
+            dispatch(setTasks(data.listTasks)); // if need to reset tasks use resetTasks
+        },
+    });
 
     if (error) throw new Error(JSON.stringify(error));
 
-    const { data: taskCreatedSubsData, loading: taskCreatedSubsLoading } =
-        useSubscription(TASK_CREATED);
+    useSubscription(TASK_CREATED, {
+        onData: ({ data }) => {
+            dispatch(pushNewTask(taskCreatedSubsData.taskCreated));
+        },
+    });
 
     const getTaskStatuses = () => {
         if (isDesigner) {
@@ -51,22 +57,6 @@ export default function Task() {
 
         return Object.keys(TaskStatus);
     };
-
-    useEffect(() => {
-        if (!graphQLloading && data?.listTasks) {
-            dispatch(setTasks(data.listTasks));
-        }
-
-        return () => {
-            dispatch(resetTasks());
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [graphQLloading, data, data?.listTasks]);
-    useEffect(() => {
-        if (!taskCreatedSubsLoading && taskCreatedSubsData?.taskCreated) {
-            dispatch(pushNewTask(taskCreatedSubsData.taskCreated));
-        }
-    }, [dispatch, taskCreatedSubsData, taskCreatedSubsLoading]);
 
     return (
         !graphQLloading &&
