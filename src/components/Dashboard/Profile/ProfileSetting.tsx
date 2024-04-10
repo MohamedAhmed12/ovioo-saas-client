@@ -50,7 +50,13 @@ export default function ProfileSetting({ user }: { user: any }): ReactNode {
         setAvatarLoading(true);
 
         try {
-            const res = await uploadFiles(e, session, `avatars/${user.id}`);
+            const res = await uploadFiles(
+                e,
+                session,
+                `avatars/${user.id}`,
+                true,
+                true
+            );
 
             if (res?.[0]?.gcsPath) {
                 const data = {
