@@ -7,6 +7,7 @@ import { DesignerTaskStatus, TaskStatus } from "@/interfaces";
 import { pushNewTask, setTasks } from "@/store/features/board";
 import "@/styles/app/unauth/home.scss";
 import { gql, useQuery, useSubscription } from "@apollo/client";
+
 const LIST_TASKS = gql`
     query ListTasks {
         listTasks {
@@ -35,6 +36,7 @@ export default function Task() {
         loading: graphQLloading,
         error,
         data,
+        refetch,
     } = useQuery(LIST_TASKS, {
         fetchPolicy: "no-cache",
         onCompleted: (data) => {
@@ -58,6 +60,11 @@ export default function Task() {
         return Object.keys(TaskStatus);
     };
 
+    const refetchTasks = async () => {
+        const { data } = await refetch();
+        dispatch(setTasks(data.listTasks));
+    };
+
     return (
         !graphQLloading &&
         !error &&
@@ -77,6 +84,7 @@ export default function Task() {
                             title={TaskStatus[taskStatusKey]}
                             color={TaskKanbanColors[taskStatusKey]}
                             tasks={tasks[TaskStatus[taskStatusKey]]}
+                            refetchTasks={refetchTasks}
                         />
                     );
                 })}

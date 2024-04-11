@@ -22,10 +22,12 @@ export default function Column({
     tasks,
     title,
     color,
+    refetchTasks,
 }: {
     tasks: TaskInterface[];
     title: TaskStatus;
     color: string;
+    refetchTasks: () => void;
 }) {
     const authUser = useAppSelector((state) => state.userReducer.user);
     const [openCreateTask, setOpenCreateTask] = useState<boolean>(false);
@@ -72,7 +74,9 @@ export default function Column({
             </p>
 
             {tasks &&
-                tasks.map((task, index) => <Task key={index} task={task} />)}
+                tasks.map((task, index) => (
+                    <Task key={index} task={task} refetchTasks={refetchTasks} />
+                ))}
 
             {authUser.role !== RoleEnum.Designer &&
                 title != TaskStatus.DONE && (
