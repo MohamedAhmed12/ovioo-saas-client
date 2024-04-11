@@ -46,7 +46,7 @@ export default function Task() {
 
     useSubscription(TASK_CREATED, {
         onData: ({ data }) => {
-            dispatch(pushNewTask(taskCreatedSubsData.taskCreated));
+            dispatch(pushNewTask(data.data.taskCreated));
         },
     });
 
