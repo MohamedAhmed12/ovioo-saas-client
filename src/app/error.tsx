@@ -1,23 +1,7 @@
 "use client";
 
-export default function Error({
-    error,
-    reset,
-}: {
-    error: Error & { digest?: string };
-    reset: () => void;
-}) {
-    return (
-        <div className="bg-black">
-            <h2>{"Something went wrong!"}</h2>
-            <button
-                onClick={
-                    // Attempt to recover by trying to re-render the segment
-                    () => reset()
-                }
-            >
-                Try again
-            </button>
-        </div>
-    );
+import { DeadPixels } from "@/components/DeadPixels";
+
+export default function Error() {
+    return <DeadPixels />;
 }
