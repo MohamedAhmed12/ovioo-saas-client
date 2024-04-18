@@ -38,6 +38,9 @@ const FETCH_USER_WITH_PROFILE = gql`
                 card_last4
                 subscriptions {
                     id
+                    plan {
+                        title
+                    }
                 }
             }
         }

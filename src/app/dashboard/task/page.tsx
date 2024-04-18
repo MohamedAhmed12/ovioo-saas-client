@@ -4,10 +4,9 @@ import Column from "@/components/Dashboard/Task/Column";
 import { TaskKanbanColors } from "@/constants/TaskKanbanColors";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { DesignerTaskStatus, TaskStatus } from "@/interfaces";
-import { pushNewTask, resetTasks, setTasks } from "@/store/features/board";
+import { pushNewTask, setTasks } from "@/store/features/board";
 import "@/styles/app/unauth/home.scss";
 import { gql, useQuery, useSubscription } from "@apollo/client";
-import { useEffect } from "react";
 
 const LIST_TASKS = gql`
     query ListTasks {
@@ -37,12 +36,21 @@ export default function Task() {
         loading: graphQLloading,
         error,
         data,
-    } = useQuery(LIST_TASKS, { fetchPolicy: "no-cache" });
+        refetch,
+    } = useQuery(LIST_TASKS, {
+        fetchPolicy: "no-cache",
+        onCompleted: (data) => {
+            dispatch(setTasks(data.listTasks)); // if need to reset tasks use resetTasks
+        },
+    });
 
     if (error) throw new Error(JSON.stringify(error));
 
-    const { data: taskCreatedSubsData, loading: taskCreatedSubsLoading } =
-        useSubscription(TASK_CREATED);
+    useSubscription(TASK_CREATED, {
+        onData: ({ data }) => {
+            dispatch(pushNewTask(data.data.taskCreated));
+        },
+    });
 
     const getTaskStatuses = () => {
         if (isDesigner) {
@@ -52,21 +60,10 @@ export default function Task() {
         return Object.keys(TaskStatus);
     };
 
-    useEffect(() => {
-        if (!graphQLloading && data?.listTasks) {
-            dispatch(setTasks(data.listTasks));
-        }
-
-        return () => {
-            dispatch(resetTasks());
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [graphQLloading, data, data?.listTasks]);
-    useEffect(() => {
-        if (!taskCreatedSubsLoading && taskCreatedSubsData?.taskCreated) {
-            dispatch(pushNewTask(taskCreatedSubsData.taskCreated));
-        }
-    }, [dispatch, taskCreatedSubsData, taskCreatedSubsLoading]);
+    const refetchTasks = async () => {
+        const { data } = await refetch();
+        dispatch(setTasks(data.listTasks));
+    };
 
     return (
         !graphQLloading &&
@@ -75,7 +72,7 @@ export default function Task() {
         tasks && (
             <div
                 className={
-                    "bg-[#f4f7fd] flex flex-1 dark:bg-[#20212c] gap-6 pb-14 overflow-x-auto"
+                    "bg-[#FFF] flex flex-1 dark:bg-[#20212c] gap-6 pb-14 overflow-x-auto"
                 }
             >
                 {getTaskStatuses().map((key: any) => {
@@ -87,6 +84,7 @@ export default function Task() {
                             title={TaskStatus[taskStatusKey]}
                             color={TaskKanbanColors[taskStatusKey]}
                             tasks={tasks[TaskStatus[taskStatusKey]]}
+                            refetchTasks={refetchTasks}
                         />
                     );
                 })}

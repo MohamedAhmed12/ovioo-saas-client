@@ -31,9 +31,6 @@
                         position: relative;
                         text-transform: capitalize;
                         border-radius: 6px;
-                        .dark & {
-                            color: var(--dashboard-dark-icon-color);
-                        }
                         .MuiListItemIcon-root {
                             width: 22px;
                             height: 22px;
@@ -41,6 +38,10 @@
                             display: flex;
                             align-items: center;
                             justify-content: center;
+                            color: var(--dashboard-icon-color);
+                            .dark & {
+                                color: var(--dashboard-dark-icon-color);
+                            }
                         }
                         .MuiListItemText-root {
                             color: inherit;

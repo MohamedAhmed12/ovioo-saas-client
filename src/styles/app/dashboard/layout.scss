@@ -2,6 +2,7 @@
     background-color: var(--dashboard-bg);
     scrollbar-width: thin;
     scrollbar-color: var(--secondary) var(--primary);
+    color: black;
     .dashboard__link {
         color: #0ea5e9;
         &:hover {
@@ -9,6 +10,7 @@
         }
     }
     .dark & {
+        color: #fff;
         background-color: var(--dashboard-dark-bg);
     }
 }

@@ -5,13 +5,18 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { DragEvent, useState } from "react";
 import TaskModal from "./TaskModal";
 
-export default function Task({ task }: { task: TaskInterface }) {
+export default function Task({
+    task,
+    refetchTasks,
+}: {
+    task: TaskInterface;
+    refetchTasks: () => void;
+}) {
     const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
     const dispatch = useAppDispatch();
     const router = useRouter();
     const searchParams = useSearchParams();
     const existInParams = searchParams.get("task");
-    const authUser = useAppSelector((state) => state.userReducer.user);
 
     let completed = 0;
     let subtasks: SubTaskInterface[] | undefined = task.subtasks;
@@ -31,6 +36,7 @@ export default function Task({ task }: { task: TaskInterface }) {
         setIsTaskModalOpen(false);
         router.push("/dashboard/task");
         dispatch(setSelectedTask(null));
+        refetchTasks();
     };
 
     return (

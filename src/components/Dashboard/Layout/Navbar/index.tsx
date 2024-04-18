@@ -8,11 +8,8 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import {
-    MdAttachMoney,
-    MdProductionQuantityLimits,
-    MdTask,
-} from "react-icons/md";
+import { FaImages } from "react-icons/fa6";
+import { MdAttachMoney, MdTask } from "react-icons/md";
 import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
 import NavbarWrapper from "./NavbarWrapper";
@@ -22,13 +19,14 @@ const NavbarTabs = [
         title: "Tasks",
         url: "/dashboard/task",
         icon: <MdTask size="25" />,
-    }
+    },
 ];
 const UserNavbarTabs = [
     {
         title: "My assets",
         url: "/dashboard/asset",
-        icon: <MdProductionQuantityLimits size="25" />,
+
+        icon: <FaImages size="25" />,
     },
     {
         title: "Credit",

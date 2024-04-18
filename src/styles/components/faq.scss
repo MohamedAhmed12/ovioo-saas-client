@@ -39,7 +39,8 @@
                         transition: color 0.3s
                             cubic-bezier(0.386, 0.096, 0, 0.991);
                         .MuiTypography-root {
-                            font-family: E ukraine, sans-serif;
+                            font-family: "__Rubik_261cd1",
+                                "__Rubik_Fallback_261cd1", sans-serif;
                             color: #fff;
                             font-size: 24px;
                             line-height: 51px;

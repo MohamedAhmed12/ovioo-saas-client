@@ -105,6 +105,7 @@ export default function RegisterForm() {
                         {...bindFullname}
                     />
                     <TextField
+                        required
                         name="company"
                         error={errors.hasOwnProperty("company")}
                         helperText={errors["company"]}

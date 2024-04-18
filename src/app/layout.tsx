@@ -2,40 +2,15 @@ import { NextAuthProvider } from "@/components/Providers/NextAuthProvider";
 import { ReduxProvider } from "@/components/Providers/ReduxProvider";
 import "@/styles/app/globals.scss";
 import { Analytics } from "@vercel/analytics/react";
-import localFont from "next/font/local";
+import { Rubik } from "next/font/google";
 import { ReactNode } from "react";
 
-const myFont = localFont({
+const rubik = Rubik({
     display: "swap",
+    subsets: ["latin"],
+    weight: ["400", "700"],
     fallback: ["sans-serif"],
-    variable: "--font-ukraine",
-    src: [
-        {
-            path: "../../public/fonts/E-Ukraine-Light.woff",
-            weight: "300",
-            style: "normal",
-        },
-        {
-            path: "../../public/fonts/E-Ukraine-Medium.woff",
-            weight: "500",
-            style: "normal",
-        },
-        {
-            path: "../../public/fonts/E-Ukraine-UltraLight.woff",
-            weight: "200",
-            style: "normal",
-        },
-        {
-            path: "../../public/fonts/E-Ukraine-Regular.otf",
-            weight: "400",
-            style: "normal",
-        },
-        {
-            path: "../../public/fonts/E-Ukraine-Bold.otf",
-            weight: "700",
-            style: "normal",
-        },
-    ],
+    variable:'--font-rubik'
 });
 
 export default async function RootLayout({
@@ -48,7 +23,7 @@ export default async function RootLayout({
             <NextAuthProvider>
                 <html lang="en">
                     <link rel="icon" href="/svg/logo.svg" />
-                    <body className={myFont.className}>
+                    <body className={rubik.className}>
                         {children}
                         <Analytics />
                     </body>

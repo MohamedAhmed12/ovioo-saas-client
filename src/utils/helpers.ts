@@ -13,11 +13,23 @@ export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 export const ObjectHasVal = (object: Object, val: any) =>
     Object.values(object).includes(val);
 
+function cleanDirectory(path: string, session: Session | null) {
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/directory/clean`, {
+        method: "POST",
+        body: JSON.stringify({ path }),
+        headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${session?.access_token}`,
+        },
+    });
+}
+
 export const uploadFiles = async (
     e: ChangeEvent<HTMLInputElement>,
     session: Session | null,
     path: string,
-    inDirectory: boolean = false
+    inDirectory: boolean = false,
+    directoryReset: boolean = false
 ): Promise<any> => {
     try {
         const files = e?.target?.files;
@@ -31,6 +43,8 @@ export const uploadFiles = async (
         for (let i = 0; i < files.length; i++) {
             form.append("files[]", files[i]);
         }
+
+        if (directoryReset) cleanDirectory(path, session);
 
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_SERVER_URL}/api/file/upload`,
