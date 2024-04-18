@@ -1,11 +1,5 @@
-import Link from "next/link";
+import { DeadPixels } from "@/components/DeadPixels";
 
 export default function NotFound() {
-    return (
-        <div className="bg-black">
-            <h2>Not Found</h2>
-            <p>Could not find requested resource</p>
-            <Link href="/">Return Home</Link>
-        </div>
-    );
+    return <DeadPixels />;
 }

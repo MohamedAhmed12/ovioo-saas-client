@@ -15,6 +15,7 @@ export const boardSlice = createSlice({
     initialState,
     reducers: {
         setTasks: (state, action) => {
+            boardSlice.caseReducers.resetTasks(state);
             action.payload.forEach((task: TaskInterface) => {
                 state.tasks[task.status].push(task);
             });

@@ -14,7 +14,6 @@ import {
 } from "react";
 import { Input } from "react-chat-elements";
 import toast from "react-hot-toast";
-import { BiSolidMicrophone } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
 import { IoSendSharp } from "react-icons/io5";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
@@ -141,9 +140,7 @@ export default function MessageInput({
                             {!loading ? (
                                 <FaPlus size={iconSize} cursor="pointer" />
                             ) : (
-                                <CircularProgress
-                                 className="!text-black !w-[20px] !h-[20px]"
-                                ></CircularProgress>
+                                <CircularProgress className="!text-black !w-[20px] !h-[20px]"></CircularProgress>
                             )}
                         </label>
                     </>

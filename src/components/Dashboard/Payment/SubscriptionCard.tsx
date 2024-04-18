@@ -1,3 +1,6 @@
+"use client";
+
+import { useAppSelector } from "@/hooks/redux";
 import { Team } from "@/interfaces";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -5,13 +8,15 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
-export default async function SubscriptionCard({
+export default function SubscriptionCard({
     mangeSubURLData,
     team,
 }: {
     mangeSubURLData: { getManageSubscriptionURL: string };
     team: Team;
 }) {
+    const authUser = useAppSelector((state) => state.userReducer.user);
+
     return (
         <Card className="ovioo-card with-shadow min-w-[300px] max-w-[580px] rounded-[10px] my-6">
             <CardContent>
@@ -19,7 +24,10 @@ export default async function SubscriptionCard({
                     <Typography variant="h5" component="div">
                         Current Plan
                         <span className="capitalize text-slate-400 ml-1">
-                            (standard)
+                            ({
+                                authUser?.teams?.[0]?.subscriptions?.[0]?.plan
+                                    ?.title
+                            })
                         </span>
                     </Typography>
                     <Link
