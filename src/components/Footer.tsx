@@ -5,7 +5,13 @@ export default function Footer() {
     return (
         <footer className="footer w-full relative">
             <div className="rocket-wrapper absolute">
-                <Image src="/svg/rocket.svg" alt="rocket" loading="lazy" width="360" height="463" />
+                <Image
+                    src="/svg/rocket.svg"
+                    alt="rocket"
+                    loading="lazy"
+                    width="360"
+                    height="463"
+                />
             </div>
             <div className="wrapper-footer z-50">
                 <div className="footer-menu flex-col lg:flex-row">
@@ -27,112 +33,77 @@ export default function Footer() {
                         <div className="footer__contacts flex flex-col lg:flex-row">
                             <div className="menu-adress-left ">
                                 <div className="text-adress">
-                                    <p className="text-sm md:text-lg">Ovioo LLC.</p>
+                                    <p className="text-sm md:text-lg">
+                                        Ovioo LLC.
+                                    </p>
                                 </div>
                                 <div className="contact-text street">
-                                <p className="text-sm md:text-lg">
+                                    <p className="text-sm md:text-lg">
                                         Ovioo is headquartered
                                         <br />
                                         in Wyoming, USA.
                                     </p>
                                 </div>
                             </div>
-                            <div className="menu-adress-right justify-end">
-                                <div className="contact-text phone">
-                                    <p className="text-sm md:text-lg"></p>
-                                </div>
+                            <div className="menu-adress-right justify-start">
                                 <a
                                     href="mailto:info@ovioo.ai"
-                                    className="contact-text email w-full inline-block mt-4 lg:mt-6"
+                                    className="contact-text email w-full inline-block"
                                 >
-                                    <p className="text-sm md:text-lg">info@ovioo.ai</p>
+                                    <p className="text-sm md:text-lg">
+                                        info@ovioo.ai
+                                    </p>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div className="menu-wrapper_footer hidden lg:flex pt-14">
+                    <div className="menu-wrapper_footer lg:flex pt-8 lg:pt-14">
                         <div className="col_footer">
-                            <div className="link_footer">
-                                <a href="/portfolio" className="text-sm md:text-lg">
+                            <div className="link_footer mt-3 md:mt-4 lg:mt-0">
+                                <a
+                                    href="/portfolio"
+                                    className="text-sm md:text-lg"
+                                >
                                     Portfolio
                                 </a>
                             </div>
                             <div className="link_footer mt-3 md:mt-4 lg:mt-7">
-                                <a href="/pricing" className="text-sm md:text-lg">
+                                <a
+                                    href="/pricing"
+                                    className="text-sm md:text-lg"
+                                >
                                     Pricing
                                 </a>
                             </div>
                         </div>
                         <div className="col_footer">
-                            <div className="link_footer">
-                                <a href="/how-it-works" className="text-sm md:text-lg">
+                            <div className="link_footer mt-3 md:mt-4 lg:mt-0">
+                                <a
+                                    href="/how-it-works"
+                                    className="text-sm md:text-lg"
+                                >
                                     How it Works
                                 </a>
                             </div>
                             <div className="link_footer mt-3 md:mt-4 lg:mt-7">
-                                <a href="/about" className="text-sm md:text-lg">
-                                    About Us
-                                </a>
-                            </div>
-                        </div>
-                        <div className="col_footer last">
-                            <div className="row-footer">
-                                <div className="link_footer">
-                                    <a href="/" className="text-sm md:text-lg">
-                                        Hiring 🔥
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="link_footer last">
                                 <a href="/terms" className="text-sm md:text-lg">
                                     Terms &amp; Policies
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    <div className="menu-wrapper-mobile flex lg:hidden mt-16 lg:mt-20 flex-col w-full">
-                        <div className="footer-menu flex flex-wrap">
-                            <div className="col_footer">
-                                <a href="/portfolio" className="link_footer w-full inline-block">
-                                    <p className="text-sm md:text-lg">Portfolio</p>
+                        <div className="col_footer last">
+                            <div className="link_footer mt-3 md:mt-4 lg:mt-[56px]">
+                                <a href="/about" className="text-sm md:text-lg">
+                                    About Us
                                 </a>
-                                <a href="/pricing" className="link_footer mt-3 md:mt-4 lg:mt-7 w-full inline-block">
-                                    <p className="text-sm md:text-lg">Pricing</p>
-                                </a>
-                                <a
-                                    href="/about-us"
-                                    className="link_footer mt-3 md:mt-4 lg:mt-7 w-full inline-block"
-                                >
-                                    <p className="text-sm md:text-lg">About Us</p>
-                                </a>
-                                <div className="link_footer mt-3 md:mt-4 lg:mt-7">
-                                    <a
-                                        href="/affiliate-terms-conditions"
-                                        className="text-sm md:text-lg"
-                                    >
-                                        Affiliates
-                                    </a>
-                                </div>
                             </div>
-                            <div className="_2-menu">
-                                <a
-                                    href="/how-it-works"
-                                    className="link_footer w-full inline-block mt-7 sm:mt-0"
-                                >
-                                    <p className="text-sm md:text-lg">What You Get</p>
-                                </a>
-                                <a
-                                    href="/terms-of-service"
-                                    className="link_footer mt-3 md:mt-4 lg:mt-7 w-full inline-block"
-                                >
-                                    <p className="text-sm md:text-lg">Terms &amp; Policies</p>
-                                </a>
-                                <div className="link_footer mt-3 md:mt-4 lg:mt-7 mob">
+                            {/* <div className="link_footer mt-3 md:mt-4 lg:mt-0">
                                     <a href="/" className="text-sm md:text-lg">
                                         Hiring 🔥
                                     </a>
-                                </div>
-                            </div>
+                                </div> 
+                                last one will have class => lg:mt-[28px]
+                            */}
                         </div>
                     </div>
                 </div>
@@ -146,9 +117,9 @@ export default function Footer() {
                             className="social-logo w-full inline-block"
                         >
                             <Image
-                                src="/icons/behance-icon.svg"
+                                src="/icons/snapchat.svg"
                                 loading="lazy"
-                                alt="behance"
+                                alt="snapchat"
                                 className="ico-img"
                                 height={80}
                                 width={80}
@@ -202,12 +173,12 @@ export default function Footer() {
                     </div>
                     <div className="footer-motto">
                         <p className="text-sm sm:block md:hidden center mob-ver">
-                            Ovioo - awesome
+                            Ovioo - awesomeness
                             <br />
                             on a cosmic level
                         </p>
                         <p className="text-lg hidden md:block center desk">
-                            Ovioo - awesome on a cosmic level
+                            Ovioo - awesomeness on a cosmic level
                         </p>
                     </div>
                 </div>
