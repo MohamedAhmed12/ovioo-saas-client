@@ -70,9 +70,6 @@ const TASK_UPDATED = gql`
             description
             title
             status
-            project {
-                id
-            }
             type {
                 id
             }
@@ -86,15 +83,6 @@ const TASK_UPDATED = gql`
                 id
                 title
                 status
-            }
-            team {
-                id
-                members {
-                    id
-                    avatar
-                    fullname
-                    isActive
-                }
             }
         }
     }
