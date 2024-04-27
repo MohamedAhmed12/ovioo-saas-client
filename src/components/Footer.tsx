@@ -47,13 +47,6 @@ export default function Footer() {
                                 >
                                     <p className="text-sm md:text-lg">info@ovioo.ai</p>
                                 </a>
-                                <a
-                                    href="/"
-                                    target="_blank"
-                                    className="contact-text help-center w-full inline-block lg:mt-0"
-                                >
-                                    <p className="text-sm md:text-lg">ovioo Help Center</p>
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -147,23 +140,8 @@ export default function Footer() {
                 <div className="social">
                     <div className="container-social">
                         <a
-                            data-w-id="00be8c05-2a40-df03-0938-7a2eda4ad09c"
-                            href="/"
-                            target="_blank"
-                            className="social-logo w-full inline-block"
-                        >
-                            <Image
-                                src="/icons/website-icon.svg"
-                                loading="lazy"
-                                alt="website"
-                                className="ico-img"
-                                height={80}
-                                width={80}
-                            />
-                        </a>
-                        <a
                             data-w-id="05257713-93c8-4f1a-cca5-fada0299f3f2"
-                            href="/"
+                            href="https://snapchat.com/t/YaepQCbZ"
                             target="_blank"
                             className="social-logo w-full inline-block"
                         >
@@ -177,23 +155,8 @@ export default function Footer() {
                             />
                         </a>
                         <a
-                            data-w-id="1ccbbd5b-0043-722d-e5b7-cf334eeaa30a"
-                            href="/"
-                            target="_blank"
-                            className="social-logo w-full inline-block"
-                        >
-                            <Image
-                                src="/icons/fb-icon.svg"
-                                loading="lazy"
-                                alt="fb"
-                                className="ico-img"
-                                height={80}
-                                width={80}
-                            />
-                        </a>
-                        <a
                             data-w-id="eaef8f78-daa9-1285-06f1-d6eaee53138a"
-                            href="/"
+                            href="https://www.instagram.com/ovioo2/"
                             target="_blank"
                             className="social-logo w-full inline-block"
                         >
@@ -207,8 +170,23 @@ export default function Footer() {
                             />
                         </a>
                         <a
+                            data-w-id="1ccbbd5b-0043-722d-e5b7-cf334eeaa30a"
+                            href="https://www.facebook.com/OviooDesigns"
+                            target="_blank"
+                            className="social-logo w-full inline-block"
+                        >
+                            <Image
+                                src="/icons/fb-icon.svg"
+                                loading="lazy"
+                                alt="fb"
+                                className="ico-img"
+                                height={80}
+                                width={80}
+                            />
+                        </a>
+                        <a
                             data-w-id="ae77bc4e-f01f-292c-9c9c-e496c8db9764"
-                            href="/"
+                            href="https://twitter.com/OviooDesigns"
                             target="_blank"
                             className="social-logo w-full inline-block"
                         >
