@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/hooks/redux";
 import { TaskTypeInterface } from "@/interfaces";
 import "@/styles/components/dashboard/task-type-dropdown.scss";
 import { gql, useQuery } from "@apollo/client";
@@ -32,6 +33,8 @@ export default function TaskTypeDropDown({
     disabled?: boolean;
 }) {
     const { loading: graphQLloading, error, data } = useQuery(LIST_TASK_TYPES);
+    const authUser = useAppSelector((state) => state.userReducer.user);
+    const authUserCurrentPlan = authUser.teams[0].subscriptions[0].plan.title;
 
     const infoComponent = (info: string[], extraInfo: string | null) => {
         return (
@@ -79,6 +82,10 @@ export default function TaskTypeDropDown({
                         <MenuItem
                             value={id}
                             key={title}
+                            disabled={
+                                authUserCurrentPlan == "standard" &&
+                                plan.title != "standard"
+                            }
                             className="task-type__option flex items-center !py-2"
                             aria-label="fff"
                         >

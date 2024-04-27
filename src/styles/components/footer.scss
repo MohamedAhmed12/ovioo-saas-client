@@ -99,9 +99,6 @@
                         margin-right: 0;
                     }
                     .link_footer {
-                        &.last {
-                            margin-top: 28px;
-                        }
                         .footer_nav-text {
                             font-size: 16px;
                             line-height: 20px;
@@ -111,11 +108,6 @@
                                 color: #fae8bc;
                             }
                         }
-                    }
-                    .row-footer {
-                        width: 100%;
-                        justify-content: space-between;
-                        display: flex;
                     }
                     @media screen and (max-width: 479px) {
                         justify-content: flex-start;
