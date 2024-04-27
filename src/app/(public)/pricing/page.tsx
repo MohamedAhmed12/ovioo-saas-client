@@ -37,19 +37,19 @@ const faq: FAQInterface[] = [
 
 export default async function Pricing() {
     const client = await getClient();
-    let data;
+    let plans: PlanInterface[] = [];
 
     try {
         const res = await client?.query({ query: LIST_PLANS });
         if (res) {
-            data = res.data;
+            plans = [...res.data.listPlans].sort((a, b) => +a.id - +b.id);
         }
     } catch (error) {
         throw new Error(JSON.stringify(error));
     }
 
     return (
-        data.listPlans && (
+        plans.length > 0 && (
             <div className="w-full">
                 <div className="intro flex mt-36 mb-14 justify-center">
                     <div className="container title text-center px-5">
@@ -66,7 +66,7 @@ export default async function Pricing() {
                 </div>
 
                 <Box className="flex flex-wrap justify-center w-full px-[9%] gap-x-9">
-                    {data.listPlans.map((plan: PlanInterface) => (
+                    {plans.map((plan: PlanInterface) => (
                         <PlansCard {...plan} key={plan.title} />
                     ))}
                 </Box>

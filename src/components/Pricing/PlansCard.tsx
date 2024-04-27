@@ -7,6 +7,7 @@ import List from "@mui/joy/List";
 import ListItem from "@mui/joy/ListItem";
 import ListItemDecorator from "@mui/joy/ListItemDecorator";
 import JoyTypography from "@mui/joy/Typography";
+import Link from "next/link";
 import { FaCheck, FaChevronRight } from "react-icons/fa6";
 
 export default function PlansCard({
@@ -117,15 +118,17 @@ export default function PlansCard({
                         </>
                     )}
                 </JoyTypography>
-                <Button
-                    variant="soft"
-                    endDecorator={<FaChevronRight />}
-                    className={
-                        background_color ? "text-white" : "text-neutral-700"
-                    }
-                >
-                    Start now
-                </Button>
+                <Link href="/auth/register">
+                    <Button
+                        variant="soft"
+                        endDecorator={<FaChevronRight />}
+                        className={
+                            background_color ? "text-white" : "text-neutral-700"
+                        }
+                    >
+                        Start now
+                    </Button>
+                </Link>
             </CardActions>
         </Card>
     );
