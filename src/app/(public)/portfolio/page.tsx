@@ -1,65 +1,58 @@
 "use client";
 
+import PortfolioMediaCard from "@/components/Dashboard/Portfolio/MediaCard";
+import { Asset as AssetInterface } from "@/interfaces";
 import "@/styles/app/unauth/portfolio.scss";
-import Tabs from "@mui/joy/Tabs";
-import TabList from "@mui/joy/TabList";
 import Tab from "@mui/joy/Tab";
+import TabList from "@mui/joy/TabList";
 import TabPanel from "@mui/joy/TabPanel";
-import { useState } from "react";
+import Tabs from "@mui/joy/Tabs";
 import { ImageList, ImageListItem } from "@mui/material";
-import Image from "next/image";
+import { useState } from "react";
 
 const steps = [
     {
         title: "All",
         images: [
             {
-                img: "https://picsum.photos/id/135/1000/1000",
+                src: "https://picsum.photos/id/135/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/12/1000/1000",
+                src: "https://picsum.photos/id/12/1000/1000",
                 alt: "Burger",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/67/1000/1000",
+                src: "https://picsum.photos/id/67/1000/1000",
                 alt: "Camera",
-                rows: 2,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/96/1000/1000",
+                src: "https://picsum.photos/id/96/1000/1000",
                 alt: "Coffee",
-                rows: 2,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/66/1000/1000",
+                src: "https://picsum.photos/id/66/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/66/1000/1000",
+                src: "https://picsum.photos/id/66/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 4,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/33/1000/1000",
+                src: "https://picsum.photos/id/33/1000/1000",
                 alt: "Burger",
-                rows: 1,
-                cols: 4,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/22/1000/1000",
+                src: "https://picsum.photos/id/22/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
         ],
     },
@@ -67,53 +60,45 @@ const steps = [
         title: "UI / UX",
         images: [
             {
-                img: "https://picsum.photos/id/736/1000/1000",
+                src: "https://picsum.photos/id/736/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 4,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/67/1000/1000",
+                src: "https://picsum.photos/id/67/1000/1000",
                 alt: "Burger",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/34/1000/1000",
+                src: "https://picsum.photos/id/34/1000/1000",
                 alt: "Camera",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/432/1000/1000",
+                src: "https://picsum.photos/id/432/1000/1000",
                 alt: "Coffee",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/123/1000/1000",
+                src: "https://picsum.photos/id/123/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/53/1000/1000",
+                src: "https://picsum.photos/id/53/1000/1000",
                 alt: "Honey",
                 author: "@arwinneil",
-                rows: 1,
-                cols: 3,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/34/1000/1000",
+                src: "https://picsum.photos/id/34/1000/1000",
                 alt: "Breakfast",
-                rows: 2,
-                cols: 3,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/158/1000/1000",
+                src: "https://picsum.photos/id/158/1000/1000",
                 alt: "Burger",
-                rows: 1,
-                cols: 3,
+                type:'png'
             },
         ],
     },
@@ -121,59 +106,50 @@ const steps = [
         title: "Logo & Brand identity",
         images: [
             {
-                img: "https://picsum.photos/id/135/1000/1000",
+                src: "https://picsum.photos/id/135/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/12/1000/1000",
+                src: "https://picsum.photos/id/12/1000/1000",
                 alt: "Burger",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/67/1000/1000",
+                src: "https://picsum.photos/id/67/1000/1000",
                 alt: "Camera",
-                rows: 2,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/96/1000/1000",
+                src: "https://picsum.photos/id/96/1000/1000",
                 alt: "Coffee",
-                rows: 2,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/66/1000/1000",
+                src: "https://picsum.photos/id/66/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/76/1000/1000",
+                src: "https://picsum.photos/id/76/1000/1000",
                 alt: "Honey",
                 author: "@arwinneil",
-                rows: 1,
-                cols: 4,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/66/1000/1000",
+                src: "https://picsum.photos/id/66/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/33/1000/1000",
+                src: "https://picsum.photos/id/33/1000/1000",
                 alt: "Burger",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/22/1000/1000",
+                src: "https://picsum.photos/id/22/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
         ],
     },
@@ -181,65 +157,55 @@ const steps = [
         title: "Graphic",
         images: [
             {
-                img: "https://picsum.photos/id/20/1000/1000",
+                src: "https://picsum.photos/id/20/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/43/1000/1000",
+                src: "https://picsum.photos/id/43/1000/1000",
                 alt: "Burger",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/1000/347/1000",
+                src: "https://picsum.photos/id/1000/347/1000",
                 alt: "Camera",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/444/1000/1000",
+                src: "https://picsum.photos/id/444/1000/1000",
                 alt: "Coffee",
-                rows: 1,
-                cols: 3,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/547/1000/1000",
+                src: "https://picsum.photos/id/547/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 3,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/22/1000/1000",
+                src: "https://picsum.photos/id/22/1000/1000",
                 alt: "Honey",
                 author: "@arwinneil",
-                rows: 1,
-                cols: 3,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/78/1000/1000",
+                src: "https://picsum.photos/id/78/1000/1000",
                 alt: "Breakfast",
-                rows: 2,
-                cols: 3,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/83/1000/1000",
+                src: "https://picsum.photos/id/83/1000/1000",
                 alt: "Burger",
-                rows: 1,
-                cols: 3,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/95/1000/1000",
+                src: "https://picsum.photos/id/95/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 4,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/123/1000/1000",
+                src: "https://picsum.photos/id/123/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
         ],
     },
@@ -247,71 +213,56 @@ const steps = [
         title: "Animation",
         images: [
             {
-                img: "https://picsum.photos/id/10/1000/1000",
+                src: "https://picsum.photos/id/10/1000/1000",
                 alt: "Breakfast",
-                rows: 2,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/11/1000/1000",
+                src: "https://picsum.photos/id/11/1000/1000",
                 alt: "Burger",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/30/1000/1000",
+                src: "https://picsum.photos/id/30/1000/1000",
                 alt: "Camera",
-                rows: 2,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/50/1000/1000",
+                src: "https://picsum.photos/id/50/1000/1000",
                 alt: "Coffee",
-                rows: 2,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/46/1000/1000",
+                src: "https://picsum.photos/id/46/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/43/1000/1000",
+                src: "https://picsum.photos/id/43/1000/1000",
                 alt: "Honey",
                 author: "@arwinneil",
-                rows: 1,
-                cols: 2,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/3/1000/1000",
+                src: "https://picsum.photos/id/3/1000/1000",
                 alt: "Breakfast",
-                rows: 2,
-                cols: 3,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/39/1000/1000",
+                src: "https://picsum.photos/id/39/1000/1000",
                 alt: "Burger",
-                rows: 1,
-                cols: 3,
+                type:'png'
             },
             {
-                img: "https://picsum.photos/id/185/1000/1000",
+                src: "https://picsum.photos/id/185/1000/1000",
                 alt: "Breakfast",
-                rows: 1,
-                cols: 3,
+                type:'png'
             },
         ],
     },
 ];
 
 export default function Portfolio() {
-    const [value, setValue] = useState(0);
-
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
-
     return (
         <>
             <div className="portfolio container flex flex-col pr-5 pl-5 mt-20 mb-40">
@@ -332,29 +283,11 @@ export default function Portfolio() {
                                 variant="quilted"
                                 cols={3}
                             >
-                                {images.map(
-                                    (
-                                        {
-                                            img,
-                                            alt,
-                                        }: {
-                                            img: string;
-                                            alt: string;
-                                        },
-                                        index
-                                    ) => (
-                                        <ImageListItem key={index + "img"}>
-                                            <Image
-                                                className="img w-full h-full"
-                                                src={`${img}?fit=crop&auto=format`}
-                                                alt={alt}
-                                                loading="lazy"
-                                                width={3446}
-                                                height={1260}
-                                            />
-                                        </ImageListItem>
-                                    )
-                                )}
+                                {images.map((asset: AssetInterface, index) => (
+                                    <ImageListItem key={index + "img"}>
+                                        <PortfolioMediaCard asset={asset} />
+                                    </ImageListItem>
+                                ))}
                             </ImageList>
                         </TabPanel>
                     ))}
