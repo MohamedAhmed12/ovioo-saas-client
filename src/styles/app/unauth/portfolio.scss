@@ -25,12 +25,18 @@
             .MuiImageList-root {
                 padding-top: 3rem;
                 padding-bottom: 120px;
-                grid-column-gap: 3.3rem !important;
-                grid-row-gap: 3.3rem !important;
+                grid-template-rows: auto auto;
+                grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(300px, 1fr)
+                ) !important;
                 .MuiImageListItem-root {
                     button.assets__media-card {
                         img {
                             border-radius: 8px;
+                            object-fit: "cover";
+                            width: "100%";
+                            height: "100%";
                         }
                     }
                     .MuiBackdrop-root {
@@ -39,23 +45,9 @@
                 }
                 @media screen and (max-width: 991px) {
                     padding-top: 2.2rem;
-                    grid-column-gap: 2.2rem !important;
-                    grid-row-gap: 2.2rem !important;
                 }
                 @media screen and (max-width: 767px) {
                     padding-bottom: 0px;
-                    display: block;
-                    grid-column: 1 / -1;
-                    .MuiImageListItem-root:not(:first-child) {
-                        img {
-                            margin-top: 25px;
-                        }
-                    }
-                    .MuiImageListItem-root:not(:last-child) {
-                        img {
-                            margin-bottom: 25px;
-                        }
-                    }
                 }
             }
         }

@@ -1,7 +1,6 @@
 "use client";
 
 import { Asset as AssetInterface } from "@/interfaces";
-import "@/styles/components/dashboard/asset/cards/media-card.scss";
 import { isVideo as isVideoHelper } from "@/utils/helpers";
 import { Backdrop } from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
@@ -22,7 +21,7 @@ export default function PortfolioMediaCard({
     return (
         <>
             <ButtonBase
-                className="assets__media-card !w-full h-[100px] lg:w-[200px] !text-gray-300 font-bold"
+                className="assets__media-card !w-full !text-gray-300 font-bold"
                 focusRipple
                 onClick={handleToggle}
             >
