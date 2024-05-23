@@ -25,12 +25,15 @@
             .MuiImageList-root {
                 padding-top: 3rem;
                 padding-bottom: 120px;
+                gap: 30px !important;
                 grid-template-rows: auto auto;
                 grid-template-columns: repeat(
                     auto-fit,
                     minmax(300px, 1fr)
                 ) !important;
                 .MuiImageListItem-root {
+                    max-height: 294px;
+                    width: 396px;
                     button.assets__media-card {
                         img {
                             border-radius: 8px;
@@ -43,10 +46,16 @@
                         background-color: rgba(0, 0, 0, 0.87);
                     }
                 }
+                @media screen and (min-width: 991px) {
+                    column-count: 3;
+                }
                 @media screen and (max-width: 991px) {
+                    column-count: 2;
                     padding-top: 2.2rem;
                 }
                 @media screen and (max-width: 767px) {
+                    column-count: 1;
+                    gap: 25px !important;
                     padding-bottom: 0px;
                 }
             }

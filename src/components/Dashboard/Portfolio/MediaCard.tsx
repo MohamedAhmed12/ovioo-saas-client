@@ -21,12 +21,12 @@ export default function PortfolioMediaCard({
     return (
         <>
             <ButtonBase
-                className="assets__media-card !w-full !text-gray-300 font-bold"
+                className="assets__media-card !max-w-full !text-gray-300 font-bold"
                 focusRipple
                 onClick={handleToggle}
             >
                 <Image
-                    className="img w-full h-full"
+                    className="img max-w-full max-h-full"
                     src={`${asset.src}?fit=crop&auto=format`}
                     alt={asset.alt}
                     loading="lazy"
