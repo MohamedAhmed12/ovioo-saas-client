@@ -89,14 +89,14 @@ export default function HowItWorks() {
                 <iframe
                     width="1200"
                     height="480"
-                    src="https://www.youtube.com/embed/IEuHpriOVzE"
+                    src="https://www.youtube.com/embed/AhU7pnjAXg0?si=RpdLEZhUZGpX8ql_"
                     title="Positive Vibes Music 🌻 Top 100 Chill Out Songs Playlist | Romantic English Songs With Lyrics"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
                 ></iframe>
             </div>
 
-            <div className="what-you-get text-[40px] font-medium text-center mt-36 mb-20 px-5 flex flex-col items-center">
+            <div className="hidden what-you-get text-[40px] font-medium text-center mt-36 mb-20 px-5 flex flex-col items-center">
                 <h3 className="mb-10 lg:mb-20 text-3xl lg:text-[2.8rem]">What You Get With Ovioo</h3>
                 <ImageList
                     className="w-full"
