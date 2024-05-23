@@ -7,7 +7,7 @@ import MobileNavBar from "./MobileNavBar";
 
 function NavBar() {
     const pages: RouteInterface[] = [
-        { url: "/portfolio", title: "Our Work" },
+        // { url: "/portfolio", title: "Our Work" },
         { url: "/pricing", title: "Plans" },
         { url: "/how-it-works", title: "How it Works" },
         { url: "/about", title: "About Us" },
