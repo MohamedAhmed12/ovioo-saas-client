@@ -68,7 +68,7 @@ export default function TaskTypeDropDown({
                 inputLabel="Type"
                 initialVal={initialVal}
                 onSelected={onSelected}
-                className="task-type__dropdown !my-4 mx-0 lg:!mx-4"
+                className="task-type__dropdown !my-4"
                 disabled={disabled}
             >
                 {data.listTaskTypes.map(

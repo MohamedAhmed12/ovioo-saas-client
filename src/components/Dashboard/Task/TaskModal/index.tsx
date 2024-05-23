@@ -43,16 +43,12 @@ const SHOW_TASK = gql`
             }
             team {
                 id
-                name
                 members {
                     id
                     avatar
                     fullname
                     isActive
                     role
-                }
-                subscriptions {
-                    status
                 }
             }
             designer {
@@ -131,7 +127,7 @@ export default function TaskModal({
                 subscriptionData?.data?.taskUpdated;
 
             if (updatedTask && task) {
-                dispatch(setSelectedTask({...task, ...updatedTask}));
+                dispatch(setSelectedTask(updatedTask));
                 if (task?.title !== updatedTask.title) {
                     dispatch(
                         updateTaskTitle({ task, title: updatedTask.title })
