@@ -9,6 +9,7 @@ import { MouseEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
 import OviooDropDown from "../../OviooDropDown";
+import { ManagerHeader } from "./ManagerHeader";
 
 const DELETE_TASK = gql`
     mutation Mutation($id: String!) {
@@ -29,6 +30,7 @@ export default function TaskModalHeader({
 
     const dispatch = useAppDispatch();
     const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
+    const isManager = useAppSelector((state) => state.userReducer.isManager);
     const [deleteTask] = useMutation(DELETE_TASK);
 
     const setOpenDeleteModal = () => {
@@ -53,46 +55,52 @@ export default function TaskModalHeader({
     };
 
     return (
-        <div className="flex flex-col-reverse lg:flex-row task-modal__header justify-between max-w-full">
-            <div
-                className={`flex flex-col-reverse lg:flex-row items-start lg:items-center px-[25px] flex-wrap max-w-full ${
-                    !isDesigner ? "basis-4/6" : ""
-                }`}
-            >
-                <OviooDropDown
-                    options={Object.values(TaskStatus)}
-                    onSelected={(status) => handleOnChange("status", status)}
-                    initialVal={task.status}
-                    className="task-status-dropdown"
-                    disabled={isDesigner}
-                />
+        <div className="flex flex-col task-modal__header justify-between max-w-full">
+            {isManager && <ManagerHeader task={task} />}
 
-                <TaskTypeDropDown
-                    onSelected={(typeId) =>
-                        handleOnChange("type", { id: typeId })
-                    }
-                    initialVal={task.type?.id}
-                    disabled={isDesigner}
-                />
+            <div className="flex flex-col-reverse lg:flex-row">
+                <div
+                    className={`flex flex-col-reverse lg:flex-row items-start lg:items-center px-[25px] flex-wrap max-w-full ${
+                        !isDesigner ? "basis-4/6" : ""
+                    }`}
+                >
+                    <OviooDropDown
+                        options={Object.values(TaskStatus)}
+                        onSelected={(status) =>
+                            handleOnChange("status", status)
+                        }
+                        initialVal={task.status}
+                        className="task-status-dropdown"
+                        disabled={isDesigner}
+                    />
+
+                    <TaskTypeDropDown
+                        onSelected={(typeId) =>
+                            handleOnChange("type", { id: typeId })
+                        }
+                        initialVal={task.type?.id}
+                        disabled={isDesigner}
+                    />
+
+                    {!isDesigner && (
+                        <Tooltip title={task?.designer?.fullname}>
+                            <Avatar
+                                alt={task?.designer?.fullname || "designer"}
+                                sx={{ width: 55, height: 55 }}
+                                src={task?.designer?.avatar}
+                            />
+                        </Tooltip>
+                    )}
+                </div>
 
                 {!isDesigner && (
-                    <Tooltip title={task?.designer?.fullname}>
-                        <Avatar
-                            alt={task?.designer?.fullname || "designer"}
-                            sx={{ width: 55, height: 55 }}
-                            src={task?.designer?.avatar}
-                        />
-                    </Tooltip>
+                    <div className="basis-2/6 flex justify-end px-[25px] lg:items-center">
+                        <IconButton onClick={setOpenDeleteModal}>
+                            <MdDelete className="text-red-600 text-4xl" />
+                        </IconButton>
+                    </div>
                 )}
             </div>
-
-            {!isDesigner && (
-                <div className="basis-2/6 flex justify-end px-[25px] lg:items-center">
-                    <IconButton onClick={setOpenDeleteModal}>
-                        <MdDelete className="text-red-600 text-4xl" />
-                    </IconButton>
-                </div>
-            )}
 
             {isDeleteModalOpen && (
                 <DeleteModal
