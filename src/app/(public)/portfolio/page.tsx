@@ -17,7 +17,7 @@ const tabsTitles = [
     { key: "animation", value: "Animation" },
 ];
 const LIST_PORTFOLIO = gql`
-    query ListPortfolio {
+    query ListPortfolioPics {
         listPortfolio {
             id
             src
