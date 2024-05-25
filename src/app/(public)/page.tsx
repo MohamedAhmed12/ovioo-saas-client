@@ -25,7 +25,7 @@ export default function Home() {
             <IntroContainer />
             <StatsSection />
             <FindDesignerSection />
-            <PortfolioSection />
+            {/* <PortfolioSection /> */}
             <AdvantageSection />
             <PyramidSection />
             <BottomWrapper faq={faq} />
