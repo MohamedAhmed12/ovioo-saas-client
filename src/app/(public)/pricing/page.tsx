@@ -10,7 +10,7 @@ import { gql } from "@apollo/client";
 import Box from "@mui/joy/Box";
 
 const LIST_PLANS = gql`
-    query ListPlans {
+    query ListPlans2 {
         listPlans {
             id
             title
