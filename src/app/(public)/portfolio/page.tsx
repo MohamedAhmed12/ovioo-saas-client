@@ -33,9 +33,8 @@ export default async function Portfolio() {
     const res = await client
         ?.query({
             query: LIST_PORTFOLIO,
-            fetchPolicy: "no-cache",
         })
-        .catch((e) => console.log(`portfolio fetching err: ${e}`));
+        .catch((e) => console.log(`aportfolio fetching err: ${e}`));
     const portfolio = res?.data?.listPortfolio;
 
     return (
