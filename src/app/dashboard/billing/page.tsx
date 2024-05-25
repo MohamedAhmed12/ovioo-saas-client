@@ -30,7 +30,7 @@ export default function Billing() {
                 <header className="px-8 py-5 font-medium">
                     <button
                         className="flex items-center text-black"
-                        onClick={() => window.history.back()}
+                        onClick={() => router.push("/")}
                     >
                         <div className="mr-2">
                             <FaArrowLeft />
