@@ -7,14 +7,14 @@ export const PortfolioSection = () => (
         <Carousel
             title={
                 <h3 className="carousel-title">
-                    Light plan – $35<small> / day</small>
+                    Light plan – $36<small> / day</small>
                 </h3>
             }
         />
         <Carousel
             title={
                 <h3 className="carousel-title">
-                    Pro plan – $99<small> / day</small>
+                    Pro plan – $90<small> / day</small>
                 </h3>
             }
         />
