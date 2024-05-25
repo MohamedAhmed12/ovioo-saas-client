@@ -25,34 +25,39 @@
             .MuiImageList-root {
                 padding-top: 3rem;
                 padding-bottom: 120px;
-                grid-column-gap: 3.3rem !important;
-                grid-row-gap: 3.3rem !important;
+                gap: 30px !important;
+                grid-template-rows: auto auto;
+                grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(300px, 1fr)
+                ) !important;
                 .MuiImageListItem-root {
-                    img {
-                        width: 100%;
-                        height: 100%;
-                        border-radius: 8px;
+                    max-height: 294px;
+                    width: 396px;
+                    button.assets__media-card {
+                        img {
+                            border-radius: 8px;
+                            object-fit: cover;
+                        }
+                    }
+                    .MuiBackdrop-root {
+                        background-color: rgba(0, 0, 0, 0.87);
                     }
                 }
-                @media screen and (max-width: 991px) {
+                @media screen and (min-width: 1280px) {
+                    column-count: 3;
+                }
+                @media screen and (max-width: 1280px) {
+                    column-count: 2;
+                    gap: 20px !important;
                     padding-top: 2.2rem;
-                    grid-column-gap: 2.2rem !important;
-                    grid-row-gap: 2.2rem !important;
+                    grid-template-columns: repeat(2, 1fr) !important;
                 }
                 @media screen and (max-width: 767px) {
+                    column-count: 1;
                     padding-bottom: 0px;
-                    display: block;
-                    grid-column: 1 / -1;
-                    .MuiImageListItem-root:not(:first-child) {
-                        img {
-                            margin-top: 25px;
-                        }
-                    }
-                    .MuiImageListItem-root:not(:last-child) {
-                        img {
-                            margin-bottom: 25px;
-                        }
-                    }
+                    grid-template-columns: unset !important;
+                    justify-content: center;
                 }
             }
         }
