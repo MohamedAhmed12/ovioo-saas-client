@@ -66,9 +66,7 @@ export const getClient = (session?: any) => {
             link: session
                 ? authLink(session).concat(splitLink(session))
                 : httpLink,
-            cache: new InMemoryCache({
-                addTypename: false,
-            }),
+            cache: new InMemoryCache({}),
         });
     }
 

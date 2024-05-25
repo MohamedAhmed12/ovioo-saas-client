@@ -43,12 +43,16 @@ const SHOW_TASK = gql`
             }
             team {
                 id
+                name
                 members {
                     id
                     avatar
                     fullname
                     isActive
                     role
+                }
+                subscriptions {
+                    status
                 }
             }
             designer {
@@ -122,12 +126,13 @@ export default function TaskModal({
 
     useSubscription(TASK_UPDATED, {
         variables: { taskId },
-        onSubscriptionData: ({ subscriptionData }) => { // Replace with onData as it will deprecate in future
+        onSubscriptionData: ({ subscriptionData }) => {
+            // Replace with onData as it will deprecate in future
             const updatedTask: TaskInterface & { title: string } =
                 subscriptionData?.data?.taskUpdated;
 
             if (updatedTask && task) {
-                dispatch(setSelectedTask(updatedTask));
+                dispatch(setSelectedTask({ ...task, ...updatedTask }));
                 if (task?.title !== updatedTask.title) {
                     dispatch(
                         updateTaskTitle({ task, title: updatedTask.title })
