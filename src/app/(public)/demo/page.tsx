@@ -19,7 +19,7 @@ export default function Demo() {
                     <div
                         id="calendly-container"
                         className="calendly-inline-widget basis-1/2"
-                        data-url="https://calendly.com/mohamed-gad3633/demo-call?hide_gdpr_banner=1"
+                        data-url="https://calendly.com/info-ywk0/30min?hide_gdpr_banner=1"
                     >
                         <div className="absolute z-[0]">
                             <Loading bgTransparent />
