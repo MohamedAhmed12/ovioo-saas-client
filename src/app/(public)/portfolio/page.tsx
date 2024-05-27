@@ -17,7 +17,7 @@ const tabsTitles = [
     { key: "animation", value: "Animation" },
 ];
 const LIST_PORTFOLIO = gql`
-    query ListPortfolioPics2 {
+    query ListPortfolioPics275 {
         listPortfolio {
             id
             src
@@ -68,13 +68,7 @@ export default async function Portfolio() {
                                             ) && (
                                                 <ImageListItem
                                                     key={index + "img"}
-                                                    className={`flex aspect-[5/4]  rounded-[20px] ${
-                                                        elm.categories.includes(
-                                                            "logo_and_branding"
-                                                        )
-                                                            ? "bg-white"
-                                                            : ""
-                                                    }`}
+                                                    className="flex aspect-[5/4] rounded-[20px]"
                                                 >
                                                     <PortfolioMediaCard
                                                         asset={elm}
