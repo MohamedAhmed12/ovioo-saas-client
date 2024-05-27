@@ -17,7 +17,7 @@ const tabsTitles = [
     { key: "animation", value: "Animation" },
 ];
 const LIST_PORTFOLIO = gql`
-    query ListPortfolio {
+    query ListPortfolioPics275 {
         listPortfolio {
             id
             src
@@ -30,7 +30,6 @@ const LIST_PORTFOLIO = gql`
 
 export default async function Portfolio() {
     const client: ApolloClient<any> | undefined = getClient();
-    client.resetStore();
     const res = await client
         ?.query({
             query: LIST_PORTFOLIO,
