@@ -17,7 +17,7 @@ const tabsTitles = [
     { key: "animation", value: "Animation" },
 ];
 const LIST_PORTFOLIO = gql`
-    query ListPortfolioPics2 {
+    query ListPortfolio {
         listPortfolio {
             id
             src
@@ -30,6 +30,7 @@ const LIST_PORTFOLIO = gql`
 
 export default async function Portfolio() {
     const client: ApolloClient<any> | undefined = getClient();
+    client.resetStore();
     const res = await client
         ?.query({
             query: LIST_PORTFOLIO,
@@ -68,13 +69,7 @@ export default async function Portfolio() {
                                             ) && (
                                                 <ImageListItem
                                                     key={index + "img"}
-                                                    className={`flex aspect-[5/4]  rounded-[20px] ${
-                                                        elm.categories.includes(
-                                                            "logo_and_branding"
-                                                        )
-                                                            ? "bg-white"
-                                                            : ""
-                                                    }`}
+                                                    className="flex aspect-[5/4] rounded-[20px]"
                                                 >
                                                     <PortfolioMediaCard
                                                         asset={elm}
