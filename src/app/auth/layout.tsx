@@ -1,10 +1,11 @@
 "use client";
 
+import InstagramRedirectModal from "@/components/Auth/InstagramRedirectModal";
 import LeftSideCover from "@/components/Auth/LeftSideCover";
 import { ApolloClientProvider } from "@/components/Providers/ApolloClientProvider";
 import "@/styles/app/auth/layout.scss";
 import { useSession } from "next-auth/react";
-import { redirect, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -36,6 +37,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
                         />
                     </div>
                 </div>
+                <InstagramRedirectModal />
             </main>
         </ApolloClientProvider>
     );
