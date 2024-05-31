@@ -7,11 +7,6 @@ const InstagramRedirectModal = ({
 }: {
     setShouldRedirect: Dispatch<SetStateAction<boolean>>;
 }) => {
-    const handleOpenInBrowser = () => {
-        const currentUrl = window.location.href;
-        window.location.href = `intent:${currentUrl}#Intent;scheme=https;package=com.android.chrome;end;`;
-    };
-
     return (
         <Backdrop
             open={true}
@@ -26,9 +21,10 @@ const InstagramRedirectModal = ({
                 variant="solid"
                 type="submit"
                 className="auth-btn min-w-[75px]"
-                onClick={handleOpenInBrowser}
             >
-                Open in browser
+                <a href={location.href} target="_blank" download>
+                    Open in browser
+                </a>
             </Button>
         </Backdrop>
     );
