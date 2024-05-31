@@ -1,6 +1,5 @@
 "use client";
 
-import InstagramRedirectModal from "@/components/Auth/InstagramRedirectModal";
 import LeftSideCover from "@/components/Auth/LeftSideCover";
 import { ApolloClientProvider } from "@/components/Providers/ApolloClientProvider";
 import "@/styles/app/auth/layout.scss";
@@ -37,7 +36,6 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
                         />
                     </div>
                 </div>
-                <InstagramRedirectModal />
             </main>
         </ApolloClientProvider>
     );

@@ -1,15 +1,18 @@
 "use client";
 
 import "@/styles/app/auth/login.scss";
+import { isInstagramBrowser } from "@/utils/helpers";
 import { Button } from "@mui/joy";
 import { Divider, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import InstagramRedirectModal from "./InstagramRedirectModal";
 
 export default function SSOWrapper() {
     const [googleBtnloading, setGoogleBtnloading] = useState(false);
+    const [shouldRedirect, setShouldRedirect] = useState(false);
     const [icloudBtnloading, setIcloudBtnloading] = useState(false);
 
     const searchParam = useSearchParams();
@@ -17,6 +20,12 @@ export default function SSOWrapper() {
 
     const SSOLogin = (provider: string) =>
         signIn(provider, { callbackUrl: callbackUrl || "/dashboard/task" });
+
+    useEffect(() => {
+        if (!isInstagramBrowser()) {
+            setShouldRedirect(true);
+        }
+    }, []);
 
     return (
         <>
@@ -69,6 +78,10 @@ export default function SSOWrapper() {
                     )}
                 </Button> */}
             </div>
+
+            {shouldRedirect && (
+                <InstagramRedirectModal setShouldRedirect={setShouldRedirect} />
+            )}
 
             <Divider sx={{ my: 3 }}>
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
