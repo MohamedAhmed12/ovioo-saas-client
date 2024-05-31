@@ -7,9 +7,6 @@ const InstagramRedirectModal = ({
 }: {
     setShouldRedirect: Dispatch<SetStateAction<boolean>>;
 }) => {
-    const handleRedirect = () => {
-        window.open("https://www.ovioo.ai/auth/login", "_blank");
-    };
     return (
         <Backdrop
             open={true}
@@ -24,9 +21,8 @@ const InstagramRedirectModal = ({
                 variant="solid"
                 type="submit"
                 className="auth-btn min-w-[75px]"
-                onClick={handleRedirect}
             >
-                Open in browser
+                Go back
             </Button>
         </Backdrop>
     );
