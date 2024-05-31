@@ -7,7 +7,7 @@ import { Divider, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InstagramRedirectModal from "./InstagramRedirectModal";
 
 export default function SSOWrapper() {
@@ -21,11 +21,14 @@ export default function SSOWrapper() {
     const SSOLogin = (provider: string) =>
         signIn(provider, { callbackUrl: callbackUrl || "/dashboard/task" });
 
-    useEffect(() => {
+    const handleGoogleLogin = () => {
         if (!isInstagramBrowser()) {
-            setShouldRedirect(true);
+            return setShouldRedirect(true);
         }
-    }, []);
+
+        SSOLogin("google");
+        setGoogleBtnloading(true);
+    };
 
     return (
         <>
@@ -35,10 +38,7 @@ export default function SSOWrapper() {
                     size="lg"
                     variant="outlined"
                     loading={googleBtnloading}
-                    onClick={() => {
-                        SSOLogin("google");
-                        setGoogleBtnloading(true);
-                    }}
+                    onClick={handleGoogleLogin}
                 >
                     {!googleBtnloading && (
                         <>
