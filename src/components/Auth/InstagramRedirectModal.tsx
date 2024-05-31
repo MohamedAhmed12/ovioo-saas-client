@@ -7,11 +7,14 @@ const InstagramRedirectModal = ({
 }: {
     setShouldRedirect: Dispatch<SetStateAction<boolean>>;
 }) => {
+    const handleRedirect = () => {
+        window.open("https://www.ovioo.ai/auth/login", "_blank");
+    };
     return (
         <Backdrop
             open={true}
             onClick={() => setShouldRedirect(false)}
-            className="flex-col bg-black/90 z-[999] text-center font-normal px-5"
+            className="flex-col bg-black/95 z-[999] text-center font-normal px-5"
         >
             <p className="text-lg my-8 text-white">
                 Google doesn't allow signing in from within Instagram. To sign
@@ -21,10 +24,9 @@ const InstagramRedirectModal = ({
                 variant="solid"
                 type="submit"
                 className="auth-btn min-w-[75px]"
+                onClick={handleRedirect}
             >
-                <a href={location.href} target="_blank" download>
-                    Open in browser
-                </a>
+                Open in browser
             </Button>
         </Backdrop>
     );
