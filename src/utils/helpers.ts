@@ -14,7 +14,7 @@ export const ObjectHasVal = (object: Object, val: any) =>
     Object.values(object).includes(val);
 
 export const isInstagramBrowser = () => {
-    const userAgent = navigator.userAgent.toLowerCase() || window?.opera;
+    const userAgent = navigator.userAgent.toLowerCase();
     return userAgent.includes("instagram");
 };
 
