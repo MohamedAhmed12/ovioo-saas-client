@@ -7,16 +7,11 @@ const InstagramRedirectModal = ({
 }: {
     setShouldRedirect: Dispatch<SetStateAction<boolean>>;
 }) => {
-    const handleOpenInBrowser = () => {
-        const currentUrl = window.location.href;
-        window.location.href = `intent:${currentUrl}#Intent;scheme=https;package=com.android.chrome;end;`;
-    };
-
     return (
         <Backdrop
             open={true}
             onClick={() => setShouldRedirect(false)}
-            className="flex-col bg-black/90 z-[999] text-center font-normal px-5"
+            className="flex-col bg-black/95 z-[999] text-center font-normal px-5"
         >
             <p className="text-lg my-8 text-white">
                 Google doesn't allow signing in from within Instagram. To sign
@@ -26,9 +21,8 @@ const InstagramRedirectModal = ({
                 variant="solid"
                 type="submit"
                 className="auth-btn min-w-[75px]"
-                onClick={handleOpenInBrowser}
             >
-                Open in browser
+                Go back
             </Button>
         </Backdrop>
     );
