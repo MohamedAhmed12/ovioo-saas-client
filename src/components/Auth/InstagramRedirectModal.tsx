@@ -3,12 +3,13 @@ import { Backdrop } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const InstagramRedirectModal = () => {
-    const [shouldRedirect, setShouldRedirect] = useState(false);
+    const [shouldRedirect, setShouldRedirect] = useState(true);
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        if (isInstagramBrowser()) {
+        if (!isInstagramBrowser()) {
             setShouldRedirect(true);
+            handleToggle();
         }
     }, []);
 
