@@ -13,6 +13,11 @@ export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 export const ObjectHasVal = (object: Object, val: any) =>
     Object.values(object).includes(val);
 
+export const isInstagramBrowser = () => {
+    const userAgent = navigator.userAgent.toLowerCase() || window?.opera;
+    return userAgent.includes("instagram");
+};
+
 function cleanDirectory(path: string, session: Session | null) {
     fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/directory/clean`, {
         method: "POST",
