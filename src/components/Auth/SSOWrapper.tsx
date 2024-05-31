@@ -22,7 +22,7 @@ export default function SSOWrapper() {
         signIn(provider, { callbackUrl: callbackUrl || "/dashboard/task" });
 
     const handleGoogleLogin = () => {
-        if (!isInstagramBrowser()) {
+        if (isInstagramBrowser()) {
             return setShouldRedirect(true);
         }
 
