@@ -1,35 +1,35 @@
-import { isInstagramBrowser } from "@/utils/helpers";
+import { Button } from "@mui/joy";
 import { Backdrop } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-const InstagramRedirectModal = () => {
-    const [shouldRedirect, setShouldRedirect] = useState(true);
-    const [open, setOpen] = useState(false);
-
-    useEffect(() => {
-        if (!isInstagramBrowser()) {
-            setShouldRedirect(true);
-            handleToggle();
-        }
-    }, []);
-
-    const handleToggle = () => {
-        setOpen((prevState) => !prevState);
-    };
+const InstagramRedirectModal = ({
+    setShouldRedirect,
+}: {
+    setShouldRedirect: Dispatch<SetStateAction<boolean>>;
+}) => {
     const handleOpenInBrowser = () => {
         const currentUrl = window.location.href;
         window.location.href = `intent:${currentUrl}#Intent;scheme=https;package=com.android.chrome;end;`;
     };
 
-    if (!shouldRedirect) return null;
-
     return (
-        <Backdrop open={open} onClick={handleToggle} className="z-[999]">
-            <p>
-                You are using the Instagram in-app browser. For a better
-                experience, please open this link in your external browser.
+        <Backdrop
+            open={true}
+            onClick={() => setShouldRedirect(false)}
+            className="flex-col bg-black/90 z-[999] text-center font-normal px-5"
+        >
+            <p className="text-lg my-8 text-white">
+                Google doesn't allow signing in from within Instagram. To sign
+                in with Google, please open the page in external browser
             </p>
-            <button onClick={handleOpenInBrowser}>Open in Browser</button>
+            <Button
+                variant="solid"
+                type="submit"
+                className="auth-btn min-w-[75px]"
+                onClick={handleOpenInBrowser}
+            >
+                Open in browser
+            </Button>
         </Backdrop>
     );
 };
