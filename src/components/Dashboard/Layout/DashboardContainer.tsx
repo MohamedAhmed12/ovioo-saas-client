@@ -7,7 +7,7 @@ import { ModeEnum } from "@/interfaces/store/main";
 import { setUser } from "@/store/features/user";
 import "@/styles/app/dashboard/layout.scss";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 
 const TOGGLE_USER_STATUS = gql`
@@ -57,8 +57,6 @@ export default function DashboardContainer({
     const isDesigner = useAppSelector((state) => state.userReducer.isDesigner);
     const mode = useAppSelector((state) => state.mainReducer.mode);
 
-    const [open, setOpen] = useState(false);
-
     const [toggleUserStatus] = useMutation(TOGGLE_USER_STATUS);
     const { loading: graphQLloading, error } = useQuery(
         FETCH_USER_WITH_PROFILE,
@@ -98,11 +96,7 @@ export default function DashboardContainer({
                     isDesigner ? "pl-8" : "pl-8 md:pl-80"
                 }`}
             >
-                <DashboardHeader
-                    openNav={open}
-                    onOpenNav={() => setOpen(true)}
-                    navbarIsHidden={isDesigner}
-                />
+                <DashboardHeader navbarIsHidden={isDesigner} />
 
                 {children}
 
