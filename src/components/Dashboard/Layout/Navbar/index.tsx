@@ -51,17 +51,19 @@ export default function Navbar() {
     const renderContent = (
         <SimpleBar className="h-full bg-inherit dark:text-white ">
             <Box className="flex max-h-[100px] px-5 py-6">
-                <Image
-                    src="/svg/logo.svg"
-                    className="hamburger-icon slef-center"
-                    width="199"
-                    height="52"
-                    alt="logo"
-                    style={{
-                        height: 52,
-                        width: 199,
-                    }}
-                />
+                <Link href="/">
+                    <Image
+                        src="/svg/logo.svg"
+                        className="hamburger-icon slef-center"
+                        width="199"
+                        height="52"
+                        alt="logo"
+                        style={{
+                            height: 52,
+                            width: 199,
+                        }}
+                    />
+                </Link>
             </Box>
             <Box>
                 <List disablePadding className=" dark:text-white">

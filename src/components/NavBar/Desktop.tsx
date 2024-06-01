@@ -1,19 +1,22 @@
 import "@/styles/components/navbar/navbar-desktop.scss";
 
-import { Route as RouteInterface } from "@/interfaces";
+import { Route as RouteInterface, UserInterface } from "@/interfaces";
 import { AppBar, Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
+import Image from "next/image";
 import Link from "next/link";
+import AccountPopover from "../Dashboard/Layout/Header/AccountPopover";
 import HideOnScroll from "../HideOnScroll";
 import BookDemoBtn from "./BookDemoBtn";
-import Image from "next/image";
 
 export default function Desktop({
     pages,
     scrolling,
+    authUser,
 }: {
     pages: RouteInterface[];
     scrolling: boolean;
+    authUser: UserInterface;
 }) {
     return (
         <HideOnScroll>
@@ -47,7 +50,9 @@ export default function Desktop({
                             </Link>
                             <Box
                                 sx={{ display: { xs: "none", md: "flex" } }}
-                                className="self-center"
+                                className={`self-center ${
+                                    authUser ? "px-3" : ""
+                                }`}
                             >
                                 <div className="menu">
                                     {pages.map(({ url, title }) => (
@@ -63,6 +68,7 @@ export default function Desktop({
                                 <BookDemoBtn />
                             </Box>
                         </div>
+                        {authUser && <AccountPopover />}
                     </div>
                 </Toolbar>
             </AppBar>
