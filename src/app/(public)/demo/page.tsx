@@ -18,7 +18,7 @@ export default function Demo() {
                 <div className="flex flex-row justify-center lg:justify-between w-full">
                     <div
                         id="calendly-container"
-                        className="calendly-inline-widget basis-1/2"
+                        className="calendly-inline-widget px-5 lg:px-12 lg:basis-1/2"
                         data-url="https://calendly.com/info-ywk0/30min?hide_gdpr_banner=1"
                     >
                         <div className="absolute z-[0]">

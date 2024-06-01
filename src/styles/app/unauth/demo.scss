@@ -4,18 +4,17 @@
         margin-bottom: 80px;
     }
     .calendly-inline-widget {
+        width: 100%;
         height: 945px !important;
         min-height: 945px !important;
         display: flex;
         justify-content: center;
         align-items: center;
         iframe {
+            max-width: 450px;
             position: relative;
-            width: 75%;
             min-height: 945px;
-            @media screen and (max-width: 991px) {
-                width: 100%;
-            }
+            width: 100%;
         }
     }
 }

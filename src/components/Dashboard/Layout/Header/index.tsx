@@ -5,21 +5,17 @@ import "@/styles/components/dashboard/layout/header/index.scss";
 import { IconButton } from "@mui/joy";
 import { AppBar, Box, Stack, Toolbar } from "@mui/material";
 import Image from "next/image";
-import { AiOutlineMenu } from "react-icons/ai";
+import Link from "next/link";
 import { FaMoon, FaSun } from "react-icons/fa6";
+import Navbar from "../Navbar";
 import AccountPopover from "./AccountPopover";
 import MessagePopover from "./Message/MessagePopover";
 import NotificationPopover from "./Notification/NotificationPopover";
-import Navbar from "../Navbar";
 
 export default function DashboardHeader({
-    openNav,
     navbarIsHidden,
-    onOpenNav,
 }: {
-    openNav: boolean;
     navbarIsHidden: boolean;
-    onOpenNav: () => void;
 }) {
     const mode = useAppSelector((state) => state.mainReducer.mode);
     const dispatch = useAppDispatch();
@@ -31,19 +27,21 @@ export default function DashboardHeader({
         >
             <Toolbar>
                 {navbarIsHidden && (
-                    <Image
-                        src="/svg/logo.svg"
-                        className="hamburger-icon slef-center"
-                        width="199"
-                        height="52"
-                        alt="logo"
-                        style={{
-                            height: 52,
-                            width: 199,
-                        }}
-                    />
+                    <Link href="/">
+                        <Image
+                            src="/svg/logo.svg"
+                            className="hamburger-icon slef-center"
+                            width="199"
+                            height="52"
+                            alt="logo"
+                            style={{
+                                height: 52,
+                                width: 199,
+                            }}
+                        />
+                    </Link>
                 )}
-                
+
                 {!navbarIsHidden && <Navbar />}
 
                 <Box sx={{ flexGrow: 1 }} />

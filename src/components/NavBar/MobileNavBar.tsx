@@ -1,24 +1,21 @@
 import "@/styles/components/navbar/navbar-mobile.scss";
 
-import { useAppSelector } from "@/hooks/redux";
-import { Route as RouteInterface } from "@/interfaces";
+import { Route as RouteInterface, UserInterface } from "@/interfaces";
 import { AppBar, Toolbar } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import AccountPopover from "../Dashboard/Layout/Header/AccountPopover";
 import HamburgerMenu from "./HamburgerMenu";
-import UserIcon from "./UserIcon";
 
 export default function MobileNavBar({
     pages,
-    settings,
     scrolling,
+    authUser,
 }: {
     pages: RouteInterface[];
-    settings: RouteInterface[];
     scrolling: boolean;
+    authUser: UserInterface;
 }) {
-    const authUser = useAppSelector((state) => state.userReducer.user);
-
     return (
         <>
             <AppBar
@@ -43,10 +40,10 @@ export default function MobileNavBar({
                             height={100}
                             alt="logo"
                         />
-                        {authUser && <UserIcon settings={settings} />}
                     </Link>
                 </Toolbar>
                 <HamburgerMenu pages={pages} />
+                {authUser && <AccountPopover />}
             </AppBar>
         </>
     );
