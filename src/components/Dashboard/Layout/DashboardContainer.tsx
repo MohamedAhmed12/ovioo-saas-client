@@ -63,7 +63,7 @@ export default function DashboardContainer({
     const { loading: graphQLloading, error } = useQuery(
         FETCH_USER_WITH_PROFILE,
         {
-            fetchPolicy: "network-only",
+            fetchPolicy: "cache-first",
             onCompleted: (data) => {
                 dispatch(setUser(data.me));
             },
